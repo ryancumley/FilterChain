@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
 
 @implementation AppDelegate
 
@@ -14,11 +15,82 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+@synthesize mVC = _mVC;
+
+- (void)loadFiltersFromJSON {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"FilterBank" ofType:@"json"];
+    NSData *filterData = [NSData dataWithContentsOfFile:path];
+    
+    NSError *err;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:filterData options:kNilOptions error:&err];
+    if (err) { //TODO this can be removed prior to shipping the app
+        NSLog(@"%@", err);
+    }
+    NSArray *definedFilters = [json objectForKey:@"Filter"];
+    NSManagedObjectContext* moc = [self managedObjectContext];
+    
+    for (NSDictionary *filter in definedFilters) {
+        NSString *name = [filter valueForKey:@"name"];
+        BOOL exists = [self alreadyExists:name inManagedObjectContext:moc];
+        if (!exists) {
+            NSString *imageNamed = [filter valueForKey:@"imageName"];
+            NSString *filterDesignator = [filter valueForKey:@"filterDesignator"];
+            [self createFilterWithName:name imageNamed:imageNamed filterDesignator:filterDesignator];
+        }
+    }
+    
+
+}
+
+- (BOOL)alreadyExists:(NSString*)filterNamed inManagedObjectContext:(NSManagedObjectContext*)moc {
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name == %@", filterNamed];
+    NSEntityDescription* description = [NSEntityDescription entityForName:@"Filter" inManagedObjectContext:moc];
+    NSFetchRequest* request = [[NSFetchRequest alloc] init];
+    [request setEntity:description];
+    [request setPredicate:predicate];
+    NSError* error;
+    NSArray* fetchedResult = [moc executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@",error.localizedDescription);
+    }
+    
+    if (fetchedResult.count == 0) {
+        return NO;
+    }
+    else {
+        return YES;
+    }
+    
+}
+
+- (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator {
+    NSManagedObjectContext* moc = [self managedObjectContext];
+    Filter* newFilter = [NSEntityDescription insertNewObjectForEntityForName:@"Filter" inManagedObjectContext:moc];
+    newFilter.name = name;
+    newFilter.imageName = imageName;
+    newFilter.filterDesignator = designator;
+    
+    NSError* error;
+    [moc save:&error];
+    if (error) {
+        NSLog(@"%@",error.localizedDescription);
+    }
+}
+
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [self loadFiltersFromJSON];
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    
+    //TODO switch the nib Name based on type of hardware detected
+    _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
+    self.window.rootViewController = _mVC;
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -27,6 +99,7 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [_mVC.recordingManager stopCameraCapture];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -43,6 +116,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [_mVC awakeVideoCamera];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

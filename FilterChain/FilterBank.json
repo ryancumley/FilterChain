@@ -1,0 +1,38 @@
+{
+    "Filter":[
+              {
+              "name":"Grayscale",
+              "imageName":"Grayscale.jpg",
+              "filterDesignator":"GPUImageGrayscaleFilter"
+              },
+
+              {
+              "name":"Edges",
+              "imageName":"Edges.jpg",
+              "filterDesignator":"GPUImageCannyEdgeDetectionFilter"
+              },
+
+              {
+              "name":"Inversion",
+              "imageName":"Inversion.jpg",
+              "filterDesignator":"GPUImageColorInvertFilter"
+              },
+              
+              
+              {
+              "name":"Shadows",
+              "imageName":"HighlightShadows.jpg",
+              "filterDesignator":"GPUImageHighlightShadowFilter"
+              },
+              
+              
+              {
+              "name":"Sepia",
+              "imageName":"Sepia.jpg",
+              "filterDesignator":"GPUImageSepiaFilter"
+              }
+              
+             
+              ]
+
+}
