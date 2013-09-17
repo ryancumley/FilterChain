@@ -8,9 +8,8 @@
 
 #import "MainViewController.h"
 
-#define k_SlideLeftFrame CGRectMake(0.0, 0.0, 640.0, 568.0)
-#define k_SlideRightFrame CGRectMake(-320.0, 0.0, 640.0, 568.0)
-#define k_ClipManagerFrame CGRectMake(0.0, 0.0, 320.0, 515.0)
+//#define k_SlideLeftFrame CGRectMake(-320.0, 0.0, 320.0, 568.0)
+//#define k_SlideRightFrame CGRectMake(0.0, 0.0, 320.0, 568.0)
 #define k_filterBankFrame CGRectMake(0.0, 51.0, 320.0, 99.0)
 
 @interface MainViewController ()
@@ -19,7 +18,7 @@
 
 @implementation MainViewController
 
-@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, slidingShell = _slidingShell, controlBox = _controlBox, toggleSwitch = _toggleSwitch;
+@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, toggleSwitch = _toggleSwitch;
 @synthesize switchingFilter = _switchingFilter, pipeline = _pipeline;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,9 +34,6 @@
 {
     [super viewDidLoad];
     //View Config
-    self.view.frame = CGRectMake(0.0, 0.0, 320.0, 568.0);
-     _slidingShell.frame = CGRectMake(-320.0, 0.0, 640.0, 568.0);
-    [self.view addSubview:_slidingShell];
     
     //Camera config
     _switchingFilter = [[GPUImageFilter alloc] init];
@@ -46,16 +42,20 @@
     [_switchingFilter addTarget:_previewLayer];
     
     //ClipManager Config
-    _clipManager = [[ClipManager alloc]init];
-    _clipManager.collectionView.frame = k_ClipManagerFrame;
+    CGRect offScreen = CGRectMake(-self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+    _clipManagerView.frame = offScreen;
+    [self.view addSubview:_clipManagerView];
+    
+    _clipManager = [[ClipManager alloc] init];
+    _clipManager.collectionView.frame = _collectionShell.frame;
     _clipManager.collectionView.backgroundColor = [UIColor clearColor];
-    [_slidingShell addSubview:_clipManager.collectionView];
+    [_collectionShell addSubview:_clipManager.collectionView];
     [_clipManager refreshStoredClips];
     
     //FilterBank Config
     _filterBank = [[FilterBank alloc] init];
     _filterBank.collectionView.frame = k_filterBankFrame;
-    [_controlBox addSubview:_filterBank.collectionView];
+    [_controlBoxManager.view addSubview:_filterBank.collectionView];
     
     //ActiveFilterManager Config
     _activeFilterManager = [[ActiveFilterManager alloc] init];
@@ -64,25 +64,24 @@
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 - (IBAction)navigateToClips:(id)sender {
+    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+    CGRect displayClips = CGRectMake(0.0, 0.0, appFrame.size.width, appFrame.size.height);
     [UIView animateWithDuration:0.1
                      animations:^(void) {
-                         _slidingShell.frame = k_SlideLeftFrame;
+                         _clipManagerView.frame = displayClips;
                      }
      ];
 }
 
 - (IBAction)navigateToCamera:(id)sender {
-    [UIView animateWithDuration:0.1
+     CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+     CGRect displayClips = CGRectMake(-appFrame.size.width, 0.0, appFrame.size.width, appFrame.size.height);
+     [UIView animateWithDuration:0.1
                      animations:^(void) {
-                         _slidingShell.frame = k_SlideRightFrame;
+                         _clipManagerView.frame = displayClips;
                      }
      ];
 
@@ -124,6 +123,25 @@
         [_recordingManager.pipeline replaceAllFilters:nil];
     }
     
+}
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotate {
+    [super shouldAutorotate];
+    
+    //Pass the rotation down
+    return YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    //NSLog(@"orientation: %d",fromInterfaceOrientation);
 }
 
 @end

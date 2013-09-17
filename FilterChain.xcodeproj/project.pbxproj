@@ -44,7 +44,6 @@
 		C0B4647817DA842F00126545 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B4647717DA842F00126545 /* MediaPlayer.framework */; };
 		C0B4648517DA854F00126545 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B4648017DA851400126545 /* libGPUImage.a */; };
 		C0B4648717DA89FF00126545 /* Retina.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0B4648617DA89FF00126545 /* Retina.xib */; };
-		C0B4648917DA8A2B00126545 /* OldDisplay.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0B4648817DA8A2B00126545 /* OldDisplay.xib */; };
 		C0B4648C17DA8A4900126545 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4648B17DA8A4900126545 /* MainViewController.m */; };
 		C0B4649017DA8CA200126545 /* ClipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4648F17DA8CA200126545 /* ClipManager.m */; };
 		C0B4649317DA8CB400126545 /* RecordingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4649217DA8CB400126545 /* RecordingManager.m */; };
@@ -135,7 +134,6 @@
 		C0B4647717DA842F00126545 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C0B4647917DA851300126545 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = "../GPUImage-master/framework/GPUImage.xcodeproj"; sourceTree = "<group>"; };
 		C0B4648617DA89FF00126545 /* Retina.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Retina.xib; sourceTree = "<group>"; };
-		C0B4648817DA8A2B00126545 /* OldDisplay.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldDisplay.xib; sourceTree = "<group>"; };
 		C0B4648A17DA8A4900126545 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		C0B4648B17DA8A4900126545 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		C0B4648E17DA8CA200126545 /* ClipManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipManager.h; sourceTree = "<group>"; };
@@ -241,7 +239,6 @@
 				C0B4649417DA8D6700126545 /* ControlBoxManager.h */,
 				C0B4649517DA8D6700126545 /* ControlBoxManager.m */,
 				C0B4648617DA89FF00126545 /* Retina.xib */,
-				C0B4648817DA8A2B00126545 /* OldDisplay.xib */,
 				C0B4644C17DA826F00126545 /* FilterChain.xcdatamodeld */,
 				C0B4648E17DA8CA200126545 /* ClipManager.h */,
 				C0B4648F17DA8CA200126545 /* ClipManager.m */,
@@ -423,7 +420,6 @@
 				C0B4644917DA826F00126545 /* Default@2x.png in Resources */,
 				C0B4644B17DA826F00126545 /* Default-568h@2x.png in Resources */,
 				C0B4648717DA89FF00126545 /* Retina.xib in Resources */,
-				C0B4648917DA8A2B00126545 /* OldDisplay.xib in Resources */,
 				C00077A317DE72DA00715694 /* FilterBank.json in Resources */,
 				C031702E17DE94E8003F8ACB /* camera-3.png in Resources */,
 				C031703017DE9537003F8ACB /* image.png in Resources */,
@@ -543,6 +539,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ryan Cumley (M8DK643HEQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -558,6 +555,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "E18C7251-12F4-4A4F-93EC-B44CE91A77AF";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -574,6 +572,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ryan Cumley (M8DK643HEQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -582,6 +581,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "E18C7251-12F4-4A4F-93EC-B44CE91A77AF";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -594,8 +594,10 @@
 				GCC_PREFIX_HEADER = "FilterChain/FilterChain-Prefix.pch";
 				HEADER_SEARCH_PATHS = "../GPUImage-master/framework/**";
 				INFOPLIST_FILE = "FilterChain/FilterChain-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -607,8 +609,10 @@
 				GCC_PREFIX_HEADER = "FilterChain/FilterChain-Prefix.pch";
 				HEADER_SEARCH_PATHS = "../GPUImage-master/framework/**";
 				INFOPLIST_FILE = "FilterChain/FilterChain-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -42,6 +42,7 @@
     return self;
 }
 
+
 - (void)refreshStoredClips {
     _storedClips = nil;
     _storedClips = [NSMutableArray arrayWithArray:[self contentsOfDocuments]];
@@ -74,6 +75,8 @@
 }
 
 - (void)generateThumbnails {
+    //TODO skip thumbnail creation for clips we have already processed
+    
     //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs
     _storedThumbnails = nil;
     _storedThumbnails = [NSMutableArray arrayWithCapacity:_storedClips.count];
@@ -135,6 +138,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
+
     Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
     [cell.auxControl addTarget:self action:@selector(clipActionInvoked) forControlEvents:UIControlEventValueChanged];
     [cell.auxControl setHidden:YES];
@@ -166,6 +171,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
     [self.collectionView setAllowsMultipleSelection:NO];
     [self refreshStoredClips];
 }

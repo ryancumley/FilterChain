@@ -89,6 +89,10 @@
     
     //TODO switch the nib Name based on type of hardware detected
     _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
+    //CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+    //[_mVC.view setFrame:appFrame];
+    //[_mVC.previewLayer setFrame:appFrame];
+    //[_mVC.clipManagerView setFrame:appFrame];
     self.window.rootViewController = _mVC;
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self.window makeKeyAndVisible];

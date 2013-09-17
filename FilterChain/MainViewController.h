@@ -23,9 +23,9 @@
 @property (strong, nonatomic) ActiveFilterManager* activeFilterManager;
 @property (strong, nonatomic) IBOutlet ControlBoxManager* controlBoxManager;
 @property (strong, nonatomic) IBOutlet GPUImageView* previewLayer;
-@property (strong, nonatomic) IBOutlet UIView* slidingShell;
-@property (strong, nonatomic) IBOutlet UIView* controlBox;
 @property (strong, nonatomic) IBOutlet UISwitch* toggleSwitch;
+@property (strong, nonatomic) IBOutlet UIView* clipManagerView;
+@property (strong, nonatomic) IBOutlet UIView* collectionShell;
 
 @property (strong, nonatomic) GPUImageFilter* switchingFilter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;
