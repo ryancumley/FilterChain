@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C00077A317DE72DA00715694 /* FilterBank.json in Resources */ = {isa = PBXBuildFile; fileRef = C00077A217DE72DA00715694 /* FilterBank.json */; };
 		C00BB83E17DD948500E0580D /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = C00BB83D17DD948500E0580D /* Cell.m */; };
+		C01734A917E82EC900113DFE /* recordRedLight.png in Resources */ = {isa = PBXBuildFile; fileRef = C01734A817E82EC900113DFE /* recordRedLight.png */; };
 		C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0208E7517E130170097F1E8 /* ActiveFilterManager.m */; };
 		C031702917DE7BBE003F8ACB /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C031702817DE7BBE003F8ACB /* Filter.m */; };
 		C031702E17DE94E8003F8ACB /* camera-3.png in Resources */ = {isa = PBXBuildFile; fileRef = C031702D17DE94E8003F8ACB /* camera-3.png */; };
@@ -93,6 +94,7 @@
 		C00077A217DE72DA00715694 /* FilterBank.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FilterBank.json; sourceTree = "<group>"; };
 		C00BB83C17DD948500E0580D /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		C00BB83D17DD948500E0580D /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
+		C01734A817E82EC900113DFE /* recordRedLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordRedLight.png; sourceTree = "<group>"; };
 		C0208E7417E130170097F1E8 /* ActiveFilterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveFilterManager.h; sourceTree = "<group>"; };
 		C0208E7517E130170097F1E8 /* ActiveFilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActiveFilterManager.m; sourceTree = "<group>"; };
 		C031702717DE7BBE003F8ACB /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				C0DB6F7B17E602150020B394 /* Sepia.jpg */,
 				C073571517E53A2E0024D02B /* clipsbutton.png */,
 				C073571117E5384E0024D02B /* record.png */,
+				C01734A817E82EC900113DFE /* recordRedLight.png */,
 				C073570317E51DE40024D02B /* OrangeSquareMin.jpg */,
 				C031703317DE95C5003F8ACB /* video.png */,
 				C031703117DE95A3003F8ACB /* outgoing.png */,
@@ -435,6 +438,7 @@
 				C0DB6F7F17E602150020B394 /* Inversion.jpg in Resources */,
 				C0DB6F8017E602150020B394 /* Pixellate.jpg in Resources */,
 				C0DB6F8117E602150020B394 /* Sepia.jpg in Resources */,
+				C01734A917E82EC900113DFE /* recordRedLight.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

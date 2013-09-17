@@ -16,6 +16,11 @@
 #import "ActiveFilterManager.h"
 
 @interface MainViewController : UIViewController
+{
+    CGRect filterBankFrame;
+    CGRect collectionShellFrame;
+    BOOL clipCollectionIsVisible;
+}
 
 @property (strong, nonatomic) RecordingManager* recordingManager;
 @property (strong, nonatomic) ClipManager* clipManager;
@@ -39,5 +44,8 @@
 - (void)previewClipForUrl:(NSURL *)targetUrl;
 - (void)awakeVideoCamera;
 - (void)refreshPipelineWithFilters:(NSArray*)filters;
+
+- (CGRect)filterBankFrameForOrientation:(UIInterfaceOrientation)orientation;
+- (CGRect)clipManagerFrameForOrientation:(UIInterfaceOrientation)orientation;
 
 @end

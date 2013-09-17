@@ -21,6 +21,7 @@
 
 @property (strong, nonatomic) GPUImageMovieWriter *movieWriter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;
+@property (strong, nonatomic) IBOutlet UIImageView* blinkyRedLight;
 
 - (void)configureCamera;
 - (void)stopCameraCapture;
@@ -29,6 +30,8 @@
 - (GPUImageFilter*)switchingFilter;
 - (BOOL)isRecording;
 - (void)awakeVideoCamera;
+- (void)orientVideoCameraOutputTo:(UIInterfaceOrientation)orientation;
+- (void)beginFlashingRecordButton;
 
 
 @end

@@ -12,11 +12,12 @@
 
 @implementation RecordingManager
 
-@synthesize movieWriter = _movieWriter, pipeline = _pipeline;
+@synthesize movieWriter = _movieWriter, pipeline = _pipeline, blinkyRedLight = _blinkyRedLight;
 
 - (void)configureCamera {
+    _blinkyRedLight.alpha = 0.0f;
     recording = NO;
-    videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset1280x720 cameraPosition:AVCaptureDevicePositionBack];
+    videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPresetHigh cameraPosition:AVCaptureDevicePositionBack];
     videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
     videoCamera.horizontallyMirrorFrontFacingCamera = NO;
     videoCamera.horizontallyMirrorRearFacingCamera = NO;
@@ -44,7 +45,19 @@
     if (_movieWriter) {
         _movieWriter = nil; //start fresh
     }
-    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:fileURL size:CGSizeMake(480, 640) fileType:AVFileTypeQuickTimeMovie outputSettings:nil];
+    
+    //Setup the CGSize based on the device and orientation. Since we nil the movieWriter when recording stops; and we force recording to stop at
+    //rotation or interruption, this should be a **safe** place to establish screen size.
+    CGSize naturalScreen = [[UIScreen mainScreen] applicationFrame].size;
+    BOOL inLandscape = UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+    CGSize rotatedScreen;
+    if (inLandscape) {
+        rotatedScreen = CGSizeMake(naturalScreen.height, naturalScreen.width);
+    }
+    else {
+        rotatedScreen = naturalScreen;
+    }
+    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:fileURL size:rotatedScreen fileType:AVFileTypeQuickTimeMovie outputSettings:nil];
     switchingFilter = [self switchingFilter];
     [switchingFilter addTarget:_movieWriter];
     if (videoCamera == nil) {
@@ -53,11 +66,13 @@
     videoCamera.audioEncodingTarget = _movieWriter;
     [_movieWriter startRecording];
     recording = YES;
+    [self beginFlashingRecordButton];
 
     
 }
 
 - (void)stopRecording {
+    [_blinkyRedLight stopAnimating];
     videoCamera.audioEncodingTarget = nil;
     [videoCamera pauseCameraCapture];
     [switchingFilter removeTarget:_movieWriter];
@@ -80,5 +95,48 @@
 - (void)awakeVideoCamera {
     [videoCamera startCameraCapture];
 }
+
+- (void)orientVideoCameraOutputTo:(UIInterfaceOrientation)orientation {
+    UIInterfaceOrientation outputOrientation;
+    switch (orientation) {
+        case UIInterfaceOrientationLandscapeLeft:
+            outputOrientation = UIInterfaceOrientationLandscapeRight;
+            break;
+            
+        case UIInterfaceOrientationLandscapeRight:
+            outputOrientation = UIInterfaceOrientationLandscapeLeft;
+            break;
+            
+        case UIInterfaceOrientationPortrait:
+            outputOrientation = UIInterfaceOrientationPortrait;
+            break;
+        
+        case UIInterfaceOrientationPortraitUpsideDown:
+            outputOrientation = UIInterfaceOrientationPortraitUpsideDown;
+            break;
+
+        default:
+            outputOrientation = UIInterfaceOrientationPortrait;
+            break;
+    }
+    
+    [videoCamera setOutputImageOrientation:outputOrientation];
+}
+
+- (void)beginFlashingRecordButton {
+    [UIView animateWithDuration:1.0
+                          delay:0.0
+                        options:UIViewAnimationOptionAutoreverse
+                     animations:^(void) {
+                         [_blinkyRedLight setAlpha:1.0];
+                     }
+     
+     
+                     completion:^(BOOL finished) {
+                         NSLog(@"cycle");
+                     }
+     ];
+}
+
 
 @end

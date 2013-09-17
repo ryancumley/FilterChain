@@ -8,9 +8,8 @@
 
 #import "MainViewController.h"
 
-//#define k_SlideLeftFrame CGRectMake(-320.0, 0.0, 320.0, 568.0)
-//#define k_SlideRightFrame CGRectMake(0.0, 0.0, 320.0, 568.0)
-#define k_filterBankFrame CGRectMake(0.0, 51.0, 320.0, 99.0)
+#define k_filterBankHeight 99.0f
+#define k_filterBankOffsetFromTop 51.0f
 
 @interface MainViewController ()
 
@@ -42,7 +41,8 @@
     [_switchingFilter addTarget:_previewLayer];
     
     //ClipManager Config
-    CGRect offScreen = CGRectMake(-self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+    clipCollectionIsVisible = NO;
+    CGRect offScreen = [self clipManagerFrameForOrientation:UIInterfaceOrientationPortrait];
     _clipManagerView.frame = offScreen;
     [self.view addSubview:_clipManagerView];
     
@@ -54,7 +54,7 @@
     
     //FilterBank Config
     _filterBank = [[FilterBank alloc] init];
-    _filterBank.collectionView.frame = k_filterBankFrame;
+    _filterBank.collectionView.frame = [self filterBankFrameForOrientation:UIInterfaceOrientationPortrait];
     [_controlBoxManager.view addSubview:_filterBank.collectionView];
     
     //ActiveFilterManager Config
@@ -67,8 +67,13 @@
 
 
 - (IBAction)navigateToClips:(id)sender {
-    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-    CGRect displayClips = CGRectMake(0.0, 0.0, appFrame.size.width, appFrame.size.height);
+    if (_recordingManager.isRecording) {
+        [_recordingManager stopRecording];
+    }
+    [_recordingManager stopCameraCapture];
+    
+    clipCollectionIsVisible = YES;
+    CGRect displayClips = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [UIView animateWithDuration:0.1
                      animations:^(void) {
                          _clipManagerView.frame = displayClips;
@@ -77,8 +82,10 @@
 }
 
 - (IBAction)navigateToCamera:(id)sender {
-     CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-     CGRect displayClips = CGRectMake(-appFrame.size.width, 0.0, appFrame.size.width, appFrame.size.height);
+    [_recordingManager awakeVideoCamera];
+    
+     clipCollectionIsVisible = NO;
+    CGRect displayClips = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
      [UIView animateWithDuration:0.1
                      animations:^(void) {
                          _clipManagerView.frame = displayClips;
@@ -104,6 +111,7 @@
 
 - (void)previewClipForUrl:(NSURL *)targetUrl {
     MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:targetUrl];
+    mpvc.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
     [self presentMoviePlayerViewControllerAnimated:mpvc];
 }
 
@@ -140,8 +148,56 @@
     return YES;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    //NSLog(@"orientation: %d",fromInterfaceOrientation);
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    //Camera capture is expensive, let's give it a break until we've finished the rotation
+    if (_recordingManager.isRecording) {
+        [_recordingManager stopRecording];
+    }
+    [_recordingManager stopCameraCapture];
+    
+    [_clipManagerView setFrame:[self clipManagerFrameForOrientation:toInterfaceOrientation]];
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [_recordingManager awakeVideoCamera];
+    
+    UIInterfaceOrientation endingOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    [_recordingManager orientVideoCameraOutputTo:endingOrientation];
+    
+    //update the filterBank
+    [_filterBank.collectionView setFrame:[self filterBankFrameForOrientation:endingOrientation]];
+    
+    //update the collectionShell
+    //[_clipManagerView setFrame:[self clipManagerFrameForOrientation:endingOrientation]];
+    
+}
+
+- (CGRect)filterBankFrameForOrientation:(UIInterfaceOrientation)orientation {
+    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        //Handle landscape orientation
+        filterBankFrame = CGRectMake(0.0, k_filterBankOffsetFromTop, appFrame.size.height, k_filterBankHeight);
+    }
+    else {
+        //Handle portrait orientation
+        filterBankFrame = CGRectMake(0.0, k_filterBankOffsetFromTop, appFrame.size.width, k_filterBankHeight);
+    }
+    return filterBankFrame;
+}
+
+- (CGRect)clipManagerFrameForOrientation:(UIInterfaceOrientation)orientation {
+    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+    int offsetModifier = clipCollectionIsVisible ? 0 : 1;
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        //Handle landscape orientation
+        collectionShellFrame = CGRectMake(-offsetModifier * appFrame.size.height, 0.0, appFrame.size.height, appFrame.size.width); //flip height and width
+    }
+    else {
+        //Handle portrait orientation
+        collectionShellFrame = CGRectMake(-offsetModifier * appFrame.size.width, 0.0, appFrame.size.width, appFrame.size.height); //flip height and width
+    }
+    return collectionShellFrame;
+}
+
 
 @end
