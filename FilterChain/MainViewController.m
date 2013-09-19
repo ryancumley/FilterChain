@@ -17,7 +17,7 @@
 
 @implementation MainViewController
 
-@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, toggleSwitch = _toggleSwitch;
+@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, toggleSwitch = _toggleSwitch, blinkyRedLight = _blinkyRedLight;
 @synthesize switchingFilter = _switchingFilter, pipeline = _pipeline;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,16 +33,16 @@
 {
     [super viewDidLoad];
     //View Config
+    _blinkyRedLight.userInteractionEnabled = NO; //allows user to press record (blinking view covers the button)
     
     //Camera config
     _switchingFilter = [[GPUImageFilter alloc] init];
     _recordingManager = [[RecordingManager alloc] init];
-    [_recordingManager configureCamera];
     [_switchingFilter addTarget:_previewLayer];
     
     //ClipManager Config
     clipCollectionIsVisible = NO;
-    CGRect offScreen = [self clipManagerFrameForOrientation:UIInterfaceOrientationPortrait];
+    CGRect offScreen = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     _clipManagerView.frame = offScreen;
     [self.view addSubview:_clipManagerView];
     
@@ -54,7 +54,7 @@
     
     //FilterBank Config
     _filterBank = [[FilterBank alloc] init];
-    _filterBank.collectionView.frame = [self filterBankFrameForOrientation:UIInterfaceOrientationPortrait];
+    _filterBank.collectionView.frame = [self filterBankFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [_controlBoxManager.view addSubview:_filterBank.collectionView];
     
     //ActiveFilterManager Config
@@ -69,6 +69,7 @@
 - (IBAction)navigateToClips:(id)sender {
     if (_recordingManager.isRecording) {
         [_recordingManager stopRecording];
+        [_clipManager refreshStoredClips];
     }
     [_recordingManager stopCameraCapture];
     
@@ -97,6 +98,8 @@
 - (IBAction)userPressedRecord:(UIButton *)sender {
     BOOL isRecording = [_recordingManager isRecording];
     if (isRecording) {
+        _blinkyRedLight.alpha = 1.0f;
+        _blinkyRedLight.userInteractionEnabled = YES; //enabling interaction of the glowing red view covering the button effectively prevents the user from pressing record again until we're ready to deal with a new recording.
         [_recordingManager stopRecording];
         [_clipManager refreshStoredClips];
     }
@@ -146,6 +149,12 @@
     
     //Pass the rotation down
     return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [_recordingManager configureCamera];
+    [_recordingManager orientVideoCameraOutputTo:[self interfaceOrientation]];
+    
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

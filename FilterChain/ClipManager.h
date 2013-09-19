@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ClipManager : UICollectionViewController
+@interface ClipManager  :  UICollectionViewController <UIAlertViewDelegate>
 {
     NSFileManager *fileManager;
     UISegmentedControl *activeClipSelection;
@@ -22,6 +22,7 @@
 - (void)generateThumbnails;
 - (void)clipActionInvoked;
 - (void)videoSaved:(NSString*)videoPath didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo;
+- (void)dismissAlert:(UIAlertView *)alertView;
 
 
 @end

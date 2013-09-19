@@ -89,10 +89,6 @@
     
     //TODO switch the nib Name based on type of hardware detected
     _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
-    //CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-    //[_mVC.view setFrame:appFrame];
-    //[_mVC.previewLayer setFrame:appFrame];
-    //[_mVC.clipManagerView setFrame:appFrame];
     self.window.rootViewController = _mVC;
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self.window makeKeyAndVisible];
@@ -103,6 +99,10 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    if (_mVC.recordingManager.isRecording) {
+        [_mVC.recordingManager stopRecording];
+        [_mVC.clipManager refreshStoredClips];
+    }
     [_mVC.recordingManager stopCameraCapture];
 }
 
@@ -127,6 +127,11 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    if (_mVC.recordingManager.isRecording) {
+        [_mVC.recordingManager stopRecording];
+    }
+    [_mVC.recordingManager stopCameraCapture];
+
 }
 
 - (void)saveContext

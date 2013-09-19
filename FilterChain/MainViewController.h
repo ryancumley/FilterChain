@@ -22,7 +22,7 @@
     BOOL clipCollectionIsVisible;
 }
 
-@property (strong, nonatomic) RecordingManager* recordingManager;
+@property (strong, nonatomic) IBOutlet RecordingManager* recordingManager;
 @property (strong, nonatomic) ClipManager* clipManager;
 @property (strong, nonatomic) FilterBank* filterBank;
 @property (strong, nonatomic) ActiveFilterManager* activeFilterManager;
@@ -31,6 +31,7 @@
 @property (strong, nonatomic) IBOutlet UISwitch* toggleSwitch;
 @property (strong, nonatomic) IBOutlet UIView* clipManagerView;
 @property (strong, nonatomic) IBOutlet UIView* collectionShell;
+@property (strong, nonatomic) IBOutlet UIView* blinkyRedLight;
 
 @property (strong, nonatomic) GPUImageFilter* switchingFilter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;

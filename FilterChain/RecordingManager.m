@@ -12,13 +12,12 @@
 
 @implementation RecordingManager
 
-@synthesize movieWriter = _movieWriter, pipeline = _pipeline, blinkyRedLight = _blinkyRedLight;
+@synthesize movieWriter = _movieWriter, pipeline = _pipeline;
 
 - (void)configureCamera {
-    _blinkyRedLight.alpha = 0.0f;
     recording = NO;
     videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPresetHigh cameraPosition:AVCaptureDevicePositionBack];
-    videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
+    videoCamera.outputImageOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     videoCamera.horizontallyMirrorFrontFacingCamera = NO;
     videoCamera.horizontallyMirrorRearFacingCamera = NO;
     
@@ -72,13 +71,16 @@
 }
 
 - (void)stopRecording {
-    [_blinkyRedLight stopAnimating];
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
     videoCamera.audioEncodingTarget = nil;
     [videoCamera pauseCameraCapture];
     [switchingFilter removeTarget:_movieWriter];
     [_movieWriter finishRecording];
     recording = NO;
     [videoCamera resumeCameraCapture];
+    mvc.blinkyRedLight.userInteractionEnabled = NO; //allow the user to press the button behind this UIImageView again.
+    mvc.blinkyRedLight.alpha = 0.0f;
 }
 
 - (GPUImageFilter*)switchingFilter {
@@ -124,16 +126,20 @@
 }
 
 - (void)beginFlashingRecordButton {
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
+    mvc.blinkyRedLight.alpha = 0.0;
     [UIView animateWithDuration:1.0
                           delay:0.0
-                        options:UIViewAnimationOptionAutoreverse
+                        options:UIViewAnimationOptionAutoreverse |
+                                UIViewAnimationOptionAllowUserInteraction |
+                                UIViewAnimationOptionRepeat
                      animations:^(void) {
-                         [_blinkyRedLight setAlpha:1.0];
+                         mvc.blinkyRedLight.alpha = 1.0;
                      }
      
      
                      completion:^(BOOL finished) {
-                         NSLog(@"cycle");
                      }
      ];
 }

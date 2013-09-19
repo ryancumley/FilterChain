@@ -103,12 +103,19 @@
     dispatch_after(startTime, dispatch_get_main_queue(), ^(void){
         if (selected == 0) {
             //Export the file!
-            [aux setSelectedSegmentIndex:-1];
             NSString *path = [targetUrl path];
             BOOL compatible = UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path);
             if (compatible) {
                 UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(videoSaved:didFinishSavingWithError:contextInfo:), nil);
+                UIAlertView* av = [[UIAlertView alloc] initWithTitle:@"Clip Sent to Camera Roll!"
+                                                             message:@"(It's also available when you sync to iTunes!)"
+                                                            delegate:nil
+                                                   cancelButtonTitle:nil
+                                                   otherButtonTitles:nil];
+                [av show];
+                [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:1.5];
             }
+            [aux setSelectedSegmentIndex:-1];
             
         }
         
@@ -123,14 +130,34 @@
             for(NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
                 [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
             }
+            
+            //push an alertView to confirm the delete
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Delete This Clip?" message:nil delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Delete!", nil];
+            [av show];
+            
             NSString *path = [targetUrl path];
             unlink([path UTF8String]); //??? This should delete it from Documents???
-            [aux setSelectedSegmentIndex:-1];
             [self refreshStoredClips];
+            [aux setSelectedSegmentIndex:-1];
         }
     });
     
 }
+
+-(void)dismissAlert:(UIAlertView *) alertView
+{
+    [alertView dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+/*
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+}
+
+- (void)alertViewCancel:(UIAlertView *)alertView {
+    
+}
+ */
 
 - (void)videoSaved:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     //Handle success with a sound later
