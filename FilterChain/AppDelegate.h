@@ -24,6 +24,7 @@
 
 - (void)saveContext;
 - (void)loadFiltersFromJSON;
+- (void)createDirectoryForThumbnails;
 - (NSURL *)applicationDocumentsDirectory;
 - (BOOL)alreadyExists:(NSString*)filterNamed inManagedObjectContext:(NSManagedObjectContext*)moc;
 - (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator;

@@ -77,6 +77,16 @@
     }
 }
 
+- (void)createDirectoryForThumbnails {
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Thumbnails"];
+    NSError* error;
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error];
+}
+
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -84,6 +94,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     [self loadFiltersFromJSON];
+    [self createDirectoryForThumbnails];
     self.window.backgroundColor = [UIColor whiteColor];
     
     

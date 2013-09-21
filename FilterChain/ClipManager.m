@@ -76,18 +76,18 @@
 
 - (void)generateThumbnails {
     //TODO skip thumbnail creation for clips we have already processed
+    if (!cachedThumbnails) {
+        cachedThumbnails = [[CachedThumbnails alloc] init];
+    }
     
-    //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs
+    
+    //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs. Our cached Thumbnails class stores the thumbnails in ~/documents/Thumbnails to avoid expensive use of MPMoviePlayerController in creating the thumbs every time.
     _storedThumbnails = nil;
     _storedThumbnails = [NSMutableArray arrayWithCapacity:_storedClips.count];
     for (NSURL *clip in _storedClips) {
-        
-        MPMoviePlayerController *mpc = [[MPMoviePlayerController alloc] initWithContentURL:clip];
-        mpc.shouldAutoplay = NO;
-        UIImage *thumb = [mpc thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+        UIImage* thumb = [cachedThumbnails thumbnailForURL:clip];
         [_storedThumbnails addObject:thumb];
     }
-    
 }
 
 - (void)clipActionInvoked {
@@ -96,7 +96,7 @@
     NSInteger selectedRow = selectedPath.row;
     Cell *cell = (Cell*)[self.collectionView cellForItemAtIndexPath:selectedPath];
     UISegmentedControl *aux = cell.auxControl;
-    NSURL *targetUrl = [_storedClips objectAtIndex:selectedRow];
+    targetUrl = [_storedClips objectAtIndex:selectedRow];
     
     double delayToBegin= 0.2;
     dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, delayToBegin* NSEC_PER_SEC);
@@ -107,13 +107,6 @@
             BOOL compatible = UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path);
             if (compatible) {
                 UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(videoSaved:didFinishSavingWithError:contextInfo:), nil);
-                UIAlertView* av = [[UIAlertView alloc] initWithTitle:@"Clip Sent to Camera Roll!"
-                                                             message:@"(It's also available when you sync to iTunes!)"
-                                                            delegate:nil
-                                                   cancelButtonTitle:nil
-                                                   otherButtonTitles:nil];
-                [av show];
-                [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:1.5];
             }
             [aux setSelectedSegmentIndex:-1];
             
@@ -134,10 +127,7 @@
             //push an alertView to confirm the delete
             UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Delete This Clip?" message:nil delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Delete!", nil];
             [av show];
-            
-            NSString *path = [targetUrl path];
-            unlink([path UTF8String]); //??? This should delete it from Documents???
-            [self refreshStoredClips];
+ 
             [aux setSelectedSegmentIndex:-1];
         }
     });
@@ -149,19 +139,29 @@
     [alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
 
-/*
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+    if (buttonIndex == 1) { //User selected "Delete"
+        NSString *path = [targetUrl path];
+        unlink([path UTF8String]); //This should delete it from Documents
+        [self refreshStoredClips];
+    }
 }
 
-- (void)alertViewCancel:(UIAlertView *)alertView {
+/*- (void)alertViewCancel:(UIAlertView *)alertView {
     
-}
- */
+    NSLog(@"cancel");
+}*/
 
 - (void)videoSaved:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    //Handle success with a sound later
-    NSLog(@"saved a Video to the CameraRoll! : %@",videoPath);
+    
+    UIAlertView* av = [[UIAlertView alloc] initWithTitle:@"Clip Sent to Camera Roll!"
+                                                 message:@"(It's also available when you sync to iTunes)"
+                                                delegate:nil
+                                       cancelButtonTitle:nil
+                                       otherButtonTitles:nil];
+    [av show];
+    [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:1.8];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {

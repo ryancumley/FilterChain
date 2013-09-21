@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CachedThumbnails.h"
 
 @interface ClipManager  :  UICollectionViewController <UIAlertViewDelegate>
 {
     NSFileManager *fileManager;
     UISegmentedControl *activeClipSelection;
+    NSURL* targetUrl;
+    CachedThumbnails* cachedThumbnails;
 }
 
 @property (strong, nonatomic) NSMutableArray *storedClips; //an arry of NSURl objects fetched from the user's Documents folder
