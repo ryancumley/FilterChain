@@ -15,7 +15,7 @@
 #define k_leftMargin 10.0
 #define k_topMargin 10.0
 
-#define k_maxActive 8
+#define k_maxActive 6
 
 @implementation ActiveFilterManager
 
@@ -153,8 +153,8 @@
 }
 
 - (CGRect)frameForPosition:(int)position {
-    float origin_Y = k_topMargin + ((position - 1) * (k_h + k_topMargin));
-    CGRect returnRect = CGRectMake(k_leftMargin, origin_Y, k_w, k_h);
+    float origin_X = k_leftMargin + ((position - 1) * (k_h + k_leftMargin));
+    CGRect returnRect = CGRectMake(origin_X, k_topMargin, k_w, k_h);
     return returnRect;
 }
 

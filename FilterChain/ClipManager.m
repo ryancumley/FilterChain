@@ -75,7 +75,6 @@
 }
 
 - (void)generateThumbnails {
-    //TODO skip thumbnail creation for clips we have already processed
     if (!cachedThumbnails) {
         cachedThumbnails = [[CachedThumbnails alloc] init];
     }
@@ -142,6 +141,10 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) { //User selected "Delete"
+        if (!cachedThumbnails) {
+            cachedThumbnails = [[CachedThumbnails alloc] init];
+            }
+        [cachedThumbnails deleteThumbnailForURL:targetUrl];
         NSString *path = [targetUrl path];
         unlink([path UTF8String]); //This should delete it from Documents
         [self refreshStoredClips];

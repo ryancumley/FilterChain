@@ -90,7 +90,8 @@
     newActiveFilter.layer.borderColor = [UIColor orangeColor].CGColor;
     newActiveFilter.layer.borderWidth = 2.0;
     float xOffset = cell.frame.origin.x - self.collectionView.contentOffset.x;
-    newActiveFilter.frame = CGRectMake(xOffset, 500.0, 44.0, 44.0);
+    float yOffset = [[UIScreen mainScreen] bounds].size.height - 100.0;
+    newActiveFilter.frame = CGRectMake(xOffset, yOffset, 44.0, 44.0); //yOffset will be too deep in Landscape. address this sometime, maybe.
     newActiveFilter.image = newImage;
     newActiveFilter.userInteractionEnabled = YES;
     //Add targeting behavior

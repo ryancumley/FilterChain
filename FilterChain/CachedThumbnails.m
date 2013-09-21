@@ -20,7 +20,6 @@
     
     if ([self thumbnailAlreadyExistsForPath:thumbPath]) {
         //fetch the stored image
-        NSLog(@"using saved image: %@",thumbPath);
         storedThumbUrl = [NSURL fileURLWithPath:thumbPath];
         NSData* fetchedJPG = [NSData dataWithContentsOfURL:storedThumbUrl]; 
         fetchedImage = [UIImage imageWithData:fetchedJPG];
@@ -36,6 +35,10 @@
 }
 
 - (void)deleteThumbnailForURL:(NSURL*)targetUrl {
+    NSString* thumbPath= [self thumbnailPathFromVideoUrl:targetUrl];
+    fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    BOOL success = [fileManager removeItemAtPath:thumbPath error:&error];
     
 }
 
@@ -53,13 +56,6 @@
     
     fileManager = [NSFileManager defaultManager];
     BOOL success = [fileManager createFileAtPath:path contents:jpgRepresentation attributes:nil];
-    if (success) {
-        NSLog(@"stored new image! %@",path);
-    }
-    else {
-        NSLog(@"failed to store new thumbnail");
-    }
-    
     return thumb;
 }
 

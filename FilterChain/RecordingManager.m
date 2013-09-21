@@ -32,6 +32,10 @@
 }
 
 - (void)startNewRecording {
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
+    [mvc.controlBoxManager.view setAlpha:0.6];
+    
     //Generate a unique URL to write this movie to within the app's Documents folder. Should be accessible to iTunes as well.
     NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString] ;
     NSString *pathString = [@"Documents/" stringByAppendingString:guid];
@@ -73,6 +77,7 @@
 - (void)stopRecording {
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
+    [mvc.controlBoxManager.view setAlpha:0.9];
     videoCamera.audioEncodingTarget = nil;
     [videoCamera pauseCameraCapture];
     [switchingFilter removeTarget:_movieWriter];
@@ -129,7 +134,7 @@
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
     mvc.blinkyRedLight.alpha = 0.0;
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:0.5
                           delay:0.0
                         options:UIViewAnimationOptionAutoreverse |
                                 UIViewAnimationOptionAllowUserInteraction |

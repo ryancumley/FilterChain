@@ -9,7 +9,7 @@
               {
               "name":"Edges",
               "imageName":"Edges.jpg",
-              "filterDesignator":"GPUImageCannyEdgeDetectionFilter"
+              "filterDesignator":"GPUImageSobelEdgeDetectionFilter"
               },
 
               {
@@ -30,6 +30,18 @@
               "name":"Sepia",
               "imageName":"Sepia.jpg",
               "filterDesignator":"GPUImageSepiaFilter"
+              },
+              
+              {
+              "name":"Sketch",
+              "imageName":"Sepia.jpg",
+              "filterDesignator":"GPUImageSketchFilter"
+              },
+              
+                           {
+              "name":"Halftone",
+              "imageName":"Sepia.jpg",
+              "filterDesignator":"GPUImageHalftoneFilter"
               }
               
              

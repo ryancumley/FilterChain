@@ -34,6 +34,7 @@
     [super viewDidLoad];
     //View Config
     _blinkyRedLight.userInteractionEnabled = NO; //allows user to press record (blinking view covers the button)
+    [_controlBoxManager.view setAlpha:0.9];
     
     //Camera config
     _switchingFilter = [[GPUImageFilter alloc] init];
