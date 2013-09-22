@@ -18,7 +18,7 @@
 
 @implementation MainViewController
 
-@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, toggleSwitch = _toggleSwitch, blinkyRedLight = _blinkyRedLight;
+@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, toggleSwitch = _toggleSwitch, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel;
 @synthesize switchingFilter = _switchingFilter, pipeline = _pipeline;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,6 +36,7 @@
     //View Config
     _blinkyRedLight.userInteractionEnabled = NO; //allows user to press record (blinking view covers the button)
     [_controlBoxManager.view setAlpha:0.9];
+    [self hideRecordingNotifier];
     
     //Camera config
     _switchingFilter = [[GPUImageFilter alloc] init];
@@ -47,7 +48,6 @@
     CGRect offScreen = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     _clipManagerView.frame = offScreen;
     [self.view addSubview:_clipManagerView];
-    
     _clipManager = [[ClipManager alloc] init];
     _clipManager.collectionView.frame = _collectionShell.frame;
     _clipManager.collectionView.backgroundColor = [UIColor clearColor];
@@ -65,6 +65,10 @@
     
     
     
+}
+
+- (void)hideRecordingNotifier {
+    [_recordingNotifier setHidden:YES];
 }
 
 
@@ -112,13 +116,26 @@
 }
 
 - (IBAction)filterKillSwitchPressed:(UISwitch *)sender {
-    [_activeFilterManager updatePipeline]; 
+    [_activeFilterManager updatePipeline];
 }
 
 - (void)previewClipForUrl:(NSURL *)targetUrl {
     MPMoviePlayerViewController *mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:targetUrl];
     mpvc.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotatedDuringPlayback) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self presentMoviePlayerViewControllerAnimated:mpvc];
+}
+
+- (void)playbackFinished {
+    //stop observing, we've heard all that we need now
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+}
+
+- (void)rotatedDuringPlayback {
+    orientationChangedDuringPlayback = YES;
 }
 
 - (void)awakeVideoCamera {
@@ -126,7 +143,6 @@
         return;
     }
     [_recordingManager awakeVideoCamera];
-    
 }
 
 - (void)refreshPipelineWithFilters:(NSArray *)filters {
@@ -139,8 +155,6 @@
     
 }
 
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -150,7 +164,10 @@
 - (BOOL)shouldAutorotate {
     [super shouldAutorotate];
     
-    //Pass the rotation down
+    //Block if a recording is in progress, otherwise allow it.
+    if (_recordingManager.isRecording) {
+        return NO;
+    }
     return YES;
 }
 
@@ -161,27 +178,31 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     //Camera capture is expensive, let's give it a break until we've finished the rotation
     if (_recordingManager.isRecording) {
         [_recordingManager stopRecording];
     }
     [_recordingManager stopCameraCapture];
-    
     [_clipManagerView setFrame:[self clipManagerFrameForOrientation:toInterfaceOrientation]];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [_recordingManager awakeVideoCamera];
-    
     UIInterfaceOrientation endingOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     [_recordingManager orientVideoCameraOutputTo:endingOrientation];
     
     //update the filterBank
     [_filterBank.collectionView setFrame:[self filterBankFrameForOrientation:endingOrientation]];
-    
-    //update the collectionShell
-    //[_clipManagerView setFrame:[self clipManagerFrameForOrientation:endingOrientation]];
-    
+}
+
+- (void)viewWillLayoutSubviews {
+    if (orientationChangedDuringPlayback) {
+        //We just rotated while a MPMoviePlayerController covered the screen. Tell mVC to handle the rotation so it stays in sync when the user dismisses the clip
+        [UIViewController attemptRotationToDeviceOrientation];
+        [self navigateToClips:nil];
+        orientationChangedDuringPlayback = NO; //reset the flag
+    }
 }
 
 - (CGRect)filterBankFrameForOrientation:(UIInterfaceOrientation)orientation {

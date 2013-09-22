@@ -11,7 +11,9 @@
                 <outlet property="clipManagerView" destination="296" id="420"/>
                 <outlet property="collectionShell" destination="314" id="426"/>
                 <outlet property="controlBoxManager" destination="11" id="29"/>
+                <outlet property="notifierLabel" destination="J89-9a-zX6" id="Rxd-MX-e4O"/>
                 <outlet property="previewLayer" destination="3" id="10"/>
+                <outlet property="recordingNotifier" destination="c1J-JT-Uc3" id="4o5-Gs-5RX"/>
                 <outlet property="toggleSwitch" destination="56" id="256"/>
                 <outlet property="view" destination="415" id="416"/>
             </connections>
@@ -28,11 +30,7 @@
                 <outlet property="view" destination="12" id="27"/>
             </connections>
         </viewController>
-        <tapGestureRecognizer id="157" userLabel="Tap Control Toggle">
-            <connections>
-                <action selector="tapControlToggle:" destination="-1" id="159"/>
-            </connections>
-        </tapGestureRecognizer>
+        <tapGestureRecognizer id="157" userLabel="Tap Control Toggle"/>
         <view contentMode="scaleToFill" id="296" userLabel="ClipManagerView">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -106,7 +104,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="previewLayer" customClass="GPUImageView">
+                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3" userLabel="previewLayer" customClass="GPUImageView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -179,11 +177,31 @@
                                         <constraint firstItem="59" firstAttribute="leading" secondItem="453" secondAttribute="leading" id="494"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="c1J-JT-Uc3" userLabel="Recording Notifier">
+                                    <rect key="frame" x="60" y="259" width="200" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J89-9a-zX6">
+                                            <rect key="frame" x="10" y="5" width="180" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                            <color key="textColor" red="0.76862745098039209" green="0.80000000000000004" blue="0.81568627450980391" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.14509803921568626" green="0.17254901960784313" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="SrO-3i-46K"/>
+                                        <constraint firstAttribute="width" constant="200" id="pCa-eM-N4d"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="12" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="40"/>
                                 <constraint firstItem="12" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="42"/>
                                 <constraint firstAttribute="bottom" secondItem="12" secondAttribute="bottom" id="433"/>
+                                <constraint firstAttribute="centerX" secondItem="c1J-JT-Uc3" secondAttribute="centerX" id="E36-Hi-4bB"/>
+                                <constraint firstAttribute="centerY" secondItem="c1J-JT-Uc3" secondAttribute="centerY" id="zc6-yM-5iH"/>
                             </constraints>
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>

@@ -91,7 +91,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[[UIApplication sharedApplication] setStatusBarHidden:YES];
+    //NSLog(@"fontFamilies: %@",[UIFont familyNames]);
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self loadFiltersFromJSON];
     [self createDirectoryForThumbnails];
@@ -99,7 +99,6 @@
     _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
     self.window.rootViewController = _mVC;
     [self.window makeKeyAndVisible];
-    //[[UIApplication sharedApplication] setStatusBarHidden:YES];
     return YES;
 }
 

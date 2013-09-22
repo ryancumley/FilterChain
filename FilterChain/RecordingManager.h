@@ -32,6 +32,8 @@
 - (void)awakeVideoCamera;
 - (void)orientVideoCameraOutputTo:(UIInterfaceOrientation)orientation;
 - (void)beginFlashingRecordButton;
+- (void)hideRecordingNotifier;
+
 
 
 @end

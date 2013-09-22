@@ -20,6 +20,7 @@
     CGRect filterBankFrame;
     CGRect collectionShellFrame;
     BOOL clipCollectionIsVisible;
+    BOOL orientationChangedDuringPlayback;
 }
 
 @property (strong, nonatomic) IBOutlet RecordingManager* recordingManager;
@@ -32,6 +33,8 @@
 @property (strong, nonatomic) IBOutlet UIView* clipManagerView;
 @property (strong, nonatomic) IBOutlet UIView* collectionShell;
 @property (strong, nonatomic) IBOutlet UIView* blinkyRedLight;
+@property (strong, nonatomic) IBOutlet UIView* recordingNotifier;
+@property (strong, nonatomic) IBOutlet UILabel* notifierLabel;
 
 @property (strong, nonatomic) GPUImageFilter* switchingFilter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;
@@ -45,6 +48,10 @@
 - (void)previewClipForUrl:(NSURL *)targetUrl;
 - (void)awakeVideoCamera;
 - (void)refreshPipelineWithFilters:(NSArray*)filters;
+- (void)hideRecordingNotifier;
+
+- (void)playbackFinished;
+- (void)rotatedDuringPlayback;
 
 - (CGRect)filterBankFrameForOrientation:(UIInterfaceOrientation)orientation;
 - (CGRect)clipManagerFrameForOrientation:(UIInterfaceOrientation)orientation;

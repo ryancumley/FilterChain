@@ -28,6 +28,7 @@
 - (void)dismissAlert:(UIAlertView *)alertView;
 - (void)selectCellAtIndexPath:(NSIndexPath*)path;
 - (void)deSelectCellAtIndexPath:(NSIndexPath*)path;
+- (void)attemptRotation;
 
 
 @end

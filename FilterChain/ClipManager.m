@@ -209,6 +209,10 @@
     
 }
 
+- (void)attemptRotation {
+    [UIViewController attemptRotationToDeviceOrientation];
+}
+
 
 - (void)viewDidLoad
 {

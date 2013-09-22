@@ -30,7 +30,8 @@
         [_label setTextAlignment:NSTextAlignmentCenter];
         _label.numberOfLines = 0;
         _label.lineBreakMode = NSLineBreakByWordWrapping;
-        _label.textColor = [UIColor whiteColor];
+        _label.textColor = [UIColor colorWithRed:196.0f/255.0f green:204.0f/255.0f blue:208.0f/255.0f alpha:1.0];
+        _label.font = [UIFont fontWithName:@"Menlo Regular" size:18.0];
         [self addSubview:_image];
         [self addSubview:_label];
     }

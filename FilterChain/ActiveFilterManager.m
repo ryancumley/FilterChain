@@ -9,6 +9,7 @@
 #import "ActiveFilterManager.h"
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "FilterBank.h"
 
 #define k_w 40.0
 #define k_h 40.0
@@ -16,6 +17,13 @@
 #define k_topMargin 10.0
 
 #define k_maxActive 6
+
+@interface ActiveFilterManager ()
+
+- (void)retireFilterNamed:(NSString*)name;
+
+@end
+
 
 @implementation ActiveFilterManager
 
@@ -127,6 +135,8 @@
     //remove the target filter
     UIView* target = tap.view;
     int position = target.tag;
+    NSString* name = [activeFilters objectAtIndex:position -1];
+    [self retireFilterNamed:name];
     [activeFilters removeObjectAtIndex:position - 1];
     
     //animate the surviving filters into position
@@ -150,6 +160,26 @@
     
     //update the filter pipeline
     [self updatePipeline];
+}
+
+- (void)retireFilterNamed:(NSString *)name {
+    //retrieve a filter instance of Filter and pass it to mVC.filterBank to place it back in service
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext* moc = [delegate managedObjectContext];
+    NSEntityDescription* description = [NSEntityDescription entityForName:@"Filter" inManagedObjectContext:moc];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name == %@",name];
+    NSFetchRequest* request = [[NSFetchRequest alloc] init];
+    [request setEntity:description];
+    [request setPredicate:predicate];
+    NSError *error;
+    NSArray *fetch = [moc executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@",error.localizedDescription);
+    }
+    Filter* filter = (Filter*)[fetch objectAtIndex:0]; //Assuming Filter contains no duplicates, fetch.count will always = 1
+    MainViewController* mvc = (MainViewController*)delegate.window.rootViewController;
+    [mvc.filterBank retireFilterFromActive:filter];
+    
 }
 
 - (CGRect)frameForPosition:(int)position {
