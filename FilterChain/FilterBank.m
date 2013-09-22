@@ -57,13 +57,6 @@
     for (Filter* filter in _excludedFilters) {
         [_displayFilters removeObjectIdenticalTo:filter];
     }
-    [self reportArrays];
-}
-
-- (void)reportArrays {
-    NSLog(@"enabledFilters: %@",_enabledFilters.description);
-    NSLog(@"excludedFilters: %@",_excludedFilters.description);
-    NSLog(@"displayFilters: %@",_displayFilters);
 }
 
 - (NSMutableArray*)excludedFilters {
@@ -76,6 +69,20 @@
 - (void)retireFilterFromActive:(id)filter {
     [_excludedFilters removeObjectIdenticalTo:filter];
     [self refreshDisplayFilters];
+    
+    //find the index of our desired filter
+    int index = 0;
+    BOOL found = NO;
+    do {
+        if ([_displayFilters objectAtIndex:index] == filter) {
+            found = YES;
+            index -= 1; //otherwise ending state will be incremented too far
+        }
+        index += 1;
+    } while (!found);
+    
+    NSIndexPath* insertionPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObjects:insertionPath, nil]];
     [self.collectionView reloadData];
 }
 
@@ -119,10 +126,7 @@
     //remove this filter from the filterBank's data source
     [[self excludedFilters] addObject:[_displayFilters objectAtIndex:indexPath.row]];
     [self refreshDisplayFilters];
-    [self.collectionView reloadData];
-    
-    
-    //update the filterBank
+    [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObjects:(NSIndexPath*)indexPath, nil]];
 }
 
 - (void)activateFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(BankCell *)cell {
