@@ -26,6 +26,8 @@
 - (void)clipActionInvoked;
 - (void)videoSaved:(NSString*)videoPath didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo;
 - (void)dismissAlert:(UIAlertView *)alertView;
+- (void)selectCellAtIndexPath:(NSIndexPath*)path;
+- (void)deSelectCellAtIndexPath:(NSIndexPath*)path;
 
 
 @end

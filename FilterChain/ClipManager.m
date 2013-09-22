@@ -12,6 +12,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #define kCellID @"cellID"
+#define k_layoutItemSize CGSizeMake(160.0, 180.0)
 
 @interface ClipManager ()
 
@@ -34,9 +35,11 @@
     self = [super init];
     if (self) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.itemSize = CGSizeMake(150.0, 180.0);
+        flowLayout.itemSize = k_layoutItemSize;
+        flowLayout.minimumInteritemSpacing = 0;
         UICollectionView *view = [[UICollectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320, 493) collectionViewLayout:flowLayout];
         self.collectionView = view;
+        self.collectionView.allowsMultipleSelection = NO;
         [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
     }
     return self;
@@ -57,11 +60,14 @@
 }
 
 -(NSArray*)contentsOfDocuments {
+    //fetch the stored clips
     fileManager = [[NSFileManager alloc] init];
     NSString *documentsFolder = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
     NSURL *documentsPath = [NSURL fileURLWithPath:documentsFolder isDirectory:YES];
     NSError *error;
     NSArray *fetchedArray = [fileManager contentsOfDirectoryAtURL:documentsPath includingPropertiesForKeys:[NSArray arrayWithObject:NSURLCreationDateKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
+    
+    //gather m4V files only
     NSMutableArray *moviesOnly = [[NSMutableArray alloc] init];
     for (NSURL *link in fetchedArray) {
         NSString* type = [link pathExtension];
@@ -69,6 +75,14 @@
             [moviesOnly addObject:link];
         }
     }
+    
+    //Order by NSURLCreationDateKey
+    [moviesOnly sortUsingComparator:^NSComparisonResult(NSURL* a, NSURL* b){
+        NSDate* a1 = [[a resourceValuesForKeys:[NSArray arrayWithObject:NSURLCreationDateKey] error:nil] objectForKey:NSURLCreationDateKey];
+        NSDate* b1 = [[b resourceValuesForKeys:[NSArray arrayWithObject:NSURLCreationDateKey] error:nil] objectForKey:NSURLCreationDateKey];
+        return [a1 compare:b1];
+        }
+     ];
     
     return moviesOnly;
     
@@ -78,8 +92,6 @@
     if (!cachedThumbnails) {
         cachedThumbnails = [[CachedThumbnails alloc] init];
     }
-    
-    
     //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs. Our cached Thumbnails class stores the thumbnails in ~/documents/Thumbnails to avoid expensive use of MPMoviePlayerController in creating the thumbs every time.
     _storedThumbnails = nil;
     _storedThumbnails = [NSMutableArray arrayWithCapacity:_storedClips.count];
@@ -108,6 +120,7 @@
                 UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(videoSaved:didFinishSavingWithError:contextInfo:), nil);
             }
             [aux setSelectedSegmentIndex:-1];
+            [self deSelectCellAtIndexPath:selectedPath];
             
         }
         
@@ -116,28 +129,24 @@
             MainViewController *mvc = (MainViewController*)appDelegate.mVC;
             [mvc previewClipForUrl:targetUrl];
             [aux setSelectedSegmentIndex:-1];
+            [self selectCellAtIndexPath:selectedPath];
         }
         
         else if (selected == 2) { //Trash the file!
-            for(NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
-                [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
-            }
-            
             //push an alertView to confirm the delete
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Delete This Clip?" message:nil delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Delete!", nil];
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Delete This Clip?" message:nil delegate:self cancelButtonTitle:@"Nevermind" otherButtonTitles:@"Delete", nil];
             [av show];
- 
+            [self selectCellAtIndexPath:selectedPath];
             [aux setSelectedSegmentIndex:-1];
         }
     });
     
 }
 
--(void)dismissAlert:(UIAlertView *) alertView
+- (void)dismissAlert:(UIAlertView *) alertView
 {
     [alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
-
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) { //User selected "Delete"
@@ -150,11 +159,6 @@
         [self refreshStoredClips];
     }
 }
-
-/*- (void)alertViewCancel:(UIAlertView *)alertView {
-    
-    NSLog(@"cancel");
-}*/
 
 - (void)videoSaved:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     
@@ -181,16 +185,25 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
-    activeClipSelection = selectedCell.auxControl;
-    [selectedCell.auxControl setSelectedSegmentIndex:-1];
-    [selectedCell.auxControl setHidden:NO];
-    selectedCell.backingView.backgroundColor = [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0f];
-    
+    [self selectCellAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [self deSelectCellAtIndexPath:indexPath];
+}
+
+
+- (void)selectCellAtIndexPath:(NSIndexPath*)path {
+    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:path];
+    activeClipSelection = selectedCell.auxControl;
+    [selectedCell.auxControl setSelectedSegmentIndex:-1];
+    [selectedCell.auxControl setHidden:NO];
+    selectedCell.backingView.backgroundColor = [UIColor colorWithRed:30.0f/255.0f green:36.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+    
+}
+
+- (void)deSelectCellAtIndexPath:(NSIndexPath*)path {
+    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:path];
     selectedCell.backingView.backgroundColor = [UIColor clearColor];
     [selectedCell.auxControl setHidden:YES];
     

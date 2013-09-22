@@ -10,6 +10,7 @@
 
 #define k_filterBankHeight 99.0f
 #define k_filterBankOffsetFromTop 51.0f
+#define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
 
 @interface MainViewController ()
 
@@ -57,6 +58,7 @@
     _filterBank = [[FilterBank alloc] init];
     _filterBank.collectionView.frame = [self filterBankFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [_controlBoxManager.view addSubview:_filterBank.collectionView];
+    [_filterBank.collectionView setBackgroundColor:k_filterBankBackgroundColor];
     
     //ActiveFilterManager Config
     _activeFilterManager = [[ActiveFilterManager alloc] init];
@@ -183,8 +185,8 @@
 }
 
 - (CGRect)filterBankFrameForOrientation:(UIInterfaceOrientation)orientation {
-    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-    if (UIInterfaceOrientationIsLandscape(orientation)) {
+    CGRect appFrame = [[UIScreen mainScreen] bounds];
+    if (UIInterfaceOrientationIsLandscape(orientation)) {//using bounds here instead of applicationFrame for iOS7 compatibility
         //Handle landscape orientation
         filterBankFrame = CGRectMake(0.0, k_filterBankOffsetFromTop, appFrame.size.height, k_filterBankHeight);
     }
@@ -196,7 +198,7 @@
 }
 
 - (CGRect)clipManagerFrameForOrientation:(UIInterfaceOrientation)orientation {
-    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
+    CGRect appFrame = [[UIScreen mainScreen] bounds]; //using bounds here instead of applicationFrame for iOS7 compatibility
     int offsetModifier = clipCollectionIsVisible ? 0 : 1;
     if (UIInterfaceOrientationIsLandscape(orientation)) {
         //Handle landscape orientation
@@ -208,6 +210,13 @@
     }
     return collectionShellFrame;
 }
+
+/*
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+ */
 
 
 @end

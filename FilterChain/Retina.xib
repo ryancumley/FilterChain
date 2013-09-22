@@ -40,12 +40,20 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="314" userLabel="Collection Shell">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="515"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.19215686274509802" green="0.22352941176470587" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="320" userLabel="Toolbar Shell">
                     <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8T-sZ-ZII" userLabel="Top Line">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.25098039215686274" green="0.27843137254901962" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="5bX-fG-Wdw"/>
+                            </constraints>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="171">
                             <rect key="frame" x="260" y="5" width="40" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -67,15 +75,18 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.5647059083" green="0.69019609689999994" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.19215686274509802" green="0.22352941176470587" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="365"/>
                         <constraint firstItem="171" firstAttribute="centerY" secondItem="320" secondAttribute="centerY" id="372"/>
                         <constraint firstAttribute="trailing" secondItem="171" secondAttribute="trailing" constant="20" id="373"/>
+                        <constraint firstAttribute="trailing" secondItem="R8T-sZ-ZII" secondAttribute="trailing" id="TrN-LN-o2J"/>
+                        <constraint firstItem="R8T-sZ-ZII" firstAttribute="leading" secondItem="320" secondAttribute="leading" id="aBg-hA-2o8"/>
+                        <constraint firstItem="R8T-sZ-ZII" firstAttribute="top" secondItem="320" secondAttribute="top" id="cdV-74-wqT"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.19215686274509802" green="0.22352941176470587" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="320" secondAttribute="trailing" id="330"/>
                 <constraint firstItem="320" firstAttribute="leading" secondItem="296" secondAttribute="leading" id="332"/>
@@ -152,7 +163,7 @@
                                             </accessibility>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.19215686269999999" green="0.22352941179999999" blue="0.28627450980000002" alpha="0.5" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="160" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="5" id="233"/>
@@ -169,7 +180,6 @@
                                     </constraints>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="12" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="40"/>
                                 <constraint firstItem="12" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="42"/>

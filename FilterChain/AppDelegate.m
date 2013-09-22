@@ -91,18 +91,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //[[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     [self loadFiltersFromJSON];
     [self createDirectoryForThumbnails];
-    self.window.backgroundColor = [UIColor whiteColor];
     
-    
-    //TODO switch the nib Name based on type of hardware detected
     _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
     self.window.rootViewController = _mVC;
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self.window makeKeyAndVisible];
+    //[[UIApplication sharedApplication] setStatusBarHidden:YES];
     return YES;
 }
 

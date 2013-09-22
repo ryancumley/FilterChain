@@ -38,7 +38,7 @@
     NSString* thumbPath= [self thumbnailPathFromVideoUrl:targetUrl];
     fileManager = [NSFileManager defaultManager];
     NSError *error;
-    BOOL success = [fileManager removeItemAtPath:thumbPath error:&error];
+    [fileManager removeItemAtPath:thumbPath error:&error];
     
 }
 
@@ -55,7 +55,7 @@
     NSData* jpgRepresentation = UIImageJPEGRepresentation(thumb, 1.0f);
     
     fileManager = [NSFileManager defaultManager];
-    BOOL success = [fileManager createFileAtPath:path contents:jpgRepresentation attributes:nil];
+    [fileManager createFileAtPath:path contents:jpgRepresentation attributes:nil];
     return thumb;
 }
 

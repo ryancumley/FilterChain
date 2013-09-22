@@ -9,7 +9,8 @@
 #import "Cell.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define k_backingViewFrame CGRectMake(0.0, 0.0, 150.0, 150.0)
+#define k_backingViewFrame CGRectMake(0.0, 0.0, 160.0, 150.0)
+//TODO decide if I care about the magic numbers in this short class to define them properly
 
 @implementation Cell
 
@@ -24,16 +25,18 @@
         //prepare backing views
         _backingView = [[UIView alloc] initWithFrame:k_backingViewFrame];
         _backingView.backgroundColor = [UIColor clearColor];
+        _backingView.layer.cornerRadius = 8.0;
+        _backingView.layer.masksToBounds = YES;
         
         
         //prepare foreground elements
-        _image = [[UIImageView alloc] initWithFrame:CGRectMake(5.0, 5.0, 140.0, 140.0)];
+        _image = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 6.0, 144.0, 144.0)];
         _image.layer.cornerRadius = 8.0;
         _image.layer.masksToBounds = YES;
-        _image.layer.borderColor = [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0f].CGColor;
+        _image.layer.borderColor = [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0].CGColor;
         _image.layer.borderWidth = 2.0;
-        _auxControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"export", @"play", @"trash", nil]];
-        _auxControl.frame = CGRectMake(5.0, 145.0, 140.0, 30.0);
+        _auxControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"outgoing.png"], [UIImage imageNamed:@"play.png"], [UIImage imageNamed:@"bin.png"], nil]];
+        _auxControl.frame = CGRectMake(0.0, 150.0, 160.0, 30.0);
         _auxControl.segmentedControlStyle = UISegmentedControlStyleBar;
         
         //add it all in
