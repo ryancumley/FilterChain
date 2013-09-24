@@ -21,12 +21,19 @@
 
 @property (strong, nonatomic) MainViewController* mVC;
 
-
-- (void)saveContext;
-- (void)loadFiltersFromJSON;
+//Initialization, Configuration and View Lifecycle
 - (void)createDirectoryForThumbnails;
-- (NSURL *)applicationDocumentsDirectory;
+
+//Load From CoreData at Launch
+- (void)loadFiltersFromJSON;
 - (BOOL)alreadyExists:(NSString*)filterNamed inManagedObjectContext:(NSManagedObjectContext*)moc;
 - (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator;
+
+//Core Data Stack
+- (void)saveContext;
+
+//Convenience Methods
+
+
 
 @end

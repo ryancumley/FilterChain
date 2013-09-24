@@ -1,5 +1,5 @@
 //
-//  BankCell.h
+//  FreeCell.h
 //  FilterChain
 //
 //  Created by Ryan Cumley on 9/9/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BankCell : UICollectionViewCell
+@interface FreeCell: UICollectionViewCell
 
 @property (strong, nonatomic) UIImageView* image;
 @property (strong, nonatomic) UILabel* label;

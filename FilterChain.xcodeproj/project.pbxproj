@@ -16,6 +16,9 @@
 		C031703017DE9537003F8ACB /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = C031702F17DE9537003F8ACB /* image.png */; };
 		C031703217DE95A3003F8ACB /* outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = C031703117DE95A3003F8ACB /* outgoing.png */; };
 		C031703417DE95C5003F8ACB /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = C031703317DE95C5003F8ACB /* video.png */; };
+		C046913317F0BF6500F14AE6 /* NavCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C046913217F0BF6500F14AE6 /* NavCell.m */; };
+		C046913617F0BF7900F14AE6 /* PaidCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C046913517F0BF7900F14AE6 /* PaidCell.m */; };
+		C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C046913717F0CDFF00F14AE6 /* VideoIcon.png */; };
 		C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */ = {isa = PBXBuildFile; fileRef = C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */; };
 		C053504617EE48560078A3D7 /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = C053504517EE48560078A3D7 /* bin.png */; };
 		C053504817EE493C0078A3D7 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = C053504717EE493C0078A3D7 /* play.png */; };
@@ -70,7 +73,7 @@
 		C0B4649317DA8CB400126545 /* RecordingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4649217DA8CB400126545 /* RecordingManager.m */; };
 		C0B4649617DA8D6700126545 /* ControlBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4649517DA8D6700126545 /* ControlBoxManager.m */; };
 		C0BD456D17DE180A005734AD /* FilterBank.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD456C17DE180A005734AD /* FilterBank.m */; };
-		C0BD457217DE1824005734AD /* BankCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD457117DE1824005734AD /* BankCell.m */; };
+		C0BD457217DE1824005734AD /* FreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD457117DE1824005734AD /* FreeCell.m */; };
 		C0DB6F7C17E602150020B394 /* Edges.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7617E602150020B394 /* Edges.jpg */; };
 		C0DB6F7D17E602150020B394 /* Grayscale.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7717E602150020B394 /* Grayscale.jpg */; };
 		C0DB6F7E17E602150020B394 /* HighlightShadows.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7817E602150020B394 /* HighlightShadows.jpg */; };
@@ -123,6 +126,11 @@
 		C031702F17DE9537003F8ACB /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image.png; path = ../image.png; sourceTree = "<group>"; };
 		C031703117DE95A3003F8ACB /* outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outgoing.png; sourceTree = "<group>"; };
 		C031703317DE95C5003F8ACB /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
+		C046913117F0BF6500F14AE6 /* NavCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavCell.h; sourceTree = "<group>"; };
+		C046913217F0BF6500F14AE6 /* NavCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavCell.m; sourceTree = "<group>"; };
+		C046913417F0BF7900F14AE6 /* PaidCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaidCell.h; sourceTree = "<group>"; };
+		C046913517F0BF7900F14AE6 /* PaidCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaidCell.m; sourceTree = "<group>"; };
+		C046913717F0CDFF00F14AE6 /* VideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VideoIcon.png; sourceTree = "<group>"; };
 		C048DD3317ECAFE700F47A1D /* CachedThumbnails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedThumbnails.h; sourceTree = "<group>"; };
 		C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedThumbnails.m; sourceTree = "<group>"; };
 		C053504517EE48560078A3D7 /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
@@ -187,8 +195,8 @@
 		C0B4649517DA8D6700126545 /* ControlBoxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlBoxManager.m; sourceTree = "<group>"; };
 		C0BD456B17DE180A005734AD /* FilterBank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBank.h; sourceTree = "<group>"; };
 		C0BD456C17DE180A005734AD /* FilterBank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBank.m; sourceTree = "<group>"; };
-		C0BD457017DE1824005734AD /* BankCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankCell.h; sourceTree = "<group>"; };
-		C0BD457117DE1824005734AD /* BankCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankCell.m; sourceTree = "<group>"; };
+		C0BD457017DE1824005734AD /* FreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeCell.h; sourceTree = "<group>"; };
+		C0BD457117DE1824005734AD /* FreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeCell.m; sourceTree = "<group>"; };
 		C0DB6F7617E602150020B394 /* Edges.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Edges.jpg; sourceTree = "<group>"; };
 		C0DB6F7717E602150020B394 /* Grayscale.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grayscale.jpg; sourceTree = "<group>"; };
 		C0DB6F7817E602150020B394 /* HighlightShadows.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = HighlightShadows.jpg; sourceTree = "<group>"; };
@@ -230,6 +238,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C046912C17F08C6F00F14AE6 /* Clip Screen */ = {
+			isa = PBXGroup;
+			children = (
+				C0B4648E17DA8CA200126545 /* ClipManager.h */,
+				C0B4648F17DA8CA200126545 /* ClipManager.m */,
+				C048DD3317ECAFE700F47A1D /* CachedThumbnails.h */,
+				C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */,
+				C00BB83C17DD948500E0580D /* Cell.h */,
+				C00BB83D17DD948500E0580D /* Cell.m */,
+			);
+			name = "Clip Screen";
+			sourceTree = "<group>";
+		};
+		C046912F17F08CA300F14AE6 /* Main Screen */ = {
+			isa = PBXGroup;
+			children = (
+				C0208E7417E130170097F1E8 /* ActiveFilterManager.h */,
+				C0208E7517E130170097F1E8 /* ActiveFilterManager.m */,
+				C0BD456B17DE180A005734AD /* FilterBank.h */,
+				C0BD456C17DE180A005734AD /* FilterBank.m */,
+				C0BD457017DE1824005734AD /* FreeCell.h */,
+				C0BD457117DE1824005734AD /* FreeCell.m */,
+				C046913117F0BF6500F14AE6 /* NavCell.h */,
+				C046913217F0BF6500F14AE6 /* NavCell.m */,
+				C046913417F0BF7900F14AE6 /* PaidCell.h */,
+				C046913517F0BF7900F14AE6 /* PaidCell.m */,
+				C0B4649117DA8CB400126545 /* RecordingManager.h */,
+				C0B4649217DA8CB400126545 /* RecordingManager.m */,
+				C0B4649417DA8D6700126545 /* ControlBoxManager.h */,
+				C0B4649517DA8D6700126545 /* ControlBoxManager.m */,
+			);
+			name = "Main Screen";
+			sourceTree = "<group>";
+		};
+		C046913017F08CC000F14AE6 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				C0B4644C17DA826F00126545 /* FilterChain.xcdatamodeld */,
+				C031702717DE7BBE003F8ACB /* Filter.h */,
+				C031702817DE7BBE003F8ACB /* Filter.m */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		C053504917EE4DAA0078A3D7 /* Launch and Icon Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,26 +354,10 @@
 				C0B4644417DA826F00126545 /* AppDelegate.m */,
 				C0B4648A17DA8A4900126545 /* MainViewController.h */,
 				C0B4648B17DA8A4900126545 /* MainViewController.m */,
-				C0208E7417E130170097F1E8 /* ActiveFilterManager.h */,
-				C0208E7517E130170097F1E8 /* ActiveFilterManager.m */,
-				C0B4649117DA8CB400126545 /* RecordingManager.h */,
-				C0B4649217DA8CB400126545 /* RecordingManager.m */,
-				C0B4649417DA8D6700126545 /* ControlBoxManager.h */,
-				C0B4649517DA8D6700126545 /* ControlBoxManager.m */,
 				C0B4648617DA89FF00126545 /* Retina.xib */,
-				C0B4644C17DA826F00126545 /* FilterChain.xcdatamodeld */,
-				C0B4648E17DA8CA200126545 /* ClipManager.h */,
-				C0B4648F17DA8CA200126545 /* ClipManager.m */,
-				C048DD3317ECAFE700F47A1D /* CachedThumbnails.h */,
-				C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */,
-				C00BB83C17DD948500E0580D /* Cell.h */,
-				C00BB83D17DD948500E0580D /* Cell.m */,
-				C0BD456B17DE180A005734AD /* FilterBank.h */,
-				C0BD456C17DE180A005734AD /* FilterBank.m */,
-				C0BD457017DE1824005734AD /* BankCell.h */,
-				C0BD457117DE1824005734AD /* BankCell.m */,
-				C031702717DE7BBE003F8ACB /* Filter.h */,
-				C031702817DE7BBE003F8ACB /* Filter.m */,
+				C046913017F08CC000F14AE6 /* Core Data */,
+				C046912F17F08CA300F14AE6 /* Main Screen */,
+				C046912C17F08C6F00F14AE6 /* Clip Screen */,
 				C0B4643B17DA826F00126545 /* Supporting Files */,
 			);
 			path = FilterChain;
@@ -372,6 +408,7 @@
 		C0DB6F8417E602570020B394 /* Supplimentary Image Files */ = {
 			isa = PBXGroup;
 			children = (
+				C046913717F0CDFF00F14AE6 /* VideoIcon.png */,
 				C053504517EE48560078A3D7 /* bin.png */,
 				C053504717EE493C0078A3D7 /* play.png */,
 				C073571717E540B40024D02B /* CameraLensSmall.png */,
@@ -531,6 +568,7 @@
 				C01734A917E82EC900113DFE /* recordRedLight.png in Resources */,
 				C0960B6617EE50E6006FF0A5 /* Default-568h@2x.png in Resources */,
 				C053504617EE48560078A3D7 /* bin.png in Resources */,
+				C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */,
 				C0A35E0817EE62510015CA6E /* icon29.png in Resources */,
 				C0A35E1117EE62510015CA6E /* icon114.png in Resources */,
 			);
@@ -571,15 +609,17 @@
 				C0B4644517DA826F00126545 /* AppDelegate.m in Sources */,
 				C0B4644E17DA826F00126545 /* FilterChain.xcdatamodeld in Sources */,
 				C0B4648C17DA8A4900126545 /* MainViewController.m in Sources */,
+				C046913617F0BF7900F14AE6 /* PaidCell.m in Sources */,
 				C0B4649017DA8CA200126545 /* ClipManager.m in Sources */,
 				C0B4649317DA8CB400126545 /* RecordingManager.m in Sources */,
 				C0B4649617DA8D6700126545 /* ControlBoxManager.m in Sources */,
 				C00BB83E17DD948500E0580D /* Cell.m in Sources */,
 				C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */,
 				C0BD456D17DE180A005734AD /* FilterBank.m in Sources */,
-				C0BD457217DE1824005734AD /* BankCell.m in Sources */,
+				C0BD457217DE1824005734AD /* FreeCell.m in Sources */,
 				C031702917DE7BBE003F8ACB /* Filter.m in Sources */,
 				C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */,
+				C046913317F0BF6500F14AE6 /* NavCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

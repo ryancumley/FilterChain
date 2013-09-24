@@ -16,12 +16,22 @@
 
 @interface ClipManager ()
 
+@property (strong, nonatomic) NSMutableArray *storedClips; //an arry of NSURl objects fetched from the user's Documents folder
+@property (strong, nonatomic) NSMutableArray *storedThumbnails;
+
+- (NSArray*)contentsOfDocuments;
+
 @end
+
+
 
 @implementation ClipManager
 
 @synthesize storedClips = _storedClips, storedThumbnails = _storedThumbnails;
 
+
+
+#pragma mark Initialization and View Lifecycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,18 +55,19 @@
     return self;
 }
 
-
-- (void)refreshStoredClips {
-    _storedClips = nil;
-    _storedClips = [NSMutableArray arrayWithArray:[self contentsOfDocuments]];
-    [self generateThumbnails];
-    [self.collectionView reloadData];
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
+    [self.collectionView setAllowsMultipleSelection:NO];
+    [self refreshStoredClips];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    NSInteger count = _storedClips.count;
-    return count;
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 -(NSArray*)contentsOfDocuments {
@@ -88,6 +99,28 @@
     
 }
 
+
+
+#pragma mark Video Specific Actions
+
+- (void)refreshStoredClips {
+    _storedClips = nil;
+    _storedClips = [NSMutableArray arrayWithArray:[self contentsOfDocuments]];
+    [self generateThumbnails];
+    [self.collectionView reloadData];
+}
+
+- (void)videoSaved:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    
+    UIAlertView* av = [[UIAlertView alloc] initWithTitle:@"Clip Sent to Camera Roll!"
+                                                 message:@"(It's also available when you sync to iTunes)"
+                                                delegate:nil
+                                       cancelButtonTitle:nil
+                                       otherButtonTitles:nil];
+    [av show];
+    [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:1.8];
+}
+
 - (void)generateThumbnails {
     if (!cachedThumbnails) {
         cachedThumbnails = [[CachedThumbnails alloc] init];
@@ -101,6 +134,28 @@
     }
 }
 
+- (void)attemptRotation {
+    [UIViewController attemptRotationToDeviceOrientation];
+}
+
+
+
+#pragma mark Cell Selection and Actions
+- (void)selectCellAtIndexPath:(NSIndexPath*)path {
+    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:path];
+    activeClipSelection = selectedCell.auxControl;
+    [selectedCell.auxControl setSelectedSegmentIndex:-1];
+    [selectedCell.auxControl setHidden:NO];
+    selectedCell.backingView.backgroundColor = [UIColor colorWithRed:30.0f/255.0f green:36.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+    
+}
+
+- (void)deSelectCellAtIndexPath:(NSIndexPath*)path {
+    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:path];
+    selectedCell.backingView.backgroundColor = [UIColor clearColor];
+    [selectedCell.auxControl setHidden:YES];
+    
+}
 - (void)clipActionInvoked {
     NSInteger selected = activeClipSelection.selectedSegmentIndex;
     NSIndexPath *selectedPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0]; //should be the first object always, since we're forbidding multiple selections
@@ -143,10 +198,8 @@
     
 }
 
-- (void)dismissAlert:(UIAlertView *) alertView
-{
-    [alertView dismissWithClickedButtonIndex:0 animated:YES];
-}
+
+#pragma mark UIAlertView Delegate Protocol Methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) { //User selected "Delete"
@@ -160,16 +213,15 @@
     }
 }
 
-- (void)videoSaved:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    
-    UIAlertView* av = [[UIAlertView alloc] initWithTitle:@"Clip Sent to Camera Roll!"
-                                                 message:@"(It's also available when you sync to iTunes)"
-                                                delegate:nil
-                                       cancelButtonTitle:nil
-                                       otherButtonTitles:nil];
-    [av show];
-    [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:1.8];
+- (void)dismissAlert:(UIAlertView *) alertView
+{
+    [alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
+
+
+
+
+#pragma mark UICollectionView DataSource and Delegate Protocol Methods
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
@@ -192,41 +244,11 @@
     [self deSelectCellAtIndexPath:indexPath];
 }
 
-
-- (void)selectCellAtIndexPath:(NSIndexPath*)path {
-    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:path];
-    activeClipSelection = selectedCell.auxControl;
-    [selectedCell.auxControl setSelectedSegmentIndex:-1];
-    [selectedCell.auxControl setHidden:NO];
-    selectedCell.backingView.backgroundColor = [UIColor colorWithRed:30.0f/255.0f green:36.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    NSInteger count = _storedClips.count;
+    return count;
 }
 
-- (void)deSelectCellAtIndexPath:(NSIndexPath*)path {
-    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:path];
-    selectedCell.backingView.backgroundColor = [UIColor clearColor];
-    [selectedCell.auxControl setHidden:YES];
-    
-}
-
-- (void)attemptRotation {
-    [UIViewController attemptRotationToDeviceOrientation];
-}
-
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
-    [self.collectionView setAllowsMultipleSelection:NO];
-    [self refreshStoredClips];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

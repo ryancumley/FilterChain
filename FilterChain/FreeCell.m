@@ -1,18 +1,18 @@
 //
-//  BankCell.m
+//  FreeCell.m
 //  FilterChain
 //
 //  Created by Ryan Cumley on 9/9/13.
 //  Copyright (c) 2013 Ryan Cumley. All rights reserved.
 //
 
-#import "BankCell.h"
+#import "FreeCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define k_imageFrame CGRectMake(15.0, 0.0, 65.0, 65.0)
 #define k_labelFrame CGRectMake(0.0, 65.0, 95.0, 30.0)
 
-@implementation BankCell
+@implementation FreeCell
 
 @synthesize image = _image, label = _label, imageName = _imageName;
 
@@ -31,7 +31,7 @@
         _label.numberOfLines = 0;
         _label.lineBreakMode = NSLineBreakByWordWrapping;
         _label.textColor = [UIColor colorWithRed:196.0f/255.0f green:204.0f/255.0f blue:208.0f/255.0f alpha:1.0];
-        _label.font = [UIFont fontWithName:@"Menlo Regular" size:18.0];
+        //_label.font = [UIFont fontWithName:@"Menlo Regular" size:18.0];
         [self addSubview:_image];
         [self addSubview:_label];
     }

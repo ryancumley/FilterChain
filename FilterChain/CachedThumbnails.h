@@ -18,9 +18,4 @@
 - (UIImage*)thumbnailForURL:(NSURL*)targetUrl;
 - (void)deleteThumbnailForURL:(NSURL*)targetUrl;
 
-- (BOOL)thumbnailAlreadyExistsForPath:(NSString*)targetPath;
-- (UIImage*)generateNewThumbnailForURL:(NSURL*)targetUrl withPath:(NSString*)path;
-- (NSString*)thumbnailPathFromVideoUrl:(NSURL*)videoUrl;
-- (NSString*)thumbnailsPath;
-
 @end

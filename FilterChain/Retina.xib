@@ -14,7 +14,6 @@
                 <outlet property="notifierLabel" destination="J89-9a-zX6" id="Rxd-MX-e4O"/>
                 <outlet property="previewLayer" destination="3" id="10"/>
                 <outlet property="recordingNotifier" destination="c1J-JT-Uc3" id="4o5-Gs-5RX"/>
-                <outlet property="toggleSwitch" destination="56" id="256"/>
                 <outlet property="view" destination="415" id="416"/>
             </connections>
         </placeholder>
@@ -108,23 +107,15 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12" userLabel="controlBox">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12" userLabel="controlBox">
                                     <rect key="frame" x="0.0" y="418" width="320" height="150"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="56">
-                                            <rect key="frame" x="256" y="10" width="51" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <connections>
-                                                <action selector="filterKillSwitchPressed:" destination="-1" eventType="valueChanged" id="255"/>
-                                            </connections>
-                                        </switch>
                                         <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="59" userLabel="RecordButton">
-                                            <rect key="frame" x="138" y="3" width="44" height="44"/>
+                                            <rect key="frame" x="138" y="4" width="44" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="495"/>
                                                 <constraint firstAttribute="height" constant="44" id="496"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
@@ -136,45 +127,38 @@
                                                 <action selector="userPressedRecord:" destination="-1" eventType="touchUpInside" id="217"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="160" userLabel="NavToClipsButton">
-                                            <rect key="frame" x="5" y="3" width="44" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <state key="normal" image="clipsbutton.png">
-                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <state key="highlighted">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="navigateToClips:" destination="-1" eventType="touchUpInside" id="170"/>
-                                            </connections>
-                                        </button>
                                         <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" image="recordRedLight.png" translatesAutoresizingMaskIntoConstraints="NO" id="453" userLabel="Blinking Light">
-                                            <rect key="frame" x="138" y="3" width="44" height="44"/>
+                                            <rect key="frame" x="138" y="4" width="44" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <accessibility key="accessibilityConfiguration">
                                                 <accessibilityTraits key="traits" none="YES" image="YES" notEnabled="YES"/>
                                             </accessibility>
                                         </imageView>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pgf-kD-faK">
+                                            <rect key="frame" x="195" y="9" width="112" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="minimumTrackTintColor" red="0.76862745099999996" green="0.80000000000000004" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="maximumTrackTintColor" red="0.1450980392" green="0.17254901959999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="thumbTintColor" red="0.25098039215686274" green="0.27843137254901962" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="globalMixChanged:" destination="-1" eventType="valueChanged" id="nQE-cr-RgB"/>
+                                            </connections>
+                                        </slider>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <gestureRecognizers/>
                                     <constraints>
-                                        <constraint firstItem="160" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="5" id="233"/>
-                                        <constraint firstItem="56" firstAttribute="top" secondItem="12" secondAttribute="top" constant="10" id="261"/>
-                                        <constraint firstItem="160" firstAttribute="top" secondItem="12" secondAttribute="top" constant="3" id="277"/>
                                         <constraint firstAttribute="height" constant="150" id="441"/>
                                         <constraint firstAttribute="centerX" secondItem="59" secondAttribute="centerX" id="444"/>
-                                        <constraint firstAttribute="trailing" secondItem="56" secondAttribute="trailing" constant="15" id="445"/>
-                                        <constraint firstItem="59" firstAttribute="centerY" secondItem="160" secondAttribute="centerY" id="451"/>
                                         <constraint firstItem="59" firstAttribute="bottom" secondItem="453" secondAttribute="bottom" id="491"/>
                                         <constraint firstItem="59" firstAttribute="trailing" secondItem="453" secondAttribute="trailing" id="492"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="453" secondAttribute="top" id="493"/>
                                         <constraint firstItem="59" firstAttribute="leading" secondItem="453" secondAttribute="leading" id="494"/>
+                                        <constraint firstItem="Pgf-kD-faK" firstAttribute="leading" secondItem="59" secondAttribute="trailing" constant="15" id="dLf-dg-tVy"/>
+                                        <constraint firstItem="Pgf-kD-faK" firstAttribute="centerY" secondItem="59" secondAttribute="centerY" id="h5Z-sh-4Nw"/>
+                                        <constraint firstItem="59" firstAttribute="top" secondItem="12" secondAttribute="top" constant="4" id="lnu-MY-hj6"/>
+                                        <constraint firstAttribute="trailing" secondItem="Pgf-kD-faK" secondAttribute="trailing" constant="15" id="r6W-eE-wAM"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="c1J-JT-Uc3" userLabel="Recording Notifier">
@@ -228,7 +212,6 @@
     </objects>
     <resources>
         <image name="CameraLensSmall.png" width="44" height="44"/>
-        <image name="clipsbutton.png" width="44" height="44"/>
         <image name="record.png" width="44" height="44"/>
         <image name="recordRedLight.png" width="44" height="44"/>
     </resources>

@@ -16,6 +16,8 @@
     NSDictionary* namesAndDesignations;
 }
 
+@property (nonatomic, assign) id filterPipelineDelegate;
+
 - (void)setIntensitiesForFilter:(GPUImageFilter*)filter;
 - (NSString*)designatorForName:(NSString*)name;
 - (NSDictionary*)namesAndDesignations;
@@ -25,5 +27,11 @@
 - (CGRect)frameForPosition:(int)position;
 - (void)updatePipeline;
 
+
+@end
+
+@protocol FilterPipelineDelegate <NSObject>
+
+- (void)updatePipelineWithFilters:(NSArray*)filters;
 
 @end

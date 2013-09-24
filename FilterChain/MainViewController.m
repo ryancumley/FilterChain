@@ -18,8 +18,8 @@
 
 @implementation MainViewController
 
-@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, toggleSwitch = _toggleSwitch, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel;
-@synthesize switchingFilter = _switchingFilter, pipeline = _pipeline;
+
+@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,13 +35,10 @@
     [super viewDidLoad];
     //View Config
     _blinkyRedLight.userInteractionEnabled = NO; //allows user to press record (blinking view covers the button)
-    [_controlBoxManager.view setAlpha:0.9];
     [self hideRecordingNotifier];
     
     //Camera config
-    _switchingFilter = [[GPUImageFilter alloc] init];
     _recordingManager = [[RecordingManager alloc] init];
-    [_switchingFilter addTarget:_previewLayer];
     
     //ClipManager Config
     clipCollectionIsVisible = NO;
@@ -62,16 +59,11 @@
     
     //ActiveFilterManager Config
     _activeFilterManager = [[ActiveFilterManager alloc] init];
-    
-    
-    
 }
 
 - (void)hideRecordingNotifier {
     [_recordingNotifier setHidden:YES];
 }
-
-
 
 - (IBAction)navigateToClips:(id)sender {
     if (_recordingManager.isRecording) {
@@ -99,7 +91,6 @@
                          _clipManagerView.frame = displayClips;
                      }
      ];
-
 }
 
 - (IBAction)userPressedRecord:(UIButton *)sender {
@@ -115,8 +106,8 @@
     }
 }
 
-- (IBAction)filterKillSwitchPressed:(UISwitch *)sender {
-    [_activeFilterManager updatePipeline];
+- (IBAction)globalMixChanged:(UISlider *)sender {
+    [_recordingManager updateBlendMix:[(UISlider *)sender value]];
 }
 
 - (void)previewClipForUrl:(NSURL *)targetUrl {
@@ -145,16 +136,6 @@
     [_recordingManager awakeVideoCamera];
 }
 
-- (void)refreshPipelineWithFilters:(NSArray *)filters {
-    if (_toggleSwitch.on) {
-        [_recordingManager.pipeline replaceAllFilters:filters];
-    }
-    else {
-        [_recordingManager.pipeline replaceAllFilters:nil];
-    }
-    
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -174,7 +155,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [_recordingManager configureCamera];
     [_recordingManager orientVideoCameraOutputTo:[self interfaceOrientation]];
-    
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -231,13 +211,5 @@
     }
     return collectionShellFrame;
 }
-
-/*
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
- */
-
 
 @end

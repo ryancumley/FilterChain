@@ -9,8 +9,20 @@
 #import "CachedThumbnails.h"
 #import <MediaPlayer/MediaPlayer.h>
 
+@interface CachedThumbnails ()
+
+- (BOOL)thumbnailAlreadyExistsForPath:(NSString*)targetPath;
+- (UIImage*)generateNewThumbnailForURL:(NSURL*)targetUrl withPath:(NSString*)path;
+- (NSString*)thumbnailPathFromVideoUrl:(NSURL*)videoUrl;
+- (NSString*)thumbnailsPath;
+
+@end
+
 @implementation CachedThumbnails
 
+
+
+#pragma mark Global Scoped Methods
 
 - (UIImage*)thumbnailForURL:(NSURL*)targetUrl {
     
@@ -42,6 +54,9 @@
     
 }
 
+
+#pragma mark Class Scoped Methods
+
 - (BOOL)thumbnailAlreadyExistsForPath:(NSString *)targetPath {
     fileManager = [NSFileManager defaultManager];
     BOOL exists = [fileManager fileExistsAtPath:targetPath isDirectory:NO];
@@ -58,7 +73,6 @@
     [fileManager createFileAtPath:path contents:jpgRepresentation attributes:nil];
     return thumb;
 }
-
 
 - (NSString*)thumbnailPathFromVideoUrl:(NSURL*)videoUrl {
     NSString* basePath = [self thumbnailsPath];

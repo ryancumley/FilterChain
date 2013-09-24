@@ -17,18 +17,21 @@
     CachedThumbnails* cachedThumbnails;
 }
 
-@property (strong, nonatomic) NSMutableArray *storedClips; //an arry of NSURl objects fetched from the user's Documents folder
-@property (strong, nonatomic) NSMutableArray *storedThumbnails;
+//Initialization and View Lifecycle
 
+//Video Specific Actions
 - (void)refreshStoredClips;
-- (NSArray*)contentsOfDocuments;
-- (void)generateThumbnails;
-- (void)clipActionInvoked;
 - (void)videoSaved:(NSString*)videoPath didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo;
-- (void)dismissAlert:(UIAlertView *)alertView;
-- (void)selectCellAtIndexPath:(NSIndexPath*)path;
-- (void)deSelectCellAtIndexPath:(NSIndexPath*)path;
+- (void)generateThumbnails;
 - (void)attemptRotation;
 
+//Cell Selection and Actions
+- (void)selectCellAtIndexPath:(NSIndexPath*)path;
+- (void)deSelectCellAtIndexPath:(NSIndexPath*)path;
+- (void)clipActionInvoked;
+
+//UIAlertView Delegate Protocol Methods
+
+//UICollectionView DataSource and Delegate Protocol Methods
 
 @end

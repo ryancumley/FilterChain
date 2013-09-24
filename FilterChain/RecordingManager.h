@@ -8,31 +8,32 @@
 
 #import <Foundation/Foundation.h>
 #import "GPUImage.h"
+#import "ActiveFilterManager.h"
 
-@interface RecordingManager : NSObject
+@interface RecordingManager :  NSObject <FilterPipelineDelegate>
 {
     GPUImageVideoCamera* videoCamera;
     BOOL recording;
     NSURL *fileURL;
-    GPUImageFilter* switchingFilter;
-    
-    
 }
-
+@property (strong, nonatomic) GPUImageFilter* passThrough;
+@property (strong, nonatomic) GPUImageFilter* pipelineDestination;
+@property (strong, nonatomic) GPUImageView* mvcPreviewLayer;
+@property (strong, nonatomic) GPUImageDissolveBlendFilter* blendFilter;
 @property (strong, nonatomic) GPUImageMovieWriter *movieWriter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;
 @property (strong, nonatomic) IBOutlet UIImageView* blinkyRedLight;
 
 - (void)configureCamera;
+- (void)awakeVideoCamera;
 - (void)stopCameraCapture;
+- (BOOL)isRecording;
 - (void)startNewRecording;
 - (void)stopRecording;
-- (GPUImageFilter*)switchingFilter;
-- (BOOL)isRecording;
-- (void)awakeVideoCamera;
 - (void)orientVideoCameraOutputTo:(UIInterfaceOrientation)orientation;
 - (void)beginFlashingRecordButton;
 - (void)hideRecordingNotifier;
+- (void)updateBlendMix:(CGFloat)mix;
 
 
 

@@ -7,18 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BankCell.h"
+#import "FreeCell.h"
+#import "NavCell.h"
+#import "PaidCell.h"
 #import "Filter.h"
 
 @interface FilterBank : UICollectionViewController
 
-@property (strong, nonatomic) NSMutableArray* enabledFilters;
-@property (strong, nonatomic) NSMutableArray* excludedFilters;
-@property (strong, nonatomic) NSMutableArray* displayFilters;
 
-- (void)loadFiltersFromStore;
-- (void)activateFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(BankCell*)cell;
-- (void)refreshDisplayFilters;
+
+- (void)activateFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell*)cell;
 - (void)retireFilterFromActive:(Filter*)filter;
 
 @end

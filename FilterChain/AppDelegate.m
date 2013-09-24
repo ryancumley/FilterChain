@@ -9,6 +9,13 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 
+
+@interface AppDelegate ()
+
+- (NSURL *)applicationDocumentsDirectory;
+
+@end
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -16,6 +23,73 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 @synthesize mVC = _mVC;
+
+
+
+#pragma Initialization, Configuration and View Lifecycle
+
+- (void)createDirectoryForThumbnails {
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    NSString* dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Thumbnails"];
+    NSError* error;
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error];
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self loadFiltersFromJSON];
+    [self createDirectoryForThumbnails];
+    
+    _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
+    self.window.rootViewController = _mVC;
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    if (_mVC.recordingManager.isRecording) {
+        [_mVC.recordingManager stopRecording];
+        [_mVC.clipManager refreshStoredClips];
+    }
+    [_mVC.recordingManager stopCameraCapture];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [_mVC awakeVideoCamera];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    // Saves changes in the application's managed object context before the application terminates.
+    [self saveContext];
+    if (_mVC.recordingManager.isRecording) {
+        [_mVC.recordingManager stopRecording];
+    }
+    [_mVC.recordingManager stopCameraCapture];
+
+}
+
+
+
+
+#pragma mark Load From CoreData at Launch
 
 - (void)loadFiltersFromJSON {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"FilterBank" ofType:@"json"];
@@ -77,83 +151,8 @@
     }
 }
 
-- (void)createDirectoryForThumbnails {
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
-    NSString* dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Thumbnails"];
-    NSError* error;
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
-        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error];
-}
 
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    //NSLog(@"fontFamilies: %@",[UIFont familyNames]);
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self loadFiltersFromJSON];
-    [self createDirectoryForThumbnails];
-    
-    _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
-    self.window.rootViewController = _mVC;
-    [self.window makeKeyAndVisible];
-    return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    if (_mVC.recordingManager.isRecording) {
-        [_mVC.recordingManager stopRecording];
-        [_mVC.clipManager refreshStoredClips];
-    }
-    [_mVC.recordingManager stopCameraCapture];
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [_mVC awakeVideoCamera];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
-    if (_mVC.recordingManager.isRecording) {
-        [_mVC.recordingManager stopRecording];
-    }
-    [_mVC.recordingManager stopCameraCapture];
-
-}
-
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
-}
 
 #pragma mark - Core Data stack
 
@@ -228,8 +227,22 @@
     return _persistentStoreCoordinator;
 }
 
-#pragma mark - Application's Documents directory
+- (void)saveContext
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+             // Replace this implementation with code to handle the error appropriately.
+             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        } 
+    }
+}
 
+
+#pragma mark Convenience Methods
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory
 {

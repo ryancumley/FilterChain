@@ -27,6 +27,16 @@
 
 @implementation ActiveFilterManager
 
+@synthesize filterPipelineDelegate = _filterPipelineDelegate;
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        _filterPipelineDelegate = [(MainViewController*)[[[[UIApplication sharedApplication]delegate]window]rootViewController] recordingManager];
+    }
+    return self;
+}
+
 - (void)setIntensitiesForFilter:(GPUImageFilter*)filter {
     if ([filter class] == [GPUImageHighlightShadowFilter class]) {
         GPUImageHighlightShadowFilter* calibrated = (GPUImageHighlightShadowFilter*)filter;
@@ -98,12 +108,8 @@
         [self setIntensitiesForFilter:(GPUImageFilter*)filter];
      }
     
-     
-    //Now send the pipeline to the mainView
-    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-    MainViewController* mvc = (MainViewController*)delegate.window.rootViewController;
-    [mvc refreshPipelineWithFilters:filters];
-    
+     //now send these filters to the pipeline, via our delegate protocol
+    [self.filterPipelineDelegate updatePipelineWithFilters:filters];
 }
 
 - (void)addFilterNamed:(NSString *)name withOriginatingView:(UIView *)view {
