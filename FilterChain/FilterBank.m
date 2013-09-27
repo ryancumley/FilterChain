@@ -81,7 +81,7 @@
 
 #pragma mark Global Scope Methods
 
-- (void)activateFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell *)cell {
+- (BOOL)successfullyActivatedFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell *)cell {
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     MainViewController* mvc = (MainViewController*)delegate.window.rootViewController;
     UIImageView*newActiveFilter = [[UIImageView alloc] init];
@@ -101,8 +101,8 @@
     [newActiveFilter addGestureRecognizer:recognizer];
 
     [mvc.previewLayer addSubview:newActiveFilter];
-    [mvc.activeFilterManager addFilterNamed:name withOriginatingView:newActiveFilter];
-    
+    BOOL success = [mvc.activeFilterManager addFilterNamed:name withOriginatingView:newActiveFilter];
+    return success;
 }
 
 - (void)retireFilterFromActive:(id)filter {
@@ -229,12 +229,14 @@
     FreeCell* cell = (FreeCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
     NSString* name = cell.label.text;
     UIImage* newImage = [cell.image.image copy];
-    [self activateFilterWithName:name andWithImage:newImage forCell:cell];
+    BOOL success = [self successfullyActivatedFilterWithName:name andWithImage:newImage forCell:cell];
     
-    //remove this filter from the filterBank's data source
-    [[self excludedFilters] addObject:[_displayFilters objectAtIndex:indexPath.row]];
-    [self refreshDisplayFilters];
-    [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObjects:(NSIndexPath*)indexPath, nil]];
+    if (success) {
+        //remove this filter from the filterBank's data source
+        [[self excludedFilters] addObject:[_displayFilters objectAtIndex:indexPath.row]];
+        [self refreshDisplayFilters];
+        [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObjects:(NSIndexPath*)indexPath, nil]];
+    }
 }
 
 

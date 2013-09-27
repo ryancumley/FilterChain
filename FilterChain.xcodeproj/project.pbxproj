@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C00077A317DE72DA00715694 /* FilterBank.json in Resources */ = {isa = PBXBuildFile; fileRef = C00077A217DE72DA00715694 /* FilterBank.json */; };
+		C0032B6917F13C9900FD72B7 /* LiveFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0032B6817F13C9900FD72B7 /* LiveFilterView.m */; };
 		C00BB83E17DD948500E0580D /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = C00BB83D17DD948500E0580D /* Cell.m */; };
 		C01734A917E82EC900113DFE /* recordRedLight.png in Resources */ = {isa = PBXBuildFile; fileRef = C01734A817E82EC900113DFE /* recordRedLight.png */; };
 		C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0208E7517E130170097F1E8 /* ActiveFilterManager.m */; };
@@ -115,6 +116,8 @@
 
 /* Begin PBXFileReference section */
 		C00077A217DE72DA00715694 /* FilterBank.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FilterBank.json; sourceTree = "<group>"; };
+		C0032B6717F13C9900FD72B7 /* LiveFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveFilterView.h; sourceTree = "<group>"; };
+		C0032B6817F13C9900FD72B7 /* LiveFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveFilterView.m; sourceTree = "<group>"; };
 		C00BB83C17DD948500E0580D /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		C00BB83D17DD948500E0580D /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
 		C01734A817E82EC900113DFE /* recordRedLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordRedLight.png; sourceTree = "<group>"; };
@@ -256,6 +259,8 @@
 			children = (
 				C0208E7417E130170097F1E8 /* ActiveFilterManager.h */,
 				C0208E7517E130170097F1E8 /* ActiveFilterManager.m */,
+				C0032B6717F13C9900FD72B7 /* LiveFilterView.h */,
+				C0032B6817F13C9900FD72B7 /* LiveFilterView.m */,
 				C0BD456B17DE180A005734AD /* FilterBank.h */,
 				C0BD456C17DE180A005734AD /* FilterBank.m */,
 				C0BD457017DE1824005734AD /* FreeCell.h */,
@@ -617,6 +622,7 @@
 				C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */,
 				C0BD456D17DE180A005734AD /* FilterBank.m in Sources */,
 				C0BD457217DE1824005734AD /* FreeCell.m in Sources */,
+				C0032B6917F13C9900FD72B7 /* LiveFilterView.m in Sources */,
 				C031702917DE7BBE003F8ACB /* Filter.m in Sources */,
 				C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */,
 				C046913317F0BF6500F14AE6 /* NavCell.m in Sources */,

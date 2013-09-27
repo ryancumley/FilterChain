@@ -16,7 +16,7 @@
 
 
 
-- (void)activateFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell*)cell;
+- (BOOL)successfullyActivatedFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell*)cell;
 - (void)retireFilterFromActive:(Filter*)filter;
 
 @end

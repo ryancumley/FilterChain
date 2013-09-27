@@ -34,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UIView* blinkyRedLight;
 @property (strong, nonatomic) IBOutlet UIView* recordingNotifier;
 @property (strong, nonatomic) IBOutlet UILabel* notifierLabel;
+@property (strong, nonatomic) IBOutlet UISlider* globalBlend;
 
 - (IBAction)navigateToClips:(id)sender;
 - (IBAction)navigateToCamera:(id)sender;

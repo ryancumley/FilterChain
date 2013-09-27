@@ -22,6 +22,7 @@
 #pragma mark Setup and Configuration Management
 
 - (void)updatePipelineWithFilters:(NSArray*)filters {
+    //save mix value and prepare to swap out the pipeline
     CGFloat mix = _blendFilter.mix;
     if (recording) {
         [_blendFilter removeTarget:_movieWriter];
@@ -29,6 +30,7 @@
     [videoCamera removeTarget:_blendFilter];
     [_pipelineDestination removeTarget:_blendFilter];
     _blendFilter = nil;
+    
     //handle an empty Pipeline
     if (filters.count == 0) {
         _passThrough = [[GPUImageFilter alloc] init];
@@ -38,6 +40,8 @@
     else {
         [_pipeline replaceAllFilters:filters];
     }
+    
+    //Re-configure the blendFilter
     _blendFilter = [[GPUImageDissolveBlendFilter alloc] init];
     [videoCamera addTarget:_blendFilter];
     [_pipelineDestination addTarget:_blendFilter];

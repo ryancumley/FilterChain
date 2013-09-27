@@ -19,7 +19,7 @@
 @implementation MainViewController
 
 
-@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel;
+@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel, globalBlend = _globalBlend;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +36,9 @@
     //View Config
     _blinkyRedLight.userInteractionEnabled = NO; //allows user to press record (blinking view covers the button)
     [self hideRecordingNotifier];
+    _recordingNotifier.layer.masksToBounds = YES;
+    _recordingNotifier.layer.cornerRadius = 5.0;
+    
     
     //Camera config
     _recordingManager = [[RecordingManager alloc] init];
@@ -73,6 +76,7 @@
     [_recordingManager stopCameraCapture];
     
     clipCollectionIsVisible = YES;
+    [self.view bringSubviewToFront:_clipManagerView];
     CGRect displayClips = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [UIView animateWithDuration:0.1
                      animations:^(void) {

@@ -11,6 +11,7 @@
                 <outlet property="clipManagerView" destination="296" id="420"/>
                 <outlet property="collectionShell" destination="314" id="426"/>
                 <outlet property="controlBoxManager" destination="11" id="29"/>
+                <outlet property="globalBlend" destination="Pgf-kD-faK" id="HJX-8z-D8t"/>
                 <outlet property="notifierLabel" destination="J89-9a-zX6" id="Rxd-MX-e4O"/>
                 <outlet property="previewLayer" destination="3" id="10"/>
                 <outlet property="recordingNotifier" destination="c1J-JT-Uc3" id="4o5-Gs-5RX"/>
@@ -135,11 +136,11 @@
                                                 <accessibilityTraits key="traits" none="YES" image="YES" notEnabled="YES"/>
                                             </accessibility>
                                         </imageView>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pgf-kD-faK">
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pgf-kD-faK">
                                             <rect key="frame" x="195" y="9" width="112" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="minimumTrackTintColor" red="0.76862745099999996" green="0.80000000000000004" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="maximumTrackTintColor" red="0.1450980392" green="0.17254901959999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="minimumTrackTintColor" red="0.1450980392" green="0.17254901959999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="maximumTrackTintColor" red="0.76862745099999996" green="0.80000000000000004" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="thumbTintColor" red="0.25098039215686274" green="0.27843137254901962" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="globalMixChanged:" destination="-1" eventType="valueChanged" id="nQE-cr-RgB"/>
