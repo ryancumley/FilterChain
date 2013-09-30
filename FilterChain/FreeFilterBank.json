@@ -3,45 +3,52 @@
               {
               "name":"Grayscale",
               "imageName":"Grayscale.jpg",
-              "filterDesignator":"GPUImageGrayscaleFilter"
+              "filterDesignator":"GPUImageGrayscaleFilter",
+              "paidOrFree":"free"
               },
 
               {
               "name":"Edges",
               "imageName":"Edges.jpg",
-              "filterDesignator":"GPUImageSobelEdgeDetectionFilter"
+              "filterDesignator":"GPUImageSobelEdgeDetectionFilter",
+              "paidOrFree":"free"
               },
 
               {
               "name":"Inversion",
               "imageName":"Inversion.jpg",
-              "filterDesignator":"GPUImageColorInvertFilter"
+              "filterDesignator":"GPUImageColorInvertFilter",
+              "paidOrFree":"free"
               },
               
               
               {
               "name":"Shadows",
               "imageName":"HighlightShadows.jpg",
-              "filterDesignator":"GPUImageHighlightShadowFilter"
+              "filterDesignator":"GPUImageHighlightShadowFilter",
+              "paidOrFree":"free"
               },
               
               
               {
               "name":"Sepia",
               "imageName":"Sepia.jpg",
-              "filterDesignator":"GPUImageSepiaFilter"
+              "filterDesignator":"GPUImageSepiaFilter",
+              "paidOrFree":"free"
               },
               
               {
               "name":"Sketch",
               "imageName":"Sepia.jpg",
-              "filterDesignator":"GPUImageSketchFilter"
+              "filterDesignator":"GPUImageSketchFilter",
+              "paidOrFree":"free"
               },
               
                            {
               "name":"Halftone",
               "imageName":"Sepia.jpg",
-              "filterDesignator":"GPUImageHalftoneFilter"
+              "filterDesignator":"GPUImageHalftoneFilter",
+              "paidOrFree":"free"
               }
               
              

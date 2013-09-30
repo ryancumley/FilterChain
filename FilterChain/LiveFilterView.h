@@ -12,6 +12,7 @@
 @interface LiveFilterView : UIView
 
 {
+    BOOL sliderIsStationary;
     BOOL displayingKillButton;
 }
 
@@ -22,15 +23,18 @@
 @property (strong, nonatomic) NSString* name;
 @property (strong, nonatomic) GPUImageFilter* filter;
 
-- (void)loadWithName:(NSString*)name;
-- (void)clearAndHide;
+- (void)killThisFilter;
 - (void)displayKillButton;
-- (void)pushUpdatedSliderValueToFilter;
+- (void)hideKillButton;
+- (void)pushUpdatedSliderValueToFilter:(UIEvent*)event;
+- (void)makeSliderStaionary:(BOOL)stationary;
+- (BOOL)isSliderStationary;
 
 @end
 
-@protocol LiveFilterSliderDelegate <NSObject>
+@protocol LiveFilterActionDelegate <NSObject>
 
 - (void)liveFilterWithTag:(int)tag isSendingValue:(CGFloat)value;
+- (void)killLiveFilterWithTag:(int)tag;
 
 @end

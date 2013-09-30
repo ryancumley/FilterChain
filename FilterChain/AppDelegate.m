@@ -92,7 +92,7 @@
 #pragma mark Load From CoreData at Launch
 
 - (void)loadFiltersFromJSON {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"FilterBank" ofType:@"json"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"FreeFilterBank" ofType:@"json"];
     NSData *filterData = [NSData dataWithContentsOfFile:path];
     
     NSError *err;
@@ -109,7 +109,8 @@
         if (!exists) {
             NSString *imageNamed = [filter valueForKey:@"imageName"];
             NSString *filterDesignator = [filter valueForKey:@"filterDesignator"];
-            [self createFilterWithName:name imageNamed:imageNamed filterDesignator:filterDesignator];
+            NSString *paid = [filter valueForKey:@"paidOrFree"];
+            [self createFilterWithName:name imageNamed:imageNamed filterDesignator:filterDesignator paidOrFree:paid];
         }
     }
     
@@ -137,12 +138,13 @@
     
 }
 
-- (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator {
+- (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator paidOrFree:(NSString *)paid {
     NSManagedObjectContext* moc = [self managedObjectContext];
     Filter* newFilter = [NSEntityDescription insertNewObjectForEntityForName:@"Filter" inManagedObjectContext:moc];
     newFilter.name = name;
     newFilter.imageName = imageName;
     newFilter.filterDesignator = designator;
+    newFilter.paidOrFree = paid;
     
     NSError* error;
     [moc save:&error];

@@ -11,6 +11,7 @@
 #define k_filterBankHeight 99.0f
 #define k_filterBankOffsetFromTop 51.0f
 #define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
+#define k_maxActiveFilters 6
 
 @interface MainViewController ()
 
@@ -62,6 +63,9 @@
     
     //ActiveFilterManager Config
     _activeFilterManager = [[ActiveFilterManager alloc] init];
+    [_activeFilterManager setFilterBankDelegate:_filterBank];
+    [_activeFilterManager setRecordingManagerDelegate:_recordingManager];
+    [_activeFilterManager setMvcDelegate:self];
 }
 
 - (void)hideRecordingNotifier {
@@ -214,6 +218,39 @@
         collectionShellFrame = CGRectMake(-offsetModifier * appFrame.size.width, 0.0, appFrame.size.width, appFrame.size.height); //flip height and width
     }
     return collectionShellFrame;
+}
+
+#pragma mark -
+#pragma mark ActiveFilterToMVC Protocol
+
+- (void)removeLiveFilterWithTag:(int)tag {
+    //We need to replace the (tag)th filter's thumb image, slider value, and hidden status with the (tag + 1)th filter's values
+    LiveFilterView* n = (LiveFilterView*)[self.view viewWithTag:tag];
+    if (tag == k_maxActiveFilters) {
+        n.hidden = YES;
+        return;
+    }
+    
+    //Now start at the targeted tag, look ahead one, and shuffle the values down
+    LiveFilterView* nPlusOne;
+    for (int i = tag; i < k_maxActiveFilters; i++) {
+        n =(LiveFilterView*)[self.view viewWithTag:i];
+        nPlusOne = (LiveFilterView*)[self.view viewWithTag:(i + 1)];
+        if (!nPlusOne.hidden) {
+            UIImage* new = [nPlusOne.slider.currentThumbImage copy];
+            [n.slider setThumbImage:new forState:UIControlStateNormal];
+            [n.slider setThumbImage:new forState:UIControlStateHighlighted];
+            [n.slider setValue:[nPlusOne.slider value] animated:YES];
+            [nPlusOne isSliderStationary] ? [n makeSliderStaionary:YES] : [n makeSliderStaionary:NO];
+            [n hideKillButton];
+            continue;
+        }
+        else { //hides the terminal filters for sets of filters < k_maxActiveFilters
+            [n setHidden:YES];
+            return;
+        }
+    }
+    [nPlusOne setHidden:YES];//If all filters were visible, and an earlier filter was killed, this takes care of the Terminal Filter. Could have checked for i == (k_maxActiveFilters - 1) in the loop, but placing it here calls it only once.
 }
 
 @end

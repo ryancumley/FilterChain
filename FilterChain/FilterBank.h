@@ -11,12 +11,10 @@
 #import "NavCell.h"
 #import "PaidCell.h"
 #import "Filter.h"
+#import "ActiveFilterManager.h"
 
-@interface FilterBank : UICollectionViewController
-
-
+@interface FilterBank : UICollectionViewController <ActiveFilterToFilterBank>
 
 - (BOOL)successfullyActivatedFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell*)cell;
-- (void)retireFilterFromActive:(Filter*)filter;
 
 @end

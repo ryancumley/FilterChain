@@ -10,7 +10,7 @@
 #import "GPUImage.h"
 #import "ActiveFilterManager.h"
 
-@interface RecordingManager :  NSObject <FilterPipelineDelegate>
+@interface RecordingManager :  NSObject <ActiveFilterToRecordingManager>
 {
     GPUImageVideoCamera* videoCamera;
     BOOL recording;

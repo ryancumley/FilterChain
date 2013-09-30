@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C00077A317DE72DA00715694 /* FilterBank.json in Resources */ = {isa = PBXBuildFile; fileRef = C00077A217DE72DA00715694 /* FilterBank.json */; };
+		C00077A317DE72DA00715694 /* FreeFilterBank.json in Resources */ = {isa = PBXBuildFile; fileRef = C00077A217DE72DA00715694 /* FreeFilterBank.json */; };
 		C0032B6917F13C9900FD72B7 /* LiveFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0032B6817F13C9900FD72B7 /* LiveFilterView.m */; };
 		C00BB83E17DD948500E0580D /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = C00BB83D17DD948500E0580D /* Cell.m */; };
 		C01734A917E82EC900113DFE /* recordRedLight.png in Resources */ = {isa = PBXBuildFile; fileRef = C01734A817E82EC900113DFE /* recordRedLight.png */; };
 		C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0208E7517E130170097F1E8 /* ActiveFilterManager.m */; };
-		C031702917DE7BBE003F8ACB /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C031702817DE7BBE003F8ACB /* Filter.m */; };
 		C031702E17DE94E8003F8ACB /* camera-3.png in Resources */ = {isa = PBXBuildFile; fileRef = C031702D17DE94E8003F8ACB /* camera-3.png */; };
 		C031703017DE9537003F8ACB /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = C031702F17DE9537003F8ACB /* image.png */; };
 		C031703217DE95A3003F8ACB /* outgoing.png in Resources */ = {isa = PBXBuildFile; fileRef = C031703117DE95A3003F8ACB /* outgoing.png */; };
@@ -23,6 +22,7 @@
 		C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */ = {isa = PBXBuildFile; fileRef = C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */; };
 		C053504617EE48560078A3D7 /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = C053504517EE48560078A3D7 /* bin.png */; };
 		C053504817EE493C0078A3D7 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = C053504717EE493C0078A3D7 /* play.png */; };
+		C06A359517FA224800DC3DBA /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C06A359417FA224800DC3DBA /* Filter.m */; };
 		C073570417E51DE40024D02B /* OrangeSquareMin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C073570317E51DE40024D02B /* OrangeSquareMin.jpg */; };
 		C073571217E5384E0024D02B /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = C073571117E5384E0024D02B /* record.png */; };
 		C073571617E53A2E0024D02B /* clipsbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = C073571517E53A2E0024D02B /* clipsbutton.png */; };
@@ -75,6 +75,9 @@
 		C0B4649617DA8D6700126545 /* ControlBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4649517DA8D6700126545 /* ControlBoxManager.m */; };
 		C0BD456D17DE180A005734AD /* FilterBank.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD456C17DE180A005734AD /* FilterBank.m */; };
 		C0BD457217DE1824005734AD /* FreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD457117DE1824005734AD /* FreeCell.m */; };
+		C0C700BC17F6A17B00464BE9 /* lookup_amatorka.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700B917F6A17B00464BE9 /* lookup_amatorka.png */; };
+		C0C700BD17F6A17B00464BE9 /* lookup_soft_elegance_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700BA17F6A17B00464BE9 /* lookup_soft_elegance_1.png */; };
+		C0C700BE17F6A17B00464BE9 /* lookup_soft_elegance_2.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700BB17F6A17B00464BE9 /* lookup_soft_elegance_2.png */; };
 		C0DB6F7C17E602150020B394 /* Edges.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7617E602150020B394 /* Edges.jpg */; };
 		C0DB6F7D17E602150020B394 /* Grayscale.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7717E602150020B394 /* Grayscale.jpg */; };
 		C0DB6F7E17E602150020B394 /* HighlightShadows.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7817E602150020B394 /* HighlightShadows.jpg */; };
@@ -115,7 +118,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C00077A217DE72DA00715694 /* FilterBank.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FilterBank.json; sourceTree = "<group>"; };
+		C00077A217DE72DA00715694 /* FreeFilterBank.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FreeFilterBank.json; sourceTree = "<group>"; };
 		C0032B6717F13C9900FD72B7 /* LiveFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveFilterView.h; sourceTree = "<group>"; };
 		C0032B6817F13C9900FD72B7 /* LiveFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveFilterView.m; sourceTree = "<group>"; };
 		C00BB83C17DD948500E0580D /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
@@ -123,8 +126,6 @@
 		C01734A817E82EC900113DFE /* recordRedLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordRedLight.png; sourceTree = "<group>"; };
 		C0208E7417E130170097F1E8 /* ActiveFilterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveFilterManager.h; sourceTree = "<group>"; };
 		C0208E7517E130170097F1E8 /* ActiveFilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActiveFilterManager.m; sourceTree = "<group>"; };
-		C031702717DE7BBE003F8ACB /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
-		C031702817DE7BBE003F8ACB /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		C031702D17DE94E8003F8ACB /* camera-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-3.png"; sourceTree = "<group>"; };
 		C031702F17DE9537003F8ACB /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = image.png; path = ../image.png; sourceTree = "<group>"; };
 		C031703117DE95A3003F8ACB /* outgoing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outgoing.png; sourceTree = "<group>"; };
@@ -138,6 +139,8 @@
 		C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedThumbnails.m; sourceTree = "<group>"; };
 		C053504517EE48560078A3D7 /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
 		C053504717EE493C0078A3D7 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		C06A359317FA224800DC3DBA /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		C06A359417FA224800DC3DBA /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		C073570317E51DE40024D02B /* OrangeSquareMin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = OrangeSquareMin.jpg; sourceTree = "<group>"; };
 		C073571117E5384E0024D02B /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
 		C073571517E53A2E0024D02B /* clipsbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clipsbutton.png; sourceTree = "<group>"; };
@@ -200,6 +203,9 @@
 		C0BD456C17DE180A005734AD /* FilterBank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBank.m; sourceTree = "<group>"; };
 		C0BD457017DE1824005734AD /* FreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeCell.h; sourceTree = "<group>"; };
 		C0BD457117DE1824005734AD /* FreeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeCell.m; sourceTree = "<group>"; };
+		C0C700B917F6A17B00464BE9 /* lookup_amatorka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_amatorka.png; sourceTree = "<group>"; };
+		C0C700BA17F6A17B00464BE9 /* lookup_soft_elegance_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_soft_elegance_1.png; sourceTree = "<group>"; };
+		C0C700BB17F6A17B00464BE9 /* lookup_soft_elegance_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_soft_elegance_2.png; sourceTree = "<group>"; };
 		C0DB6F7617E602150020B394 /* Edges.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Edges.jpg; sourceTree = "<group>"; };
 		C0DB6F7717E602150020B394 /* Grayscale.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grayscale.jpg; sourceTree = "<group>"; };
 		C0DB6F7817E602150020B394 /* HighlightShadows.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = HighlightShadows.jpg; sourceTree = "<group>"; };
@@ -280,9 +286,10 @@
 		C046913017F08CC000F14AE6 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				C06A359317FA224800DC3DBA /* Filter.h */,
+				C06A359417FA224800DC3DBA /* Filter.m */,
 				C0B4644C17DA826F00126545 /* FilterChain.xcdatamodeld */,
-				C031702717DE7BBE003F8ACB /* Filter.h */,
-				C031702817DE7BBE003F8ACB /* Filter.m */,
+				C00077A217DE72DA00715694 /* FreeFilterBank.json */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -377,7 +384,6 @@
 				C0B4643D17DA826F00126545 /* InfoPlist.strings */,
 				C0B4644017DA826F00126545 /* main.m */,
 				C0B4644217DA826F00126545 /* FilterChain-Prefix.pch */,
-				C00077A217DE72DA00715694 /* FilterBank.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -413,6 +419,9 @@
 		C0DB6F8417E602570020B394 /* Supplimentary Image Files */ = {
 			isa = PBXGroup;
 			children = (
+				C0C700B917F6A17B00464BE9 /* lookup_amatorka.png */,
+				C0C700BA17F6A17B00464BE9 /* lookup_soft_elegance_1.png */,
+				C0C700BB17F6A17B00464BE9 /* lookup_soft_elegance_2.png */,
 				C046913717F0CDFF00F14AE6 /* VideoIcon.png */,
 				C053504517EE48560078A3D7 /* bin.png */,
 				C053504717EE493C0078A3D7 /* play.png */,
@@ -538,7 +547,7 @@
 				C0B4643F17DA826F00126545 /* InfoPlist.strings in Resources */,
 				C0B4648717DA89FF00126545 /* Retina.xib in Resources */,
 				C0A35DF217EE592D0015CA6E /* Default-Portrait@2x~ipad.png in Resources */,
-				C00077A317DE72DA00715694 /* FilterBank.json in Resources */,
+				C00077A317DE72DA00715694 /* FreeFilterBank.json in Resources */,
 				C031702E17DE94E8003F8ACB /* camera-3.png in Resources */,
 				C0960B6017EE4FE6006FF0A5 /* Default.png in Resources */,
 				C0A35DF017EE58850015CA6E /* Default-Landscape~ipad.png in Resources */,
@@ -549,6 +558,7 @@
 				C053504817EE493C0078A3D7 /* play.png in Resources */,
 				C0A35E0A17EE62510015CA6E /* icon50.png in Resources */,
 				C0A35DFA17EE62430015CA6E /* icon120.png in Resources */,
+				C0C700BE17F6A17B00464BE9 /* lookup_soft_elegance_2.png in Resources */,
 				C031703417DE95C5003F8ACB /* video.png in Resources */,
 				C073570417E51DE40024D02B /* OrangeSquareMin.jpg in Resources */,
 				C0A35DF417EE595F0015CA6E /* Default-Landscape@2x~ipad.png in Resources */,
@@ -556,6 +566,8 @@
 				C073571617E53A2E0024D02B /* clipsbutton.png in Resources */,
 				C073571817E540B40024D02B /* CameraLensSmall.png in Resources */,
 				C0A35E0E17EE62510015CA6E /* icon76.png in Resources */,
+				C0C700BC17F6A17B00464BE9 /* lookup_amatorka.png in Resources */,
+				C0C700BD17F6A17B00464BE9 /* lookup_soft_elegance_1.png in Resources */,
 				C0A35E0917EE62510015CA6E /* icon40.png in Resources */,
 				C0DB6F7C17E602150020B394 /* Edges.jpg in Resources */,
 				C0DB6F7D17E602150020B394 /* Grayscale.jpg in Resources */,
@@ -619,11 +631,11 @@
 				C0B4649317DA8CB400126545 /* RecordingManager.m in Sources */,
 				C0B4649617DA8D6700126545 /* ControlBoxManager.m in Sources */,
 				C00BB83E17DD948500E0580D /* Cell.m in Sources */,
+				C06A359517FA224800DC3DBA /* Filter.m in Sources */,
 				C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */,
 				C0BD456D17DE180A005734AD /* FilterBank.m in Sources */,
 				C0BD457217DE1824005734AD /* FreeCell.m in Sources */,
 				C0032B6917F13C9900FD72B7 /* LiveFilterView.m in Sources */,
-				C031702917DE7BBE003F8ACB /* Filter.m in Sources */,
 				C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */,
 				C046913317F0BF6500F14AE6 /* NavCell.m in Sources */,
 			);

@@ -11,29 +11,41 @@
 #import "Filter.h"
 #import "LiveFilterView.h"
 
-@interface ActiveFilterManager : NSObject <LiveFilterSliderDelegate>
+@interface ActiveFilterManager : NSObject <LiveFilterActionDelegate>
 {
     NSMutableArray* activeFilterNames;
     NSDictionary* namesAndDesignations;
 }
 
-@property (nonatomic, assign) id filterPipelineDelegate;
+@property (nonatomic, assign) id recordingManagerDelegate;
+@property (nonatomic, assign) id filterBankDelegate;
+@property (nonatomic, assign) id mvcDelegate;
 @property (strong, nonatomic) NSMutableArray* activeFilters;
 
-- (void)setIntensitiesForFilter:(GPUImageFilter*)filter;
 - (NSString*)designatorForName:(NSString*)name;
 - (NSDictionary*)namesAndDesignations;
 - (NSMutableArray*)activeFilterNames;
 - (BOOL)addFilterNamed:(NSString*)name withOriginatingView:(UIView*)view;
-- (void)removeFilter:(UITapGestureRecognizer*)tap;
 - (CGRect)frameForPosition:(int)position;
 - (void)updatePipeline;
 
 
 @end
 
-@protocol FilterPipelineDelegate <NSObject>
+@protocol ActiveFilterToRecordingManager <NSObject>
 
 - (void)updatePipelineWithFilters:(NSArray*)filters;
+
+@end
+
+@protocol ActiveFilterToFilterBank <NSObject>
+
+- (void)retireFilter:(Filter*)filter;
+
+@end
+
+@protocol ActiveFilterToMVC <NSObject>
+
+- (void)removeLiveFilterWithTag:(int)tag;
 
 @end

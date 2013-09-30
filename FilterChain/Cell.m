@@ -35,7 +35,8 @@
         _image.layer.masksToBounds = YES;
         _image.layer.borderColor = [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0].CGColor;
         _image.layer.borderWidth = 2.0;
-        _auxControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"outgoing.png"], [UIImage imageNamed:@"play.png"], [UIImage imageNamed:@"bin.png"], nil]];
+        //_auxControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:[UIImage imageNamed:@"outgoing.png"], [UIImage imageNamed:@"play.png"], [UIImage imageNamed:@"bin.png"], nil]];
+        _auxControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"export", @"play", @"delete", nil]];
         _auxControl.frame = CGRectMake(0.0, 150.0, 160.0, 30.0);
         _auxControl.segmentedControlStyle = UISegmentedControlStyleBar;
         

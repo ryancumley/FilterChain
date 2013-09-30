@@ -2,7 +2,7 @@
 //  Filter.m
 //  FilterChain
 //
-//  Created by Ryan Cumley on 9/9/13.
+//  Created by Ryan Cumley on 9/30/13.
 //  Copyright (c) 2013 Ryan Cumley. All rights reserved.
 //
 
@@ -14,5 +14,6 @@
 @dynamic filterDesignator;
 @dynamic imageName;
 @dynamic name;
+@dynamic paidOrFree;
 
 @end

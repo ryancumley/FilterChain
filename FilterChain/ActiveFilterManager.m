@@ -28,14 +28,11 @@
 
 @implementation ActiveFilterManager
 
-@synthesize filterPipelineDelegate = _filterPipelineDelegate, activeFilters = _activeFilters;
+@synthesize recordingManagerDelegate = _recordingManagerDelegate, activeFilters = _activeFilters, mvcDelegate = _mvcDelegate;
 
 - (id)init {
     self = [super init];
     if (self) {
-        //assign our delegate
-        _filterPipelineDelegate = [(MainViewController*)[[[[UIApplication sharedApplication]delegate]window]rootViewController] recordingManager];
-        
         UIViewController* mvc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         //Configure the 6 LiveFilterView instances
         for (int i = 1; i <= k_maxActive; i++) {
@@ -49,15 +46,6 @@
     }
     
     return self;
-}
-
-- (void)setIntensitiesForFilter:(GPUImageFilter*)filter {
-    if ([filter class] == [GPUImageHighlightShadowFilter class]) {
-        GPUImageHighlightShadowFilter* calibrated = (GPUImageHighlightShadowFilter*)filter;
-        [calibrated setShadows:0.7];
-        [calibrated setHighlights:0.8];
-        filter = calibrated;
-    }
 }
 
 - (NSDictionary*)namesAndDesignations {
@@ -116,13 +104,8 @@
         }
     }
     
-    //set intensity parameters as needed for the filters
-    for (GPUImageFilter* filter in _activeFilters) {
-        [self setIntensitiesForFilter:(GPUImageFilter*)filter];
-     }
-    
      //now send these filters to the pipeline, via our delegate protocol
-    [self.filterPipelineDelegate updatePipelineWithFilters:_activeFilters];
+    [self.recordingManagerDelegate updatePipelineWithFilters:_activeFilters];
 }
 
 - (BOOL)addFilterNamed:(NSString *)name withOriginatingView:(UIView *)view {
@@ -145,6 +128,7 @@
                      }
      ];
     
+    //scale down and push the thumbnail image to the correct LiveFilterView instance
     UIViewController* mvc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     LiveFilterView* destination = (LiveFilterView*)[mvc.view viewWithTag:currentCount];
     UIImage* bigThumb = [(UIImageView*)view image];
@@ -153,43 +137,18 @@
     [destination.slider setThumbImage:smallThumb forState:UIControlStateHighlighted];
     [destination setHidden:NO];
     [destination.slider setValue:0.7 animated:YES];
+    if (currentCount == 1 || currentCount == 3) {
+        [destination makeSliderStaionary:YES];
+    }
+    else {
+        [destination makeSliderStaionary:NO];
+    }
     [view removeFromSuperview];
     view = nil;
     
     //update the filter pipeline
     [self updatePipeline];
     return YES;
-}
-
-- (void)removeFilter:(UITapGestureRecognizer*)tap {
-    //remove the target filter
-    UIView* target = tap.view;
-    int position = target.tag;
-    NSString* name = [activeFilterNames objectAtIndex:position - 1];
-    [self retireFilterNamed:name];
-    [activeFilterNames removeObjectAtIndex:position - 1];
-    
-    //animate the surviving filters into position
-    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    MainViewController* mvc = (MainViewController*)delegate.window.rootViewController;
-    if (position < k_maxActive) {
-        for (int i = (position + 1); i <= k_maxActive; i++) {
-            UIView* decrement = [mvc.previewLayer viewWithTag:i];
-            decrement.tag -= 1;
-            CGRect ending = [self frameForPosition:(i-1)];
-            [UIView animateWithDuration:0.2
-                             animations:^(void) {
-                                 decrement.frame = ending;
-                             }
-             ];
-        }
-    }
-    
-    [target removeFromSuperview];
-    target = nil;
-    
-    //update the filter pipeline
-    [self updatePipeline];
 }
 
 - (void)retireFilterNamed:(NSString *)name {
@@ -207,9 +166,7 @@
         NSLog(@"%@",error.localizedDescription);
     }
     Filter* filter = (Filter*)[fetch objectAtIndex:0]; //Assuming Filter contains no duplicates, fetch.count will always = 1
-    MainViewController* mvc = (MainViewController*)delegate.window.rootViewController;
-    [mvc.filterBank retireFilterFromActive:filter];
-    
+    [self.filterBankDelegate retireFilter:filter];
 }
 
 - (CGRect)frameForPosition:(int)position {
@@ -230,8 +187,84 @@
 - (void)liveFilterWithTag:(int)tag isSendingValue:(CGFloat)value {
     //point to the correct filter
     GPUImageFilter* target = [_activeFilters objectAtIndex:(tag - 1)];
-    //NSLog(@"target.class: %@",target.class); //our pointer has the class that we desire. Next adjust the appropriate constant for the filter
-
+    Class targetClass = [target class];
+    
+    //adjust the right value, corresponding to filter Type, as needed
+    if (targetClass == [GPUImageHighlightShadowFilter class]) {
+        [(GPUImageHighlightShadowFilter*)target setShadows:value]; //setting just shadows for now. Use a (1-value) sort of thing for highlights if desired later
+        return;
+    }
+    
+    if ([target class] == [GPUImageSaturationFilter class]) {
+        [(GPUImageSaturationFilter*)target setSaturation:(2 * value)]; //ranges from 0-2 with 1 as neutral
+        return;
+    }
+    
+    if ([target class] == [GPUImageContrastFilter class]) {
+           [(GPUImageContrastFilter*)target setContrast:(4 * value)]; //ranges from 0-4 with 1.0 as normal
+        return;
+    }
+    
+    if ([target class] == [GPUImageExposureFilter class]) {
+           [(GPUImageExposureFilter*)target setExposure:(20 * (value - 0.5))]; //ranges from -10-10, 0 is neutral
+        return;
+    }
+    
+    if ([target class] == [GPUImageSharpenFilter class]) {
+           [(GPUImageSharpenFilter*)target setSharpness:(8 *(value - 0.5))]; //ranges from -4-4, 0 is neutral
+        return;
+    }
+    
+    if ([target class] == [GPUImageGammaFilter class]) {
+           [(GPUImageGammaFilter*)target setGamma:(3 * value)]; //ranges from 0-3 with 1 as normal
+        return;
+    }
+    
+    if ([target class] == [GPUImageAdaptiveThresholdFilter class]) {
+            [(GPUImageAdaptiveThresholdFilter*)target setBlurSize:(5 * value)];
+        return;
+    }
+    
+    if ([target class] == [GPUImagePixellateFilter class]) {
+            [(GPUImagePixellateFilter*)target setFractionalWidthOfAPixel:(70 * value)];
+        return;
+    }
+    
+    if ([target class] == [GPUImageToonFilter class]) {
+            [(GPUImageToonFilter*)target setThreshold:(value / 2)];
+            [(GPUImageToonFilter*)target setQuantizationLevels:(20 * value)];
+        return;
+    }
+    
+    if ([target class] == [GPUImageGaussianBlurFilter class]) {
+               [(GPUImageGaussianBlurFilter*)target setBlurSize:(3 * value)];
+        return;
+    }
+    
+    if ([target class] == [GPUImageTiltShiftFilter class]) {
+        if (value > 0.1 && value < 0.9) {
+            [(GPUImageTiltShiftFilter*)target setTopFocusLevel:(value - 0.1)];
+            [(GPUImageTiltShiftFilter*)target setBottomFocusLevel:(value + 0.1)];
+        }
+        return;
+    }
 }
+
+- (void)killLiveFilterWithTag:(int)tag {
+    //tell FilterBank to put this filter back into the available pool
+    GPUImageFilter* targetFilter = [_activeFilters objectAtIndex:(tag - 1)];
+    [self retireFilterNamed:[activeFilterNames objectAtIndex:(tag - 1)]];
+    
+    //update the name and filter arrays in this class
+    [_activeFilters removeObject:targetFilter];
+    [activeFilterNames removeObjectAtIndex:(tag - 1)];
+    
+    //update the appearance of the LiveFilterView's displayed in the main view
+    [self.mvcDelegate removeLiveFilterWithTag:tag];
+    
+    [self updatePipeline];
+}
+
+
 
 @end

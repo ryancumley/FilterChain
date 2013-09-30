@@ -8,7 +8,6 @@
 
 #import "FilterBank.h"
 #import "AppDelegate.h"
-#import "ActiveFilterManager.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define k_filterBankFrame CGRectMake(0.0, 0.0, 320.0, 99.0)
@@ -105,25 +104,6 @@
     return success;
 }
 
-- (void)retireFilterFromActive:(id)filter {
-    [_excludedFilters removeObjectIdenticalTo:filter];
-    [self refreshDisplayFilters];
-    
-    //find the index of our desired filter
-    int index = 0;
-    BOOL found = NO;
-    do {
-        if ([_displayFilters objectAtIndex:index] == filter) {
-            found = YES;
-            index -= 1; //otherwise ending state will be incremented too far
-        }
-        index += 1;
-    } while (!found);
-    
-    NSIndexPath* insertionPath = [NSIndexPath indexPathForRow:index inSection:1];
-    [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObjects:insertionPath, nil]];
-}
-
 
 
 #pragma mark Class Scope Methods
@@ -161,7 +141,27 @@
     }
 }
 
+#pragma mark ActiveFilterManager delegate methods
 
+- (void)retireFilter:(Filter*)filter{
+    [_excludedFilters removeObjectIdenticalTo:filter];
+    [self refreshDisplayFilters];
+    
+    //find the index of our desired filter
+    int index = 0;
+    BOOL found = NO;
+    do {
+        if ([_displayFilters objectAtIndex:index] == filter) {
+            found = YES;
+            index -= 1; //otherwise ending state will be incremented too far
+        }
+        index += 1;
+    } while (!found);
+    
+    NSIndexPath* insertionPath = [NSIndexPath indexPathForRow:index inSection:1];
+    [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObjects:insertionPath, nil]];
+    
+}
 
 #pragma mark UICollectionView Data Source and Delegate Methods
 
@@ -225,6 +225,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return;
+    }
     //Instantiate the active filter and tell mVC to move it into position
     FreeCell* cell = (FreeCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
     NSString* name = cell.label.text;

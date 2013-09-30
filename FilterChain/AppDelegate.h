@@ -27,7 +27,7 @@
 //Load From CoreData at Launch
 - (void)loadFiltersFromJSON;
 - (BOOL)alreadyExists:(NSString*)filterNamed inManagedObjectContext:(NSManagedObjectContext*)moc;
-- (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator;
+- (void)createFilterWithName:(NSString*)name imageNamed:(NSString*)imageName filterDesignator:(NSString*)designator paidOrFree:(NSString*)paid;
 
 //Core Data Stack
 - (void)saveContext;

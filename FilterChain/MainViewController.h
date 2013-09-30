@@ -15,7 +15,7 @@
 #import "GPUImage.h"
 #import "ActiveFilterManager.h"
 
-@interface MainViewController : UIViewController
+@interface MainViewController : UIViewController <ActiveFilterToMVC>
 {
     CGRect filterBankFrame;
     CGRect collectionShellFrame;
