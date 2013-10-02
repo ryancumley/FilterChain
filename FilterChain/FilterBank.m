@@ -166,7 +166,7 @@
 #pragma mark UICollectionView Data Source and Delegate Methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 3;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -176,9 +176,6 @@
     }
     if (section == 1) {
         elements = _displayFilters.count;
-    }
-    if (section == 2) {
-        elements = 2;
     }
     
     return elements;
@@ -215,9 +212,7 @@
         case 1:
             cell = [self sectionOneCellFor:cv cellForItemAtIndexPath:indexPath];
             break;
-        case 2:
-            cell = [self sectionTwoCellFor:cv cellForItemAtIndexPath:indexPath];
-            break;
+            
         default:
             break;
     }

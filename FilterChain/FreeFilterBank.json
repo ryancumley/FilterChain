@@ -1,57 +1,146 @@
 {
     "Filter":[
+                           
+             {
+              "name":"Adaptive",
+              "imageName":"Adaptive.jpg",
+              "filterDesignator":"GPUImageAdaptiveThresholdFilter",
+              "paidOrFree":"free"
+              },
+              
+             {
+              "name":"Amatorka",
+              "imageName":"Amatorka.jpg",
+              "filterDesignator":"GPUImageAmatorkaFilter",
+              "paidOrFree":"free"
+              },
+              
+             {
+              "name":"Blur",
+              "imageName":"Blur.jpg",
+              "filterDesignator":"GPUImageGaussianBlurFilter",
+              "paidOrFree":"free"
+              },
+              
+             {
+              "name":"Contrast",
+              "imageName":"Contrast.jpg",
+              "filterDesignator":"GPUImageContrastFilter",
+              "paidOrFree":"free"
+              },
+              
+             {
+              "name":"Edges",
+              "imageName":"Edges.jpg",
+              "filterDesignator":"GPUImageSobelEdgeDetectionFilter",
+              "paidOrFree":"free"
+              },
+              
+             {
+              "name":"Exposure",
+              "imageName":"Exposure.jpg",
+              "filterDesignator":"GPUImageExposureFilter",
+              "paidOrFree":"free"
+              },
+              
+             {
+              "name":"Gamma",
+              "imageName":"Gamma.jpg",
+              "filterDesignator":"GPUImageGammaFilter",
+              "paidOrFree":"free"
+              },
+              
               {
               "name":"Grayscale",
               "imageName":"Grayscale.jpg",
               "filterDesignator":"GPUImageGrayscaleFilter",
               "paidOrFree":"free"
               },
-
-              {
-              "name":"Edges",
-              "imageName":"Edges.jpg",
-              "filterDesignator":"GPUImageSobelEdgeDetectionFilter",
-              "paidOrFree":"free"
-              },
-
-              {
+              
+             {
               "name":"Inversion",
               "imageName":"Inversion.jpg",
               "filterDesignator":"GPUImageColorInvertFilter",
               "paidOrFree":"free"
               },
               
-              
-              {
-              "name":"Shadows",
-              "imageName":"HighlightShadows.jpg",
-              "filterDesignator":"GPUImageHighlightShadowFilter",
+             {
+              "name":"Neon Edge",
+              "imageName":"NeonEdge.jpg",
+              "filterDesignator":"GPUImageXYDerivativeFilter",
               "paidOrFree":"free"
               },
               
+             {
+              "name":"Pixellate",
+              "imageName":"Pixellate.jpg",
+              "filterDesignator":"GPUImagePixellateFilter",
+              "paidOrFree":"paid"
+              },
+              
+             {
+              "name":"Saturate",
+              "imageName":"Saturate.jpg",
+              "filterDesignator":"GPUImageSaturationFilter",
+              "paidOrFree":"paid"
+              },
               
               {
               "name":"Sepia",
               "imageName":"Sepia.jpg",
               "filterDesignator":"GPUImageSepiaFilter",
-              "paidOrFree":"free"
+              "paidOrFree":"paid"
               },
               
               {
-              "name":"Sketch",
-              "imageName":"Sepia.jpg",
-              "filterDesignator":"GPUImageSketchFilter",
-              "paidOrFree":"free"
+              "name":"Shadows",
+              "imageName":"HighlightShadows.jpg",
+              "filterDesignator":"GPUImageHighlightShadowFilter",
+              "paidOrFree":"paid"
               },
               
-                           {
-              "name":"Halftone",
-              "imageName":"Sepia.jpg",
-              "filterDesignator":"GPUImageHalftoneFilter",
-              "paidOrFree":"free"
+              {
+              "name":"Sharpen",
+              "imageName":"Sharpen.jpg",
+              "filterDesignator":"GPUImageSharpenFilter",
+              "paidOrFree":"paid"
+              },
+              
+             {
+              "name":"Sketch",
+              "imageName":"Sketch.jpg",
+              "filterDesignator":"GPUImageSketchFilter",
+              "paidOrFree":"paid"
+              },
+              
+             {
+              "name":"Soft",
+              "imageName":"Soft.jpg",
+              "filterDesignator":"GPUImageSoftEleganceFilter",
+              "paidOrFree":"paid"
+              },
+              
+             {
+              "name":"Tilt Shift",
+              "imageName":"TiltShift.jpg",
+              "filterDesignator":"GPUImageTiltShiftFilter",
+              "paidOrFree":"paid"
+              },
+              
+             {
+              "name":"Toon",
+              "imageName":"Toon.jpg",
+              "filterDesignator":"GPUImageToonFilter",
+              "paidOrFree":"paid"
+              },
+              
+             {
+              "name":"Vignette",
+              "imageName":"Vignette.jpg",
+              "filterDesignator":"GPUImageVignetteFilter",
+              "paidOrFree":"paid"
               }
               
-             
               ]
 
 }

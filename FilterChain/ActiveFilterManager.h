@@ -15,6 +15,7 @@
 {
     NSMutableArray* activeFilterNames;
     NSDictionary* namesAndDesignations;
+    NSArray* namesOfStationaryFilters;
 }
 
 @property (nonatomic, assign) id recordingManagerDelegate;

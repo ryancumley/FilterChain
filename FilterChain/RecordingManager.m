@@ -10,9 +10,8 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 
-#define k_FilterBankAlphaNotRecording 0.85f
-#define k_FilterBankAlphaIsRecording 0.7f
 #define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
+#define k_filterBankBackgroundRecordingColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:0.5]
 
 @implementation RecordingManager
 
@@ -90,8 +89,7 @@
 - (void)startNewRecording {
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
-    [mvc.controlBoxManager.view setAlpha:k_FilterBankAlphaIsRecording];
-    [mvc.filterBank.collectionView setBackgroundColor:[UIColor clearColor]];
+    [mvc.filterBank.collectionView setBackgroundColor:k_filterBankBackgroundRecordingColor];
     [self beginFlashingRecordButton];
     [mvc.recordingNotifier setHidden:NO];
     mvc.notifierLabel.text = @"Recording";
@@ -138,7 +136,6 @@
     MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
     [mvc.recordingNotifier setHidden:NO];
     mvc.notifierLabel.text = @"Saving Clip";
-    [mvc.controlBoxManager.view setAlpha:k_FilterBankAlphaNotRecording];
     [mvc.filterBank.collectionView setBackgroundColor:k_filterBankBackgroundColor];
     videoCamera.audioEncodingTarget = nil;
     [videoCamera pauseCameraCapture];

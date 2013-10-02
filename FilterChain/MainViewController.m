@@ -91,6 +91,7 @@
 
 - (IBAction)navigateToCamera:(id)sender {
     [_recordingManager awakeVideoCamera];
+    [_activeFilterManager updatePipeline];
     
      clipCollectionIsVisible = NO;
     CGRect displayClips = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];

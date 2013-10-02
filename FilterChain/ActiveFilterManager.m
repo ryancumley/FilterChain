@@ -22,6 +22,7 @@
 
 - (void)retireFilterNamed:(NSString*)name;
 - (UIImage*)scaledDownVersionOf:(UIImage*)source;
+- (BOOL)stationarySliderNeededForName:(NSString*)name;
 
 @end
 
@@ -108,6 +109,22 @@
     [self.recordingManagerDelegate updatePipelineWithFilters:_activeFilters];
 }
 
+- (BOOL)stationarySliderNeededForName:(NSString *)name {
+    if (namesOfStationaryFilters == nil) {
+        namesOfStationaryFilters = [NSArray arrayWithObjects:
+                                    @"Amatorka",
+                                    @"Edges",
+                                    @"Grayscale",
+                                    @"Inversion",
+                                    @"Neon Edge",
+                                    @"Sepia",
+                                    @"Sketch",
+                                    @"Soft",
+                                    @"Vignette", nil];
+    }
+    return [namesOfStationaryFilters containsObject:name];
+}
+
 - (BOOL)addFilterNamed:(NSString *)name withOriginatingView:(UIView *)view {
     
     //append this filter to the end of the activeFilters array
@@ -137,12 +154,9 @@
     [destination.slider setThumbImage:smallThumb forState:UIControlStateHighlighted];
     [destination setHidden:NO];
     [destination.slider setValue:0.7 animated:YES];
-    if (currentCount == 1 || currentCount == 3) {
-        [destination makeSliderStaionary:YES];
-    }
-    else {
-        [destination makeSliderStaionary:NO];
-    }
+    
+    [destination makeSliderStaionary:[self stationarySliderNeededForName:name]];
+    
     [view removeFromSuperview];
     view = nil;
     
@@ -226,7 +240,7 @@
     }
     
     if ([target class] == [GPUImagePixellateFilter class]) {
-            [(GPUImagePixellateFilter*)target setFractionalWidthOfAPixel:(70 * value)];
+            [(GPUImagePixellateFilter*)target setFractionalWidthOfAPixel:(value / 3)];
         return;
     }
     

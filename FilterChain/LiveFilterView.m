@@ -36,7 +36,7 @@
         _killButton.frame = k_killButtonFrame;
         _killButton.layer.masksToBounds = YES;
         _killButton.layer.cornerRadius = 10.0;
-        _killButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        _killButton.layer.borderColor = [UIColor orangeColor].CGColor;
         _killButton.layer.borderWidth = 2.0;
         [_killButton addTarget:self action:@selector(killThisFilter) forControlEvents:UIControlEventTouchUpInside];
         UILabel* buttonX = [[UILabel alloc] initWithFrame:k_killButtonLabelFrame];
