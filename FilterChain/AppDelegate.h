@@ -10,6 +10,7 @@
 #import "GPUImage.h"
 #import "MainViewController.h"
 #import "Filter.h"
+#import "InAppPurchaseManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -20,9 +21,11 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (strong, nonatomic) MainViewController* mVC;
+@property (strong, nonatomic) InAppPurchaseManager* purchaseManager;
 
 //Initialization, Configuration and View Lifecycle
 - (void)createDirectoryForThumbnails;
+- (InAppPurchaseManager*)purchaseManager;
 
 //Load From CoreData at Launch
 - (void)loadFiltersFromJSON;

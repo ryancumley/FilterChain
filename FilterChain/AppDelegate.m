@@ -23,6 +23,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 @synthesize mVC = _mVC;
+@synthesize purchaseManager = _purchaseManager;
 
 
 
@@ -38,11 +39,19 @@
         [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error];
 }
 
+- (InAppPurchaseManager*)purchaseManager {
+    if (_purchaseManager == nil) {
+        _purchaseManager = [[InAppPurchaseManager alloc] init];
+    }
+    return _purchaseManager;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self loadFiltersFromJSON];
     [self createDirectoryForThumbnails];
+    [[self purchaseManager] requestPremiumFiltersUpgradeProductData];
     
     _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
     self.window.rootViewController = _mVC;

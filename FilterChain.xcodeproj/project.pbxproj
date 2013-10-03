@@ -26,6 +26,7 @@
 		C00BB83E17DD948500E0580D /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = C00BB83D17DD948500E0580D /* Cell.m */; };
 		C01734A917E82EC900113DFE /* recordRedLight.png in Resources */ = {isa = PBXBuildFile; fileRef = C01734A817E82EC900113DFE /* recordRedLight.png */; };
 		C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0208E7517E130170097F1E8 /* ActiveFilterManager.m */; };
+		C02B829017FCD82300165792 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02B828F17FCD82300165792 /* StoreKit.framework */; };
 		C046913317F0BF6500F14AE6 /* NavCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C046913217F0BF6500F14AE6 /* NavCell.m */; };
 		C046913617F0BF7900F14AE6 /* PaidCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C046913517F0BF7900F14AE6 /* PaidCell.m */; };
 		C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C046913717F0CDFF00F14AE6 /* VideoIcon.png */; };
@@ -91,6 +92,7 @@
 		C0DB6F7F17E602150020B394 /* Inversion.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7917E602150020B394 /* Inversion.jpg */; };
 		C0DB6F8017E602150020B394 /* Pixellate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7A17E602150020B394 /* Pixellate.jpg */; };
 		C0DB6F8117E602150020B394 /* Sepia.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7B17E602150020B394 /* Sepia.jpg */; };
+		C0EFCAD917FD3E39009537F2 /* InAppPurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EFCAD817FD3E39009537F2 /* InAppPurchaseManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +149,7 @@
 		C01734A817E82EC900113DFE /* recordRedLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordRedLight.png; sourceTree = "<group>"; };
 		C0208E7417E130170097F1E8 /* ActiveFilterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveFilterManager.h; sourceTree = "<group>"; };
 		C0208E7517E130170097F1E8 /* ActiveFilterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActiveFilterManager.m; sourceTree = "<group>"; };
+		C02B828F17FCD82300165792 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C046913117F0BF6500F14AE6 /* NavCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavCell.h; sourceTree = "<group>"; };
 		C046913217F0BF6500F14AE6 /* NavCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavCell.m; sourceTree = "<group>"; };
 		C046913417F0BF7900F14AE6 /* PaidCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaidCell.h; sourceTree = "<group>"; };
@@ -226,6 +229,8 @@
 		C0DB6F7917E602150020B394 /* Inversion.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Inversion.jpg; sourceTree = "<group>"; };
 		C0DB6F7A17E602150020B394 /* Pixellate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Pixellate.jpg; sourceTree = "<group>"; };
 		C0DB6F7B17E602150020B394 /* Sepia.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sepia.jpg; sourceTree = "<group>"; };
+		C0EFCAD717FD3E39009537F2 /* InAppPurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppPurchaseManager.h; sourceTree = "<group>"; };
+		C0EFCAD817FD3E39009537F2 /* InAppPurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchaseManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +241,7 @@
 				C0B4648517DA854F00126545 /* libGPUImage.a in Frameworks */,
 				C0B4647817DA842F00126545 /* MediaPlayer.framework in Frameworks */,
 				C0B4647217DA840800126545 /* AVFoundation.framework in Frameworks */,
+				C02B829017FCD82300165792 /* StoreKit.framework in Frameworks */,
 				C0B4647317DA840800126545 /* CoreMedia.framework in Frameworks */,
 				C0B4647417DA840800126545 /* CoreVideo.framework in Frameworks */,
 				C0B4647517DA840800126545 /* OpenGLES.framework in Frameworks */,
@@ -364,6 +370,7 @@
 		C0B4643117DA826F00126545 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C02B828F17FCD82300165792 /* StoreKit.framework */,
 				C0B4643217DA826F00126545 /* UIKit.framework */,
 				C0B4643417DA826F00126545 /* Foundation.framework */,
 				C0B4643617DA826F00126545 /* CoreGraphics.framework */,
@@ -381,6 +388,8 @@
 				C0B4648A17DA8A4900126545 /* MainViewController.h */,
 				C0B4648B17DA8A4900126545 /* MainViewController.m */,
 				C0B4648617DA89FF00126545 /* Retina.xib */,
+				C0EFCAD717FD3E39009537F2 /* InAppPurchaseManager.h */,
+				C0EFCAD817FD3E39009537F2 /* InAppPurchaseManager.m */,
 				C046913017F08CC000F14AE6 /* Core Data */,
 				C046912F17F08CA300F14AE6 /* Main Screen */,
 				C046912C17F08C6F00F14AE6 /* Clip Screen */,
@@ -516,6 +525,11 @@
 				TargetAttributes = {
 					C0B4642E17DA826F00126545 = {
 						DevelopmentTeam = L5DJ695F59;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -664,6 +678,7 @@
 				C0BD456D17DE180A005734AD /* FilterBank.m in Sources */,
 				C0BD457217DE1824005734AD /* FreeCell.m in Sources */,
 				C0032B6917F13C9900FD72B7 /* LiveFilterView.m in Sources */,
+				C0EFCAD917FD3E39009537F2 /* InAppPurchaseManager.m in Sources */,
 				C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */,
 				C046913317F0BF6500F14AE6 /* NavCell.m in Sources */,
 			);
@@ -776,6 +791,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilterChain/FilterChain-Prefix.pch";
 				HEADER_SEARCH_PATHS = "../GPUImage-master/framework/**";
@@ -783,6 +799,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -792,6 +809,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilterChain/FilterChain-Prefix.pch";
 				HEADER_SEARCH_PATHS = "../GPUImage-master/framework/**";
@@ -799,6 +817,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
