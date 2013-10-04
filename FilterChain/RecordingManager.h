@@ -25,7 +25,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView* blinkyRedLight;
 
 - (void)configureCamera;
-- (void)awakeVideoCamera;
+- (void)startCameraCapture;
+- (void)pauseCameraCapture;
+- (void)resumeCameraCapture;
 - (void)stopCameraCapture;
 - (BOOL)isRecording;
 - (void)startNewRecording;

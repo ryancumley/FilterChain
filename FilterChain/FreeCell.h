@@ -13,5 +13,6 @@
 @property (strong, nonatomic) UIImageView* image;
 @property (strong, nonatomic) UILabel* label;
 @property (strong, nonatomic) NSString* imageName;
+@property (strong, nonatomic) UIImageView* lockImage;
 
 @end

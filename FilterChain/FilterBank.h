@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "FreeCell.h"
 #import "NavCell.h"
-#import "PaidCell.h"
 #import "Filter.h"
 #import "ActiveFilterManager.h"
 

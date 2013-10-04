@@ -14,7 +14,7 @@
 
 @implementation FreeCell
 
-@synthesize image = _image, label = _label, imageName = _imageName;
+@synthesize image = _image, label = _label, imageName = _imageName, lockImage = _lockImage;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -31,8 +31,11 @@
         _label.numberOfLines = 0;
         _label.lineBreakMode = NSLineBreakByWordWrapping;
         _label.textColor = [UIColor colorWithRed:196.0f/255.0f green:204.0f/255.0f blue:208.0f/255.0f alpha:1.0];
+        _lockImage = [[UIImageView alloc] initWithFrame:k_imageFrame];
+        _lockImage.image = [UIImage imageNamed:@"locked.png"];
         [self addSubview:_image];
         [self addSubview:_label];
+        [self addSubview:_lockImage];
     }
     return self;
 }

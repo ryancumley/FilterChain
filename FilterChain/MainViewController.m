@@ -12,6 +12,7 @@
 #define k_filterBankOffsetFromTop 51.0f
 #define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
 #define k_maxActiveFilters 6
+#define k_upgradePurchased @"upgradePurchased"
 
 @interface MainViewController ()
 
@@ -72,6 +73,9 @@
     _purchaseManager = [[InAppPurchaseManager alloc] init];
     [_purchaseManager setPurchasePresentationDelegate:self];
     [_purchaseManager loadStore];
+    NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults registerDefaults:@{@NO:k_upgradePurchased}];
+    [standardDefaults synchronize];
 }
 
 - (void)hideRecordingNotifier {
@@ -83,7 +87,7 @@
         [_recordingManager stopRecording];
         [_clipManager refreshStoredClips];
     }
-    [_recordingManager stopCameraCapture];
+    [_recordingManager pauseCameraCapture];
     
     clipCollectionIsVisible = YES;
     [self.view bringSubviewToFront:_clipManagerView];
@@ -96,7 +100,7 @@
 }
 
 - (IBAction)navigateToCamera:(id)sender {
-    [_recordingManager awakeVideoCamera];
+    [_recordingManager resumeCameraCapture];
     [_activeFilterManager updatePipeline];
     
      clipCollectionIsVisible = NO;
@@ -148,7 +152,7 @@
     if (_recordingManager == nil) {
         return;
     }
-    [_recordingManager awakeVideoCamera];
+    [_recordingManager startCameraCapture];
 }
 
 - (void)didReceiveMemoryWarning
@@ -183,7 +187,7 @@
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [_recordingManager awakeVideoCamera];
+    [_recordingManager startCameraCapture];
     UIInterfaceOrientation endingOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     [_recordingManager orientVideoCameraOutputTo:endingOrientation];
     
@@ -266,9 +270,17 @@
 - (void)presentDetailsOfUpgrade:(NSString*)title description:(NSString*)description price:(NSDecimalNumber*)price {
     //User selected a locked filter, and we've queried Apple to make sure the product is available, and fetched the details in localized $
     //Present it to the user for approval
+    NSString* alertViewTitle = [NSString stringWithFormat:@"Unlock Premium Filters for %@",price];
     
     //AlertView setup and presentation
-    
+    UIAlertView* av = [[UIAlertView alloc]
+                       initWithTitle:alertViewTitle
+                       message:@"Purchase / Restore additional filters. Available for use immediately. Includes all premium filters in future app upgrades."
+                       delegate:self
+                       cancelButtonTitle:@"Cancel"
+                       otherButtonTitles:@"Purchase / Restore",
+                       nil];
+    [av show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

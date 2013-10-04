@@ -70,8 +70,16 @@
     [videoCamera startCameraCapture];
 }
 
-- (void)awakeVideoCamera {
+- (void)startCameraCapture {
     [videoCamera startCameraCapture];
+}
+
+- (void)resumeCameraCapture {
+    [videoCamera resumeCameraCapture];
+}
+
+- (void)pauseCameraCapture {
+    [videoCamera pauseCameraCapture];
 }
 
 - (void)stopCameraCapture {

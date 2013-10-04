@@ -11,6 +11,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define k_filterBankFrame CGRectMake(0.0, 0.0, 320.0, 99.0)
+#define k_upgradePurchased @"upgradePurchased"
+#define k_InAppPurchaseManagerTransactionSucceededNotification @"k_InAppPurchaseManagerTransactionSucceededNotification"
 
 @interface FilterBank ()
 
@@ -19,7 +21,6 @@
 - (void)refreshDisplayFilters;
 - (UICollectionViewCell *)sectionZeroCellFor:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 - (UICollectionViewCell *)sectionOneCellFor:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
-- (UICollectionViewCell *)sectionTwoCellFor:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @property (strong, nonatomic) NSMutableArray* enabledFilters;
 @property (strong, nonatomic) NSMutableArray* excludedFilters;
@@ -57,13 +58,18 @@
         self.collectionView = view;
         [self.collectionView registerClass:[NavCell class] forCellWithReuseIdentifier:@"zeroCell"];
         [self.collectionView registerClass:[FreeCell class] forCellWithReuseIdentifier:@"oneCell"];
-        [self.collectionView registerClass:[PaidCell class] forCellWithReuseIdentifier:@"twoCell"];
         [self.collectionView setBackgroundColor:[UIColor clearColor]];
         [self loadFiltersFromStore];
         _excludedFilters = nil;
         [self refreshDisplayFilters];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseSucceeded) name:k_InAppPurchaseManagerTransactionSucceededNotification object:nil];
     }
     return self;
+}
+
+- (void)purchaseSucceeded {
+    [self.collectionView reloadData];
 }
 
 - (void)viewDidLoad
@@ -189,19 +195,23 @@
 
 - (UICollectionViewCell *)sectionOneCellFor:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FreeCell* cell = [cv dequeueReusableCellWithReuseIdentifier:@"oneCell" forIndexPath:indexPath];
-    cell.label.text = [[_displayFilters objectAtIndex:indexPath.row] name];
+    Filter* thisFilter = (Filter*)[_displayFilters objectAtIndex:indexPath.row];
+    cell.label.text = thisFilter.name;
     cell.label.backgroundColor = [UIColor clearColor];
-    NSString*targetName = [[_displayFilters objectAtIndex:indexPath.row] imageName];
+    NSString*targetName = thisFilter.imageName;
     UIImage *image = [UIImage imageNamed:targetName];
     cell.image.image = image;
+    BOOL purchased = (BOOL)[[NSUserDefaults standardUserDefaults] valueForKey:k_upgradePurchased];
+    if ([thisFilter.paidOrFree isEqual: @"free"]) {
+        cell.lockImage.hidden = YES;
+    }
+    else if (purchased) {
+        cell.lockImage.hidden = YES;
+    }
+    else {
+        cell.lockImage.hidden = NO;
+    }
     return cell;
-}
-
-- (UICollectionViewCell *)sectionTwoCellFor:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PaidCell* cell = [cv dequeueReusableCellWithReuseIdentifier:@"twoCell" forIndexPath:indexPath];
-    //setup the image and button actions here
-    return cell;
-    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -226,8 +236,12 @@
         return;
     }
     //Check for intention to purchase the upgrade
-    if (NO == YES) {
+    BOOL purchased = (BOOL)[[NSUserDefaults standardUserDefaults] valueForKey:k_upgradePurchased];
+    Filter* thisCell = [_displayFilters objectAtIndex:indexPath.row];
+    
+    if (!purchased && [thisCell.paidOrFree isEqualToString:@"paid"]) {
         [self.mvcDelegate userSelectedAPremiumFilter];
+        return;
      }
      
     //Otherwise attempt to load a new Filter into the active pipeline

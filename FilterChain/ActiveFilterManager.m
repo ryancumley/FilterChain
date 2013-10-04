@@ -257,8 +257,8 @@
     
     if ([target class] == [GPUImageTiltShiftFilter class]) {
         if (value > 0.1 && value < 0.9) {
-            [(GPUImageTiltShiftFilter*)target setTopFocusLevel:(value - 0.1)];
-            [(GPUImageTiltShiftFilter*)target setBottomFocusLevel:(value + 0.1)];
+            [(GPUImageTiltShiftFilter*)target setTopFocusLevel:(value + 0.1)];
+            [(GPUImageTiltShiftFilter*)target setBottomFocusLevel:(value - 0.1)];
         }
         return;
     }

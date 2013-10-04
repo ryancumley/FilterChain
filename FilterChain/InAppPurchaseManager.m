@@ -11,6 +11,7 @@
 #define k_InAppPurchaseProUpgradeProductId @"FCPU_001"
 #define k_InAppPurchaseManagerTransactionFailedNotification @"k_InAppPurchaseManagerTransactionFailedNotification"
 #define k_InAppPurchaseManagerTransactionSucceededNotification @"k_InAppPurchaseManagerTransactionSucceededNotification"
+#define k_upgradePurchased @"upgradePurchased"
 
 
 @implementation InAppPurchaseManager
@@ -49,7 +50,9 @@
     if (!allowed) {
         //Alert view with message
         NSString* notAllowedMessage = @"Error: You do not have Permission to make Purchases";
-        NSString* explanation = @"Disable the download new apps restriction in your device's settings to enable";
+        NSString* explanation = @"Disable the 'download new apps' restriction in your device's settings to proceed";
+        UIAlertView* cantPayAlert = [[UIAlertView alloc] initWithTitle:notAllowedMessage message:explanation delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [cantPayAlert show];
         return;
     }
     
@@ -58,7 +61,9 @@
     if (!productIsReachableAtApple) {
         //Alert view with message
         NSString *notAvaialbleMessage = @"Error: The upgrade is not reachable on the AppStore right now";
-        NSString *explation = @"Try again in a few minutes, and if it's still not working, send us an e-mail to let us know the upgrade is down. ryan@ryancumley.com";
+        NSString *explanation = @"Try again in a few minutes, and if it's still not working, send us an e-mail to let us know the upgrade is down. ryan@ryancumley.com";
+        UIAlertView* notAvailable = [[UIAlertView alloc] initWithTitle:notAvaialbleMessage message:explanation delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [notAvailable show];
         return;
     }
     
@@ -75,7 +80,7 @@
     if ([transaction.payment.productIdentifier isEqualToString:k_InAppPurchaseProUpgradeProductId])
     {
         // save the transaction receipt to disk
-        [[NSUserDefaults standardUserDefaults] setValue:transaction.transactionReceipt forKey:@"proUpgradeTransactionReceipt"];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"proUpgradeReciept":transaction.transactionReceipt}];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
@@ -85,7 +90,7 @@
     if ([productId isEqualToString:k_InAppPurchaseProUpgradeProductId])
     {
         // enable the pro features
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isProUpgradePurchased"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:k_upgradePurchased];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
@@ -155,10 +160,12 @@
     {
         productIsReachableAtApple = YES;
         [self.purchasePresentationDelegate presentDetailsOfUpgrade:premiumFiltersUpgrade.localizedTitle description:premiumFiltersUpgrade.localizedDescription price:premiumFiltersUpgrade.price];
+        /*
         NSLog(@"Product title: %@" , premiumFiltersUpgrade.localizedTitle);
         NSLog(@"Product description: %@" , premiumFiltersUpgrade.localizedDescription);
         NSLog(@"Product price: %@" , premiumFiltersUpgrade.price);
         NSLog(@"Product id: %@" , premiumFiltersUpgrade.productIdentifier);
+         */
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
