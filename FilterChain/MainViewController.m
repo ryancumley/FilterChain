@@ -20,7 +20,7 @@
 @implementation MainViewController
 
 
-@synthesize clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel, globalBlend = _globalBlend;
+@synthesize purchaseManager = _purchaseManager, clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel, globalBlend = _globalBlend;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,12 +60,18 @@
     _filterBank.collectionView.frame = [self filterBankFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [_controlBoxManager.view addSubview:_filterBank.collectionView];
     [_filterBank.collectionView setBackgroundColor:k_filterBankBackgroundColor];
+    [_filterBank setMvcDelegate:self];
     
     //ActiveFilterManager Config
     _activeFilterManager = [[ActiveFilterManager alloc] init];
     [_activeFilterManager setFilterBankDelegate:_filterBank];
     [_activeFilterManager setRecordingManagerDelegate:_recordingManager];
     [_activeFilterManager setMvcDelegate:self];
+    
+    //PurchaseManager Config
+    _purchaseManager = [[InAppPurchaseManager alloc] init];
+    [_purchaseManager setPurchasePresentationDelegate:self];
+    [_purchaseManager loadStore];
 }
 
 - (void)hideRecordingNotifier {
@@ -252,6 +258,35 @@
         }
     }
     [nPlusOne setHidden:YES];//If all filters were visible, and an earlier filter was killed, this takes care of the Terminal Filter. Could have checked for i == (k_maxActiveFilters - 1) in the loop, but placing it here calls it only once.
+}
+
+#pragma mark -
+#pragma mark InAppPurchaseDisplay Protocol and alertViewResponse handlers
+
+- (void)presentDetailsOfUpgrade:(NSString*)title description:(NSString*)description price:(NSDecimalNumber*)price {
+    //User selected a locked filter, and we've queried Apple to make sure the product is available, and fetched the details in localized $
+    //Present it to the user for approval
+    
+    //AlertView setup and presentation
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        //purchase was approved by the user, go make some money.
+        [_purchaseManager purchaseProUpgrade];
+    }
+}
+
+- (void)alertViewCancel:(UIAlertView *)alertView {
+    
+}
+
+#pragma mark -
+#pragma mark FilterBankToMVC Protocol
+
+- (void)userSelectedAPremiumFilter {
+    [_purchaseManager launchInAppPurchaseDialog];
 }
 
 @end

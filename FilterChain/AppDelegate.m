@@ -51,7 +51,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self loadFiltersFromJSON];
     [self createDirectoryForThumbnails];
-    [[self purchaseManager] requestPremiumFiltersUpgradeProductData];
     
     _mVC = [[MainViewController alloc] initWithNibName:@"Retina" bundle:[NSBundle mainBundle]];
     self.window.rootViewController = _mVC;

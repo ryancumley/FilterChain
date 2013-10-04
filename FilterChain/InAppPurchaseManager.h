@@ -16,9 +16,20 @@
 {
     SKProduct* premiumFiltersUpgrade;
     SKProductsRequest* productsRequest;
+    BOOL productIsReachableAtApple;
 }
 
-- (void)requestPremiumFiltersUpgradeProductData;
+@property (nonatomic, assign) id purchasePresentationDelegate;
 
+- (void)loadStore;
+- (void)launchInAppPurchaseDialog;
+- (void)purchaseProUpgrade;
+
+
+@end
+
+@protocol InAppPurchasingDisplayManager <NSObject>
+
+- (void)presentDetailsOfUpgrade:(NSString*)title description:(NSString*)description price:(NSDecimalNumber*)price;
 
 @end

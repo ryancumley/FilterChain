@@ -32,6 +32,7 @@
 @implementation FilterBank
 
 @synthesize enabledFilters = _enabledFilters, excludedFilters = _excludedFilters, displayFilters = _displayFilters;
+@synthesize mvcDelegate = _mvcDelegate;
 
 
 #pragma mark Initialization and View Lifecycle
@@ -220,10 +221,16 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // the NavigateToClips action lives in section 0. Ignore the selection and let the button handle the touch
     if (indexPath.section == 0) {
         return;
     }
-    //Instantiate the active filter and tell mVC to move it into position
+    //Check for intention to purchase the upgrade
+    if (NO == YES) {
+        [self.mvcDelegate userSelectedAPremiumFilter];
+     }
+     
+    //Otherwise attempt to load a new Filter into the active pipeline
     FreeCell* cell = (FreeCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
     NSString* name = cell.label.text;
     UIImage* newImage = [cell.image.image copy];

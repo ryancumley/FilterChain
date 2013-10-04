@@ -14,8 +14,9 @@
 #import "FilterBank.h"
 #import "GPUImage.h"
 #import "ActiveFilterManager.h"
+#import "InAppPurchaseManager.h"
 
-@interface MainViewController : UIViewController <ActiveFilterToMVC>
+@interface MainViewController : UIViewController <ActiveFilterToMVC, InAppPurchasingDisplayManager, UIAlertViewDelegate, FilterBankToMVC>
 {
     CGRect filterBankFrame;
     CGRect collectionShellFrame;
@@ -23,6 +24,7 @@
     BOOL orientationChangedDuringPlayback;
 }
 
+@property (strong, nonatomic) InAppPurchaseManager* purchaseManager;
 @property (strong, nonatomic) IBOutlet RecordingManager* recordingManager;
 @property (strong, nonatomic) ClipManager* clipManager;
 @property (strong, nonatomic) FilterBank* filterBank;

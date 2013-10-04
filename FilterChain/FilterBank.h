@@ -15,6 +15,14 @@
 
 @interface FilterBank : UICollectionViewController <ActiveFilterToFilterBank>
 
+@property (nonatomic, assign) id mvcDelegate;
+
 - (BOOL)successfullyActivatedFilterWithName:(NSString*)name andWithImage:(UIImage*)image forCell:(FreeCell*)cell;
+
+@end
+
+@protocol FilterBankToMVC <NSObject>
+
+- (void)userSelectedAPremiumFilter;
 
 @end
