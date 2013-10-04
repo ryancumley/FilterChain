@@ -22,6 +22,9 @@
     CGRect collectionShellFrame;
     BOOL clipCollectionIsVisible;
     BOOL orientationChangedDuringPlayback;
+    int timeSec;
+    int timeMin;
+    NSTimer *timer;
 }
 
 @property (strong, nonatomic) InAppPurchaseManager* purchaseManager;
@@ -37,6 +40,7 @@
 @property (strong, nonatomic) IBOutlet UIView* recordingNotifier;
 @property (strong, nonatomic) IBOutlet UILabel* notifierLabel;
 @property (strong, nonatomic) IBOutlet UISlider* globalBlend;
+@property (strong, nonatomic) IBOutlet UILabel* recordingTimer;
 
 - (IBAction)navigateToClips:(id)sender;
 - (IBAction)navigateToCamera:(id)sender;
@@ -45,6 +49,7 @@
 - (void)previewClipForUrl:(NSURL *)targetUrl;
 - (void)awakeVideoCamera;
 - (void)hideRecordingNotifier;
+- (void)stopTimer;
 
 - (void)playbackFinished;
 - (void)rotatedDuringPlayback;

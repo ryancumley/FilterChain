@@ -61,6 +61,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     if (_mVC.recordingManager.isRecording) {
+        [_mVC stopTimer];
         [_mVC.recordingManager stopRecording];
         [_mVC.clipManager refreshStoredClips];
     }

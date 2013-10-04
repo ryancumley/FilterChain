@@ -21,7 +21,7 @@
 @implementation MainViewController
 
 
-@synthesize purchaseManager = _purchaseManager, clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel, globalBlend = _globalBlend;
+@synthesize purchaseManager = _purchaseManager, clipManager = _clipManager, recordingManager = _recordingManager, controlBoxManager = _controlBoxManager, filterBank = _filterBank, activeFilterManager = _activeFilterManager, previewLayer = _previewLayer, clipManagerView = _clipManagerView, collectionShell = _collectionShell, blinkyRedLight = _blinkyRedLight, recordingNotifier = _recordingNotifier, notifierLabel = _notifierLabel, globalBlend = _globalBlend, recordingTimer = _recordingTimer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +40,7 @@
     [self hideRecordingNotifier];
     _recordingNotifier.layer.masksToBounds = YES;
     _recordingNotifier.layer.cornerRadius = 5.0;
+    _recordingTimer.hidden = YES;
     
     
     //Camera config
@@ -84,6 +85,7 @@
 
 - (IBAction)navigateToClips:(id)sender {
     if (_recordingManager.isRecording) {
+        [self stopTimer];
         [_recordingManager stopRecording];
         [_clipManager refreshStoredClips];
     }
@@ -115,14 +117,45 @@
 - (IBAction)userPressedRecord:(UIButton *)sender {
     BOOL isRecording = [_recordingManager isRecording];
     if (isRecording) {
-        _blinkyRedLight.alpha = 1.0f;
+        _blinkyRedLight.alpha = 0.1f;
+        [self stopTimer];
         _blinkyRedLight.userInteractionEnabled = YES; //enabling interaction of the glowing red view covering the button effectively prevents the user from pressing record again until we're ready to deal with a new recording.
         [_recordingManager stopRecording];
         [_clipManager refreshStoredClips];
     }
     else {
         [_recordingManager startNewRecording];
+        [self startTimer];
     }
+}
+
+-(void)startTimer {
+    [_recordingTimer setHidden:NO];
+    timeSec = 0;
+    timeSec = 0;
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)timerTick:(NSTimer *)timer {
+    timeSec++;
+    if (timeSec == 60)
+    {
+        timeSec = 0;
+        timeMin++;
+    }
+    //Format the string 00:00
+    NSString* timeNow = [NSString stringWithFormat:@"%02d:%02d", timeMin, timeSec];
+    _recordingTimer.text = timeNow;
+}
+
+- (void)stopTimer {
+    [_recordingTimer setHidden:YES];
+    [timer invalidate];
+    timeSec = 0;
+    timeMin = 0;
+    NSString* timeNow = [NSString stringWithFormat:@"%02d:%02d", timeMin, timeSec];
+    _recordingTimer.text = timeNow;
 }
 
 - (IBAction)globalMixChanged:(UISlider *)sender {
@@ -180,6 +213,7 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     //Camera capture is expensive, let's give it a break until we've finished the rotation
     if (_recordingManager.isRecording) {
+        [self stopTimer];
         [_recordingManager stopRecording];
     }
     [_recordingManager stopCameraCapture];

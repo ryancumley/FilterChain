@@ -135,8 +135,6 @@
     [_movieWriter startRecording];
     recording = YES;
     [self performSelector:@selector(hideRecordingNotifier) withObject:nil afterDelay:1.5];
-
-    
 }
 
 - (void)stopRecording {

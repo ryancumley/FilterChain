@@ -15,6 +15,7 @@
                 <outlet property="notifierLabel" destination="J89-9a-zX6" id="Rxd-MX-e4O"/>
                 <outlet property="previewLayer" destination="3" id="10"/>
                 <outlet property="recordingNotifier" destination="c1J-JT-Uc3" id="4o5-Gs-5RX"/>
+                <outlet property="recordingTimer" destination="4dk-Bg-Xqf" id="Kdl-Eb-Wm8"/>
                 <outlet property="view" destination="415" id="416"/>
             </connections>
         </placeholder>
@@ -146,6 +147,17 @@
                                                 <action selector="globalMixChanged:" destination="-1" eventType="valueChanged" id="nQE-cr-RgB"/>
                                             </connections>
                                         </slider>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-Bg-Xqf" userLabel="recordingTimer">
+                                            <rect key="frame" x="15" y="15" width="60" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.1450980392" green="0.16862745100000001" blue="0.25882352939999997" alpha="0.5" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="vze-LP-U3c"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <gestureRecognizers/>
@@ -156,6 +168,8 @@
                                         <constraint firstItem="59" firstAttribute="trailing" secondItem="453" secondAttribute="trailing" id="492"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="453" secondAttribute="top" id="493"/>
                                         <constraint firstItem="59" firstAttribute="leading" secondItem="453" secondAttribute="leading" id="494"/>
+                                        <constraint firstItem="59" firstAttribute="centerY" secondItem="4dk-Bg-Xqf" secondAttribute="centerY" id="HST-uF-4qz"/>
+                                        <constraint firstItem="4dk-Bg-Xqf" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="15" id="TmJ-pE-iX5"/>
                                         <constraint firstItem="Pgf-kD-faK" firstAttribute="leading" secondItem="59" secondAttribute="trailing" constant="15" id="dLf-dg-tVy"/>
                                         <constraint firstItem="Pgf-kD-faK" firstAttribute="centerY" secondItem="59" secondAttribute="centerY" id="h5Z-sh-4Nw"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="12" secondAttribute="top" constant="4" id="lnu-MY-hj6"/>
