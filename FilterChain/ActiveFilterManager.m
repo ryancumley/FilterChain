@@ -8,8 +8,6 @@
 
 #import "ActiveFilterManager.h"
 #import "AppDelegate.h"
-#import "MainViewController.h"
-#import "FilterBank.h"
 
 #define k_w 40.0
 #define k_h 150.0
@@ -23,6 +21,10 @@
 - (void)retireFilterNamed:(NSString*)name;
 - (UIImage*)scaledDownVersionOf:(UIImage*)source;
 - (BOOL)stationarySliderNeededForName:(NSString*)name;
+- (NSString*)designatorForName:(NSString*)name;
+- (NSDictionary*)namesAndDesignations;
+- (NSMutableArray*)activeFilterNames;
+- (CGRect)frameForPosition:(int)position;
 
 @end
 
@@ -30,6 +32,11 @@
 @implementation ActiveFilterManager
 
 @synthesize recordingManagerDelegate = _recordingManagerDelegate, activeFilters = _activeFilters, mvcDelegate = _mvcDelegate;
+
+
+
+#pragma mark -
+#pragma mark Initialization and Convenience Methods
 
 - (id)init {
     self = [super init];
@@ -66,7 +73,6 @@
         NSLog(@"%@",error.localizedDescription);
     }
     
-    
     //Loop through and store the name/designators as key/value pairs
     NSMutableArray* keys = [[NSMutableArray alloc] initWithCapacity:fetchedResults.count];
     NSMutableArray* values = [[NSMutableArray alloc] initWithCapacity:fetchedResults.count];
@@ -77,36 +83,6 @@
     
     NSDictionary* returnValue = [NSDictionary dictionaryWithObjects:values forKeys:keys];
     return returnValue;
-}
-
-- (NSMutableArray*)activeFilterNames {
-    if (!activeFilterNames) {
-        activeFilterNames = [[NSMutableArray alloc] init];
-    }
-    return activeFilterNames;
-}
-
-- (NSString*)designatorForName:(NSString *)name {
-    namesAndDesignations = [self namesAndDesignations];
-    NSString* designator = [namesAndDesignations valueForKey:name];
-    return designator;
-}
-
-- (void)updatePipeline {
-    if (activeFilterNames.count == 0) {
-        _activeFilters = nil;
-    }
-    else {
-        _activeFilters = [[NSMutableArray alloc] init];
-        for (NSString* name in activeFilterNames) {
-            NSString* designator = [self designatorForName:name];
-            GPUImageFilter *newConversion = [[NSClassFromString(designator) alloc] init];
-            [_activeFilters addObject:newConversion];
-        }
-    }
-    
-     //now send these filters to the pipeline, via our delegate protocol
-    [self.recordingManagerDelegate updatePipelineWithFilters:_activeFilters];
 }
 
 - (BOOL)stationarySliderNeededForName:(NSString *)name {
@@ -125,7 +101,39 @@
     return [namesOfStationaryFilters containsObject:name];
 }
 
+- (NSMutableArray*)activeFilterNames {
+    if (!activeFilterNames) {
+        activeFilterNames = [[NSMutableArray alloc] init];
+    }
+    return activeFilterNames;
+}
+
+- (NSString*)designatorForName:(NSString *)name {
+    namesAndDesignations = [self namesAndDesignations];
+    NSString* designator = [namesAndDesignations valueForKey:name];
+    return designator;
+}
+
+- (CGRect)frameForPosition:(int)position {
+    float origin_X = k_leftMargin + ((position - 1) * (k_w + k_leftMargin));
+    CGRect returnRect = CGRectMake(origin_X, k_topMargin, k_w, k_h);
+    return returnRect;
+}
+
+- (UIImage*)scaledDownVersionOf:(UIImage *)source {
+    CGImageRef sourceCG = source.CGImage;
+    UIImage* smaller = [UIImage imageWithCGImage:sourceCG scale:(65.0 / 40.0) orientation:UIImageOrientationUp];
+    return smaller;
+}
+
+
+
+
+
+#pragma mark -
+#pragma mark Management of Active Filters
 - (BOOL)addFilterNamed:(NSString *)name withOriginatingView:(UIView *)view {
+    
     
     //append this filter to the end of the activeFilters array
     int currentCount = [[self activeFilters] count] + 1;
@@ -154,7 +162,6 @@
     [destination.slider setThumbImage:smallThumb forState:UIControlStateHighlighted];
     [destination setHidden:NO];
     [destination.slider setValue:0.7 animated:YES];
-    
     [destination makeSliderStaionary:[self stationarySliderNeededForName:name]];
     
     [view removeFromSuperview];
@@ -162,11 +169,12 @@
     
     //update the filter pipeline
     [self updatePipeline];
+    [self liveFilterWithTag:currentCount isSendingValue:0.7]; //get the filter started at some value
     return YES;
 }
 
 - (void)retireFilterNamed:(NSString *)name {
-    //retrieve a filter instance of Filter and pass it to mVC.filterBank to place it back in service
+    //retrieve a filter instance of Filter and pass it to filterBank to place it back in service
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext* moc = [delegate managedObjectContext];
     NSEntityDescription* description = [NSEntityDescription entityForName:@"Filter" inManagedObjectContext:moc];
@@ -183,17 +191,32 @@
     [self.filterBankDelegate retireFilter:filter];
 }
 
-- (CGRect)frameForPosition:(int)position {
-    float origin_X = k_leftMargin + ((position - 1) * (k_w + k_leftMargin));
-    CGRect returnRect = CGRectMake(origin_X, k_topMargin, k_w, k_h);
-    return returnRect;
+- (void)updatePipeline {
+    if (activeFilterNames.count == 0) {
+        _activeFilters = nil;
+    }
+    else {
+        _activeFilters = [[NSMutableArray alloc] init];
+        for (NSString* name in activeFilterNames) {
+            NSString* designator = [self designatorForName:name];
+            GPUImageFilter *newConversion = [[NSClassFromString(designator) alloc] init];
+            [_activeFilters addObject:newConversion];
+        }
+    }
+    
+     //now send these filters to the pipeline, via our delegate protocol
+    [self.recordingManagerDelegate updatePipelineWithFilters:_activeFilters];
 }
 
-- (UIImage*)scaledDownVersionOf:(UIImage *)source {
-    CGImageRef sourceCG = source.CGImage;
-    UIImage* smaller = [UIImage imageWithCGImage:sourceCG scale:(65.0 / 40.0) orientation:UIImageOrientationUp];
-    return smaller;
-}
+
+
+
+
+
+
+
+
+
 
 #pragma mark -
 #pragma mark LiveFilterSliderDelegate Methods

@@ -23,6 +23,7 @@
 @property (strong, nonatomic) GPUImageMovieWriter *movieWriter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;
 @property (strong, nonatomic) IBOutlet UIImageView* blinkyRedLight;
+@property (nonatomic, assign) id mvcDelegate;
 
 - (void)configureCamera;
 - (void)startCameraCapture;
@@ -33,10 +34,15 @@
 - (void)startNewRecording;
 - (void)stopRecording;
 - (void)orientVideoCameraOutputTo:(UIInterfaceOrientation)orientation;
-- (void)beginFlashingRecordButton;
-- (void)hideRecordingNotifier;
 - (void)updateBlendMix:(CGFloat)mix;
 
+@end
 
+@protocol RecordingManagerToMVC <NSObject>
+
+- (void)startVisualRecordingFeedback;
+- (void)stopVisualRecordingFeedback;
+- (void)beginFlashingRecordButton;
+- (void)hideRecordingNotifier;
 
 @end

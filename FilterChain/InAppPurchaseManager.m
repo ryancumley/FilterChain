@@ -72,6 +72,11 @@
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
+
+
+
+
+
 #pragma -
 #pragma Purchase helpers
 
@@ -103,12 +108,12 @@
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:transaction, @"transaction" , nil];
     if (wasSuccessful)
     {
-        // send out a notification that we’ve finished the transaction
+        // send out a notification that we’ve finished the transaction. FilterBank is listening and will call "reloadData" accordingly
         [[NSNotificationCenter defaultCenter] postNotificationName:k_InAppPurchaseManagerTransactionSucceededNotification object:self userInfo:userInfo];
     }
     else
     {
-        // send out a notification for the failed transaction
+        // send out a notification for the failed transaction. Nobody is listening right now, but perhaps in a later version???
         [[NSNotificationCenter defaultCenter] postNotificationName:k_InAppPurchaseManagerTransactionFailedNotification object:self userInfo:userInfo];
     }
 }
@@ -126,7 +131,6 @@
     [self finishTransaction:transaction wasSuccessful:YES];
 }
 
-// called when a transaction has been restored and and successfully completed
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction
 {
     [self recordTransaction:transaction.originalTransaction];
@@ -134,7 +138,6 @@
     [self finishTransaction:transaction wasSuccessful:YES];
 }
 
-// called when a transaction has failed
 - (void)failedTransaction:(SKPaymentTransaction *)transaction
 {
     if (transaction.error.code != SKErrorPaymentCancelled)
@@ -149,6 +152,9 @@
     }
 }
 
+
+
+
 #pragma mark - 
 #pragma mark SKProductsRequestDelegate Methods
 
@@ -160,12 +166,6 @@
     {
         productIsReachableAtApple = YES;
         [self.purchasePresentationDelegate presentDetailsOfUpgrade:premiumFiltersUpgrade.localizedTitle description:premiumFiltersUpgrade.localizedDescription price:premiumFiltersUpgrade.price];
-        /*
-        NSLog(@"Product title: %@" , premiumFiltersUpgrade.localizedTitle);
-        NSLog(@"Product description: %@" , premiumFiltersUpgrade.localizedDescription);
-        NSLog(@"Product price: %@" , premiumFiltersUpgrade.price);
-        NSLog(@"Product id: %@" , premiumFiltersUpgrade.productIdentifier);
-         */
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
@@ -174,6 +174,10 @@
         productIsReachableAtApple = NO;
     }
 }
+
+
+
+
 
 #pragma mark - 
 #pragma mark SKPaymentTransactionObserverDelegate Methods

@@ -8,7 +8,6 @@
 
 #import "ClipManager.h"
 #import "Cell.h"
-#import "AppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 #define kCellID @"cellID"
@@ -28,6 +27,7 @@
 @implementation ClipManager
 
 @synthesize storedClips = _storedClips, storedThumbnails = _storedThumbnails;
+@synthesize moviePlayerDelegate = _moviePlayerDelegate;
 
 
 
@@ -180,9 +180,10 @@
         }
         
         else if (selected == 1) { //preview the file
-            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-            MainViewController *mvc = (MainViewController*)appDelegate.mVC;
-            [mvc previewClipForUrl:targetUrl];
+            //AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            //MainViewController *mvc = (MainViewController*)appDelegate.mVC;
+            //[mvc previewClipForUrl:targetUrl];
+            [_moviePlayerDelegate previewClipForUrl:targetUrl];
             [aux setSelectedSegmentIndex:-1];
             [self selectCellAtIndexPath:selectedPath];
         }

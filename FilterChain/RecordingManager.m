@@ -8,7 +8,6 @@
 
 #import "RecordingManager.h"
 #import "AppDelegate.h"
-#import "MainViewController.h"
 
 #define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
 #define k_filterBankBackgroundRecordingColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:0.5]
@@ -16,7 +15,7 @@
 @implementation RecordingManager
 
 @synthesize movieWriter = _movieWriter, pipeline = _pipeline, blendFilter = _blendFilter, mvcPreviewLayer = _mvcPreviewLayer, passThrough = _passThrough, pipelineDestination = _pipelineDestination;
-
+@synthesize mvcDelegate = _mvcDelegate;
 
 #pragma mark Setup and Configuration Management
 
@@ -95,12 +94,8 @@
 }
 
 - (void)startNewRecording {
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
-    [mvc.filterBank.collectionView setBackgroundColor:k_filterBankBackgroundRecordingColor];
-    [self beginFlashingRecordButton];
-    [mvc.recordingNotifier setHidden:NO];
-    mvc.notifierLabel.text = @"Recording";
+
+    [self.mvcDelegate startVisualRecordingFeedback];
     
     //Generate a unique URL to write this movie to within the app's Documents folder. Should be accessible to iTunes as well.
     NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString] ;
@@ -134,24 +129,16 @@
     videoCamera.audioEncodingTarget = _movieWriter;
     [_movieWriter startRecording];
     recording = YES;
-    [self performSelector:@selector(hideRecordingNotifier) withObject:nil afterDelay:1.5];
 }
 
 - (void)stopRecording {
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
-    [mvc.recordingNotifier setHidden:NO];
-    mvc.notifierLabel.text = @"Saving Clip";
-    [mvc.filterBank.collectionView setBackgroundColor:k_filterBankBackgroundColor];
+    [self.mvcDelegate stopVisualRecordingFeedback];
     videoCamera.audioEncodingTarget = nil;
     [videoCamera pauseCameraCapture];
     [_blendFilter removeTarget:_movieWriter];
     [_movieWriter finishRecording];
     recording = NO;
-    mvc.blinkyRedLight.userInteractionEnabled = NO; //allow the user to press the button behind this UIImageView again.
-    mvc.blinkyRedLight.alpha = 0.0f;
     [videoCamera resumeCameraCapture];
-    [self performSelector:@selector(hideRecordingNotifier) withObject:nil afterDelay:1.0];
 }
 
 - (void)orientVideoCameraOutputTo:(UIInterfaceOrientation)orientation {
@@ -181,30 +168,9 @@
     [videoCamera setOutputImageOrientation:outputOrientation];
 }
 
-- (void)beginFlashingRecordButton {
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
-    mvc.blinkyRedLight.alpha = 0.0;
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-                        options:UIViewAnimationOptionAutoreverse |
-                                UIViewAnimationOptionAllowUserInteraction |
-                                UIViewAnimationOptionRepeat
-                     animations:^(void) {
-                         mvc.blinkyRedLight.alpha = 1.0;
-                     }
-     
-     
-                     completion:^(BOOL finished) {
-                     }
-     ];
-}
 
-- (void)hideRecordingNotifier {
-    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    MainViewController *mvc = (MainViewController*)delegate.window.rootViewController;
-    [mvc hideRecordingNotifier];
-}
+
+
 
 
 #pragma mark Convenience Method

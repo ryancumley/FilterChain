@@ -23,13 +23,8 @@
 @property (nonatomic, assign) id mvcDelegate;
 @property (strong, nonatomic) NSMutableArray* activeFilters;
 
-- (NSString*)designatorForName:(NSString*)name;
-- (NSDictionary*)namesAndDesignations;
-- (NSMutableArray*)activeFilterNames;
 - (BOOL)addFilterNamed:(NSString*)name withOriginatingView:(UIView*)view;
-- (CGRect)frameForPosition:(int)position;
 - (void)updatePipeline;
-
 
 @end
 

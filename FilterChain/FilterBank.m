@@ -106,6 +106,9 @@
     recognizer.enabled = YES;
     [newActiveFilter addGestureRecognizer:recognizer];
 
+    //
+    //TODO switch to protocol-delegate pattern
+    //
     [mvc.previewLayer addSubview:newActiveFilter];
     BOOL success = [mvc.activeFilterManager addFilterNamed:name withOriginatingView:newActiveFilter];
     return success;

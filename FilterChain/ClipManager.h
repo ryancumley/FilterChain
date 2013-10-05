@@ -17,6 +17,8 @@
     CachedThumbnails* cachedThumbnails;
 }
 
+@property (nonatomic, assign) id moviePlayerDelegate;
+
 //Initialization and View Lifecycle
 
 //Video Specific Actions
@@ -33,5 +35,11 @@
 //UIAlertView Delegate Protocol Methods
 
 //UICollectionView DataSource and Delegate Protocol Methods
+
+@end
+
+@protocol clipManagerMPMoviePlayer <NSObject>
+
+- (void)previewClipForUrl:(NSURL *)targetUrl;
 
 @end

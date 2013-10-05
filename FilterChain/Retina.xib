@@ -10,7 +10,7 @@
                 <outlet property="blinkyRedLight" destination="453" id="483"/>
                 <outlet property="clipManagerView" destination="296" id="420"/>
                 <outlet property="collectionShell" destination="314" id="426"/>
-                <outlet property="controlBoxManager" destination="11" id="29"/>
+                <outlet property="controlBoxView" destination="12" id="fkq-86-OLO"/>
                 <outlet property="globalBlend" destination="Pgf-kD-faK" id="HJX-8z-D8t"/>
                 <outlet property="notifierLabel" destination="J89-9a-zX6" id="Rxd-MX-e4O"/>
                 <outlet property="previewLayer" destination="3" id="10"/>
@@ -20,17 +20,6 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <viewController id="11" customClass="ControlBoxManager">
-            <extendedEdge key="edgesForExtendedLayout"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-            <nil key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="view" destination="12" id="27"/>
-            </connections>
-        </viewController>
         <tapGestureRecognizer id="157" userLabel="Tap Control Toggle"/>
         <view contentMode="scaleToFill" id="296" userLabel="ClipManagerView">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -147,11 +136,12 @@
                                                 <action selector="globalMixChanged:" destination="-1" eventType="valueChanged" id="nQE-cr-RgB"/>
                                             </connections>
                                         </slider>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-Bg-Xqf" userLabel="recordingTimer">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dk-Bg-Xqf" userLabel="recordingTimer">
                                             <rect key="frame" x="15" y="15" width="60" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.1450980392" green="0.16862745100000001" blue="0.25882352939999997" alpha="0.5" colorSpace="calibratedRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="Wu7-eW-8H2"/>
                                                 <constraint firstAttribute="width" constant="60" id="vze-LP-U3c"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -168,8 +158,8 @@
                                         <constraint firstItem="59" firstAttribute="trailing" secondItem="453" secondAttribute="trailing" id="492"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="453" secondAttribute="top" id="493"/>
                                         <constraint firstItem="59" firstAttribute="leading" secondItem="453" secondAttribute="leading" id="494"/>
-                                        <constraint firstItem="59" firstAttribute="centerY" secondItem="4dk-Bg-Xqf" secondAttribute="centerY" id="HST-uF-4qz"/>
                                         <constraint firstItem="4dk-Bg-Xqf" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="15" id="TmJ-pE-iX5"/>
+                                        <constraint firstItem="4dk-Bg-Xqf" firstAttribute="top" secondItem="12" secondAttribute="top" constant="15" id="boS-iF-bD9"/>
                                         <constraint firstItem="Pgf-kD-faK" firstAttribute="leading" secondItem="59" secondAttribute="trailing" constant="15" id="dLf-dg-tVy"/>
                                         <constraint firstItem="Pgf-kD-faK" firstAttribute="centerY" secondItem="59" secondAttribute="centerY" id="h5Z-sh-4Nw"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="12" secondAttribute="top" constant="4" id="lnu-MY-hj6"/>

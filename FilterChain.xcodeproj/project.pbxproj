@@ -80,7 +80,6 @@
 		C0B4648C17DA8A4900126545 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4648B17DA8A4900126545 /* MainViewController.m */; };
 		C0B4649017DA8CA200126545 /* ClipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4648F17DA8CA200126545 /* ClipManager.m */; };
 		C0B4649317DA8CB400126545 /* RecordingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4649217DA8CB400126545 /* RecordingManager.m */; };
-		C0B4649617DA8D6700126545 /* ControlBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B4649517DA8D6700126545 /* ControlBoxManager.m */; };
 		C0BD456D17DE180A005734AD /* FilterBank.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD456C17DE180A005734AD /* FilterBank.m */; };
 		C0BD457217DE1824005734AD /* FreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BD457117DE1824005734AD /* FreeCell.m */; };
 		C0C700BC17F6A17B00464BE9 /* lookup_amatorka.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700B917F6A17B00464BE9 /* lookup_amatorka.png */; };
@@ -213,8 +212,6 @@
 		C0B4648F17DA8CA200126545 /* ClipManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipManager.m; sourceTree = "<group>"; };
 		C0B4649117DA8CB400126545 /* RecordingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingManager.h; sourceTree = "<group>"; };
 		C0B4649217DA8CB400126545 /* RecordingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingManager.m; sourceTree = "<group>"; };
-		C0B4649417DA8D6700126545 /* ControlBoxManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlBoxManager.h; sourceTree = "<group>"; };
-		C0B4649517DA8D6700126545 /* ControlBoxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlBoxManager.m; sourceTree = "<group>"; };
 		C0BD456B17DE180A005734AD /* FilterBank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterBank.h; sourceTree = "<group>"; };
 		C0BD456C17DE180A005734AD /* FilterBank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterBank.m; sourceTree = "<group>"; };
 		C0BD457017DE1824005734AD /* FreeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeCell.h; sourceTree = "<group>"; };
@@ -294,8 +291,6 @@
 				C046913217F0BF6500F14AE6 /* NavCell.m */,
 				C0B4649117DA8CB400126545 /* RecordingManager.h */,
 				C0B4649217DA8CB400126545 /* RecordingManager.m */,
-				C0B4649417DA8D6700126545 /* ControlBoxManager.h */,
-				C0B4649517DA8D6700126545 /* ControlBoxManager.m */,
 			);
 			name = "Main Screen";
 			sourceTree = "<group>";
@@ -669,7 +664,6 @@
 				C0B4648C17DA8A4900126545 /* MainViewController.m in Sources */,
 				C0B4649017DA8CA200126545 /* ClipManager.m in Sources */,
 				C0B4649317DA8CB400126545 /* RecordingManager.m in Sources */,
-				C0B4649617DA8D6700126545 /* ControlBoxManager.m in Sources */,
 				C00BB83E17DD948500E0580D /* Cell.m in Sources */,
 				C06A359517FA224800DC3DBA /* Filter.m in Sources */,
 				C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */,
