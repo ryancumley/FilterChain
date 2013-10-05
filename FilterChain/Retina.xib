@@ -63,7 +63,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.19215686274509802" green="0.22352941176470587" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.17254901960784313" green="0.20784313725490194" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="365"/>
                         <constraint firstItem="171" firstAttribute="centerY" secondItem="320" secondAttribute="centerY" id="372"/>
@@ -74,7 +74,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.19215686274509802" green="0.22352941176470587" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.19215686269999999" green="0.22352941179999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="320" secondAttribute="trailing" id="330"/>
                 <constraint firstItem="320" firstAttribute="leading" secondItem="296" secondAttribute="leading" id="332"/>
@@ -195,7 +195,7 @@
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="3" firstAttribute="leading" secondItem="379" secondAttribute="leading" id="380"/>
                         <constraint firstItem="3" firstAttribute="trailing" secondItem="379" secondAttribute="trailing" id="399"/>
@@ -205,7 +205,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="379" firstAttribute="top" secondItem="415" secondAttribute="top" id="417"/>
                 <constraint firstItem="379" firstAttribute="bottom" secondItem="415" secondAttribute="bottom" id="418"/>

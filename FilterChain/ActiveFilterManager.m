@@ -122,7 +122,7 @@
 
 - (UIImage*)scaledDownVersionOf:(UIImage *)source {
     CGImageRef sourceCG = source.CGImage;
-    UIImage* smaller = [UIImage imageWithCGImage:sourceCG scale:(65.0 / 40.0) orientation:UIImageOrientationUp];
+    UIImage* smaller = [UIImage imageWithCGImage:sourceCG scale:(320.0 / 40.0) orientation:UIImageOrientationRight];
     return smaller;
 }
 

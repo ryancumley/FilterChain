@@ -20,7 +20,7 @@
     if (self) {
         _navButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _navButton.frame = k_buttonFrame;
-        _navButton.backgroundColor = [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0];
+        _navButton.backgroundColor = [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0];
         [_navButton addTarget:self action:@selector(pushedNavButton) forControlEvents:UIControlEventTouchUpInside];
         [_navButton setImage:[UIImage imageNamed:@"VideoIcon.png"] forState:UIControlStateNormal];
         _navButton.layer.masksToBounds = YES;

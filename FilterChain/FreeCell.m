@@ -24,7 +24,7 @@
         _image = [[UIImageView alloc] initWithFrame:k_imageFrame];
         _image.layer.cornerRadius = 8.0;
         _image.layer.masksToBounds = YES;
-        _image.layer.borderColor = [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0f].CGColor;
+        _image.layer.borderColor = [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0].CGColor;
         _image.layer.borderWidth = 2.0;
         _label = [[UILabel alloc] initWithFrame:k_labelFrame];
         [_label setTextAlignment:NSTextAlignmentCenter];

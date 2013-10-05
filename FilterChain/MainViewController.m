@@ -10,11 +10,11 @@
 
 #define k_filterBankHeight 99.0f
 #define k_filterBankOffsetFromTop 51.0f
-#define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
 #define k_maxActiveFilters 6
 #define k_upgradePurchased @"upgradePurchased"
-#define k_filterBankBackgroundColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:1.0]
-#define k_filterBankBackgroundRecordingColor [UIColor colorWithRed:64.0f/255.0f green:71.0f/255.0f blue:90.0f/255.0f alpha:0.5]
+#define k_filterBankBackgroundColor [UIColor colorWithRed:49.0f/255.0f green:57.0f/255.0f blue:73.0f/255.0f alpha:1.0]
+//#define k_filterBankBackgroundColor [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0]
+#define k_filterBankBackgroundRecordingColor [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:0.5]
 
 @interface MainViewController ()
 
