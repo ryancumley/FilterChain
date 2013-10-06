@@ -31,6 +31,8 @@
 		C046913317F0BF6500F14AE6 /* NavCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C046913217F0BF6500F14AE6 /* NavCell.m */; };
 		C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C046913717F0CDFF00F14AE6 /* VideoIcon.png */; };
 		C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */ = {isa = PBXBuildFile; fileRef = C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */; };
+		C05C1E431801D52F004B29BA /* PurchaseAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C05C1E411801D52F004B29BA /* PurchaseAlertViewController.m */; };
+		C05C1E441801D52F004B29BA /* PurchaseAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C05C1E421801D52F004B29BA /* PurchaseAlertView.xib */; };
 		C06A359517FA224800DC3DBA /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C06A359417FA224800DC3DBA /* Filter.m */; };
 		C073570417E51DE40024D02B /* OrangeSquareMin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C073570317E51DE40024D02B /* OrangeSquareMin.jpg */; };
 		C073571217E5384E0024D02B /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = C073571117E5384E0024D02B /* record.png */; };
@@ -155,6 +157,9 @@
 		C046913717F0CDFF00F14AE6 /* VideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VideoIcon.png; sourceTree = "<group>"; };
 		C048DD3317ECAFE700F47A1D /* CachedThumbnails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedThumbnails.h; sourceTree = "<group>"; };
 		C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedThumbnails.m; sourceTree = "<group>"; };
+		C05C1E401801D52F004B29BA /* PurchaseAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseAlertViewController.h; sourceTree = "<group>"; };
+		C05C1E411801D52F004B29BA /* PurchaseAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseAlertViewController.m; sourceTree = "<group>"; };
+		C05C1E421801D52F004B29BA /* PurchaseAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseAlertView.xib; sourceTree = "<group>"; };
 		C06A359317FA224800DC3DBA /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		C06A359417FA224800DC3DBA /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		C073570317E51DE40024D02B /* OrangeSquareMin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = OrangeSquareMin.jpg; sourceTree = "<group>"; };
@@ -382,6 +387,9 @@
 				C0B4648617DA89FF00126545 /* Retina.xib */,
 				C0EFCAD717FD3E39009537F2 /* InAppPurchaseManager.h */,
 				C0EFCAD817FD3E39009537F2 /* InAppPurchaseManager.m */,
+				C05C1E401801D52F004B29BA /* PurchaseAlertViewController.h */,
+				C05C1E411801D52F004B29BA /* PurchaseAlertViewController.m */,
+				C05C1E421801D52F004B29BA /* PurchaseAlertView.xib */,
 				C046913017F08CC000F14AE6 /* Core Data */,
 				C046912F17F08CA300F14AE6 /* Main Screen */,
 				C046912C17F08C6F00F14AE6 /* Clip Screen */,
@@ -618,6 +626,7 @@
 				C008F53717FCA04A0061232A /* NeonEdge.jpg in Resources */,
 				C0960B6417EE507B006FF0A5 /* Default~iphone.png in Resources */,
 				C01734A917E82EC900113DFE /* recordRedLight.png in Resources */,
+				C05C1E441801D52F004B29BA /* PurchaseAlertView.xib in Resources */,
 				C0960B6617EE50E6006FF0A5 /* Default-568h@2x.png in Resources */,
 				C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */,
 				C008F54417FCA4BA0061232A /* Vignette.jpg in Resources */,
@@ -670,6 +679,7 @@
 				C0BD456D17DE180A005734AD /* FilterBank.m in Sources */,
 				C0BD457217DE1824005734AD /* FreeCell.m in Sources */,
 				C0032B6917F13C9900FD72B7 /* LiveFilterView.m in Sources */,
+				C05C1E431801D52F004B29BA /* PurchaseAlertViewController.m in Sources */,
 				C0EFCAD917FD3E39009537F2 /* InAppPurchaseManager.m in Sources */,
 				C0208E7617E130170097F1E8 /* ActiveFilterManager.m in Sources */,
 				C046913317F0BF6500F14AE6 /* NavCell.m in Sources */,

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PurchaseAlertViewController">
+            <connections>
+                <outlet property="acceptButton" destination="QBS-nO-cOC" id="qss-0I-pZt"/>
+                <outlet property="backgroundImageView" destination="JYy-IU-Y47" id="ITG-9i-oqD"/>
+                <outlet property="byline" destination="5PO-pl-xlo" id="fG4-te-axs"/>
+                <outlet property="cancelButton" destination="Zng-xg-YgM" id="gmg-nt-aie"/>
+                <outlet property="headline" destination="H20-n7-nnU" id="EUf-Lc-vcK"/>
+                <outlet property="seeThroughBackingView" destination="ZOr-UQ-3Mi" id="3Lh-HF-u0V"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JYy-IU-Y47" userLabel="backgroundImageView">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZOr-UQ-3Mi" userLabel="seeThroughBackingView">
+                    <rect key="frame" x="15" y="15" width="270" height="270"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H20-n7-nnU" userLabel="headline">
+                            <rect key="frame" x="20" y="15" width="230" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v7z-7x-Xbx" userLabel="divider">
+                            <rect key="frame" x="0.0" y="228" width="272" height="2"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zng-xg-YgM" userLabel="cancelButton">
+                            <rect key="frame" x="0.0" y="230" width="145" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="CancelButton">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBS-nO-cOC" userLabel="acceptButton">
+                            <rect key="frame" x="145" y="230" width="145" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="AcceptButton">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5PO-pl-xlo" userLabel="byline">
+                            <rect key="frame" x="20" y="44" width="230" height="176"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="H20-n7-nnU" secondAttribute="trailing" constant="20" id="16d-xk-ud0"/>
+                        <constraint firstItem="H20-n7-nnU" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" constant="20" id="2w2-QE-l7D"/>
+                        <constraint firstAttribute="bottom" secondItem="v7z-7x-Xbx" secondAttribute="bottom" constant="40" id="85b-o2-I5z"/>
+                        <constraint firstItem="H20-n7-nnU" firstAttribute="top" secondItem="ZOr-UQ-3Mi" secondAttribute="top" constant="15" id="Bij-G3-Lzo"/>
+                        <constraint firstItem="v7z-7x-Xbx" firstAttribute="top" secondItem="5PO-pl-xlo" secondAttribute="bottom" constant="15" id="Bo9-ul-L8s"/>
+                        <constraint firstAttribute="centerX" secondItem="H20-n7-nnU" secondAttribute="centerX" id="MKQ-YQ-e7b"/>
+                        <constraint firstItem="Zng-xg-YgM" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" id="O1Q-ak-g0r"/>
+                        <constraint firstItem="5PO-pl-xlo" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" constant="20" id="RMM-Gt-L85"/>
+                        <constraint firstAttribute="trailing" secondItem="5PO-pl-xlo" secondAttribute="trailing" constant="20" id="SWO-R5-Wwy"/>
+                        <constraint firstItem="Zng-xg-YgM" firstAttribute="top" secondItem="v7z-7x-Xbx" secondAttribute="bottom" id="VhN-9m-EDZ"/>
+                        <constraint firstAttribute="trailing" secondItem="QBS-nO-cOC" secondAttribute="trailing" id="d5d-7T-nxV"/>
+                        <constraint firstItem="5PO-pl-xlo" firstAttribute="top" secondItem="H20-n7-nnU" secondAttribute="bottom" constant="15" id="hEJ-DD-Ea1"/>
+                        <constraint firstAttribute="trailing" secondItem="v7z-7x-Xbx" secondAttribute="trailing" constant="5" id="jgx-VU-7nr"/>
+                        <constraint firstAttribute="bottom" secondItem="Zng-xg-YgM" secondAttribute="bottom" id="ldJ-Ie-4hP"/>
+                        <constraint firstItem="Zng-xg-YgM" firstAttribute="width" secondItem="QBS-nO-cOC" secondAttribute="width" id="qyV-uG-qUQ"/>
+                        <constraint firstAttribute="centerX" secondItem="v7z-7x-Xbx" secondAttribute="centerX" id="r64-dh-ajx"/>
+                        <constraint firstAttribute="centerX" secondItem="5PO-pl-xlo" secondAttribute="centerX" id="t2G-ru-n85"/>
+                        <constraint firstItem="v7z-7x-Xbx" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" id="vC4-Ob-xSI"/>
+                        <constraint firstItem="QBS-nO-cOC" firstAttribute="leading" secondItem="Zng-xg-YgM" secondAttribute="trailing" id="vRH-my-vmK"/>
+                        <constraint firstAttribute="bottom" secondItem="QBS-nO-cOC" secondAttribute="bottom" id="vk1-7D-NOo"/>
+                        <constraint firstItem="QBS-nO-cOC" firstAttribute="top" secondItem="v7z-7x-Xbx" secondAttribute="bottom" id="xQ9-3c-wTl"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="JYy-IU-Y47" firstAttribute="top" secondItem="1" secondAttribute="top" id="71A-tw-yVi"/>
+                <constraint firstAttribute="bottom" secondItem="ZOr-UQ-3Mi" secondAttribute="bottom" constant="15" id="Sye-co-RNa"/>
+                <constraint firstItem="JYy-IU-Y47" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Uuu-HG-jhh"/>
+                <constraint firstAttribute="trailing" secondItem="ZOr-UQ-3Mi" secondAttribute="trailing" constant="15" id="UzG-Z0-6Ew"/>
+                <constraint firstItem="ZOr-UQ-3Mi" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="15" id="WmL-TM-in4"/>
+                <constraint firstAttribute="trailing" secondItem="JYy-IU-Y47" secondAttribute="trailing" id="btn-Pi-rXI"/>
+                <constraint firstAttribute="bottom" secondItem="JYy-IU-Y47" secondAttribute="bottom" id="e7N-1Z-KKJ"/>
+                <constraint firstItem="ZOr-UQ-3Mi" firstAttribute="top" secondItem="1" secondAttribute="top" constant="15" id="gY3-eH-9X6"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

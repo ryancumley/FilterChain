@@ -16,11 +16,15 @@
 
 @implementation InAppPurchaseManager
 
+@synthesize purchaseAlertViewController = _purchaseAlertViewController;
+
 - (void)loadStore
 {
     // restarts any purchases if they were interrupted last time the app was open
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     productIsReachableAtApple = NO;
+    
+    _purchaseAlertViewController = [[PurchaseAlertViewController alloc] initWithNibName:@"PurchaseAlertView.xib" bundle:[NSBundle mainBundle]];
 }
 
 - (void)launchInAppPurchaseDialog {
@@ -50,9 +54,8 @@
     if (!allowed) {
         //Alert view with message
         NSString* notAllowedMessage = @"Error: You do not have Permission to make Purchases";
-        NSString* explanation = @"Disable the 'download new apps' restriction in your device's settings to proceed";
-        UIAlertView* cantPayAlert = [[UIAlertView alloc] initWithTitle:notAllowedMessage message:explanation delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-        [cantPayAlert show];
+        NSString* explanation = @"Enable \"In-App Purchases\" from the Restrictions to proceed";
+        [self.purchasePresentationDelegate presentFailureNotification:notAllowedMessage explanation:explanation];
         return;
     }
     
@@ -60,10 +63,9 @@
     //Inform and fail if the product is unreachable for some reason
     if (!productIsReachableAtApple) {
         //Alert view with message
-        NSString *notAvaialbleMessage = @"Error: The upgrade is not reachable on the AppStore right now";
-        NSString *explanation = @"Try again in a few minutes, and if it's still not working, send us an e-mail to let us know the upgrade is down. ryan@ryancumley.com";
-        UIAlertView* notAvailable = [[UIAlertView alloc] initWithTitle:notAvaialbleMessage message:explanation delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-        [notAvailable show];
+        NSString *notAvaialbleMessage = @"Error: The AppStore is not reachable right now";
+        NSString *explanation = @"Make sure you're connected to the internet! Otherwise, try again in a few minutes";
+        [self.purchasePresentationDelegate presentFailureNotification:notAvaialbleMessage explanation:explanation];
         return;
     }
     
@@ -143,6 +145,9 @@
     if (transaction.error.code != SKErrorPaymentCancelled)
     {
         // error!
+        NSString* error = transaction.error.localizedDescription;
+        [self.purchasePresentationDelegate presentFailureNotification:error explanation:nil];
+        
         [self finishTransaction:transaction wasSuccessful:NO];
     }
     else
@@ -159,7 +164,6 @@
 #pragma mark SKProductsRequestDelegate Methods
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    
     NSArray *products = response.products;
     premiumFiltersUpgrade = [products count] == 1 ? [products firstObject] : nil;
     if (premiumFiltersUpgrade)
@@ -170,7 +174,6 @@
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
     {
-        NSLog(@"Invalid product id: %@" , invalidProductId);
         productIsReachableAtApple = NO;
     }
 }

@@ -55,7 +55,8 @@
     _recordingNotifier.layer.masksToBounds = YES;
     _recordingNotifier.layer.cornerRadius = 5.0;
     _recordingTimer.hidden = YES;
-    
+    [_globalBlend addTarget:self action:@selector(touchDownInBlend) forControlEvents:UIControlEventTouchDown];
+    [_globalBlend addTarget:self action:@selector(touchEndedInBlend) forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside)];
     
     //Camera config
     _recordingManager = [[RecordingManager alloc] init];
@@ -96,6 +97,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    _filterBank.collectionView.frame = [self filterBankFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]]; // handles a launch in portrait, since ViewDidLoad has the status bar in portrait at launch
     [_recordingManager configureCamera];
     [_recordingManager orientVideoCameraOutputTo:[self interfaceOrientation]];
 }
@@ -108,6 +110,23 @@
         orientationChangedDuringPlayback = NO; //reset the flag
     }
 }
+
+- (IBAction)globalMixChanged:(UISlider *)sender {
+    [_recordingManager updateBlendMix:[(UISlider *)sender value]];
+}
+
+- (void)touchDownInBlend {
+    
+    _globalBlend.layer.borderColor = [UIColor colorWithRed:143.0/255.0 green:211.0/255.0 blue:111.0/255.0 alpha:0.8].CGColor;
+    _globalBlend.layer.borderWidth = 1.0;
+    _globalBlend.backgroundColor = [UIColor colorWithRed:37.0/255.0 green:44.0/255.0 blue:58.0/255.0 alpha:1.0];
+}
+
+- (void)touchEndedInBlend {
+    _globalBlend.backgroundColor = [UIColor clearColor];
+    _globalBlend.layer.borderColor = [UIColor clearColor].CGColor;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -177,6 +196,8 @@
     }
     return collectionShellFrame;
 }
+
+
 
 
 
@@ -266,9 +287,6 @@
     _recordingTimer.text = timeNow;
 }
 
-- (IBAction)globalMixChanged:(UISlider *)sender {
-    [_recordingManager updateBlendMix:[(UISlider *)sender value]];
-}
 
 
 
@@ -389,14 +407,18 @@
     //Present it to the user for approval
     NSString* alertViewTitle = [NSString stringWithFormat:@"Unlock Premium Filters for %@",price];
     
-    //AlertView setup and presentation
     UIAlertView* av = [[UIAlertView alloc]
                        initWithTitle:alertViewTitle
-                       message:@"Purchase / Restore additional filters. Available for use immediately. Includes all premium filters in future app upgrades."
+                       message:@"Activate additional filters. Available for use immediately."
                        delegate:self
                        cancelButtonTitle:@"Cancel"
                        otherButtonTitles:@"Purchase / Restore",
                        nil];
+    [av show];
+}
+
+- (void)presentFailureNotification:(NSString*)title explanation:(NSString*)explanation {
+    UIAlertView* av = [[UIAlertView alloc] initWithTitle:title message:explanation delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
     [av show];
 }
 
@@ -408,6 +430,23 @@
 }
 
 - (void)alertViewCancel:(UIAlertView *)alertView {
+    
+}
+
+
+
+
+
+
+
+#pragma mark -
+#pragma mark PurchaseAlertViewDelegate Protocol
+
+- (void)purchaseAlertViewIsTakingOverWithView:(UIView *)view {
+    
+}
+
+- (void)purchaseAlertViewIsResigning {
     
 }
 

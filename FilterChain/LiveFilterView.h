@@ -24,9 +24,7 @@
 @property (strong, nonatomic) GPUImageFilter* filter;
 
 - (void)killThisFilter;
-- (void)displayKillButton;
 - (void)hideKillButton;
-- (void)pushUpdatedSliderValueToFilter:(UIEvent*)event;
 - (void)makeSliderStaionary:(BOOL)stationary;
 - (BOOL)isSliderStationary;
 

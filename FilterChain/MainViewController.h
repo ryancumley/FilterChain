@@ -14,8 +14,9 @@
 #import "GPUImage.h"
 #import "ActiveFilterManager.h"
 #import "InAppPurchaseManager.h"
+#import "PurchaseAlertViewController.h"
 
-@interface MainViewController : UIViewController <ActiveFilterToMVC, InAppPurchasingDisplayManager, UIAlertViewDelegate, FilterBankToMVC, RecordingManagerToMVC>
+@interface MainViewController : UIViewController <ActiveFilterToMVC, InAppPurchasingDisplayManager, UIAlertViewDelegate, FilterBankToMVC, RecordingManagerToMVC, PurchaseAlertViewDelegate>
 {
     CGRect filterBankFrame;
     CGRect collectionShellFrame;
@@ -24,6 +25,7 @@
     int timeSec;
     int timeMin;
     NSTimer *timer;
+    UIView* puchaseAlertView;
 }
 
 @property (strong, nonatomic) InAppPurchaseManager* purchaseManager;

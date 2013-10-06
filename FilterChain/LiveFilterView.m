@@ -28,7 +28,8 @@
         _slider.minimumTrackTintColor = [UIColor blackColor];
         _slider.maximumTrackTintColor = [UIColor whiteColor];
         [_slider addTarget:self action:@selector(pushUpdatedSliderValueToFilter:) forControlEvents:UIControlEventValueChanged];
-        [_slider addTarget:self action:@selector(displayKillButton) forControlEvents:UIControlEventTouchDown];
+        [_slider addTarget:self action:@selector(thisSliderIsHot) forControlEvents:UIControlEventTouchDown];
+        [_slider addTarget:self action:@selector(thisSliderIsCold) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchUpInside)];
         sliderIsStationary = NO;
         
         //Configure Kill Button
@@ -63,13 +64,23 @@
     [self hideKillButton];
 }
 
-- (void)displayKillButton {
+- (void)thisSliderIsHot {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    self.layer.borderColor = [UIColor colorWithRed:143.0f/255.0 green:211.0/255.0 blue:111.0/255.0 alpha:1.0].CGColor;
+    self.layer.borderWidth = 1.0;
+    _slider.backgroundColor = [UIColor colorWithRed:37.0/255.0 green:44.0/255.0 blue:58.0/255.0 alpha:1.0];
     if (!displayingKillButton) {
         [_killButton setHidden:NO];
         displayingKillButton = YES;
-        [self performSelector:@selector(hideKillButton) withObject:nil afterDelay:2.5];
     }
     
+}
+
+- (void)thisSliderIsCold {
+    UIColor* clear = [UIColor clearColor];
+    _slider.backgroundColor = clear;
+    self.layer.borderColor = clear.CGColor;
+    [self performSelector:@selector(hideKillButton) withObject:nil afterDelay:2.5];
 }
 
 - (void)hideKillButton {
