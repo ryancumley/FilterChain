@@ -17,7 +17,6 @@
 @property (strong, nonatomic) IBOutlet UILabel* byline;
 @property (strong, nonatomic) IBOutlet UIButton* cancelButton;
 @property (strong, nonatomic) IBOutlet UIButton* acceptButton;
-@property (strong, nonatomic) IBOutlet UIView* activitySpinnerView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicator;
 
 @property (nonatomic, assign) id viewDelegate;
@@ -29,6 +28,8 @@
 - (void)hideActivitySpinner;
 - (void)userCancelled;
 - (void)userAccepted;
+- (IBAction)pressedCancel:(id)sender;
+- (IBAction)pressedAccept:(id)sender;
 
 @end
 

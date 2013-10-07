@@ -24,11 +24,16 @@
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     productIsReachableAtApple = NO;
     
-    _purchaseAlertViewController = [[PurchaseAlertViewController alloc] initWithNibName:@"PurchaseAlertView.xib" bundle:[NSBundle mainBundle]];
 }
 
 - (void)launchInAppPurchaseDialog {
-       
+    _purchaseAlertViewController = [[PurchaseAlertViewController alloc] initWithNibName:@"PurchaseAlertView" bundle:[NSBundle mainBundle]];
+    [_purchaseAlertViewController setViewDelegate:[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
+    [_purchaseAlertViewController setActionDelegate:self];
+    [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsTakingOverWithView:_purchaseAlertViewController.view];
+    [_purchaseAlertViewController loadHeadline:@"Enable Premium Filters" byline:@"Conacting Apple's AppStore" cancelTitle:@"Cancel" acceptTitle:nil];
+    [_purchaseAlertViewController displayActivitySpinner];
+    
     // get the product description and set the productIsReachableAtApple flag
     [self requestPremiumFiltersUpgradeProductData];
     
@@ -55,7 +60,7 @@
         //Alert view with message
         NSString* notAllowedMessage = @"Error: You do not have Permission to make Purchases";
         NSString* explanation = @"Enable \"In-App Purchases\" from the Restrictions to proceed";
-        [self.purchasePresentationDelegate presentFailureNotification:notAllowedMessage explanation:explanation];
+        [_purchaseAlertViewController loadHeadline:notAllowedMessage byline:explanation cancelTitle:@"Dismiss" acceptTitle:nil];
         return;
     }
     
@@ -65,13 +70,14 @@
         //Alert view with message
         NSString *notAvaialbleMessage = @"Error: The AppStore is not reachable right now";
         NSString *explanation = @"Make sure you're connected to the internet! Otherwise, try again in a few minutes";
-        [self.purchasePresentationDelegate presentFailureNotification:notAvaialbleMessage explanation:explanation];
+        [_purchaseAlertViewController loadHeadline:notAvaialbleMessage byline:explanation cancelTitle:@"Dismiss" acceptTitle:nil];
         return;
     }
     
     //User has permission to buy, and the product is ready at Apple. Let's make some money
     SKPayment *payment = [SKPayment paymentWithProduct:premiumFiltersUpgrade];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
+    [_purchaseAlertViewController displayActivitySpinner];
 }
 
 
@@ -121,7 +127,6 @@
 }
 
 // called when a transaction is pending with Apple. Not clear if I need to do anything with this, as the queue should update and post a complete, or failed message when it does
-// for now, I'll just post a helpful message to the user
 - (void)completingTransaction:(SKPaymentTransaction*)transaction {
     
 }
@@ -131,6 +136,7 @@
     [self recordTransaction:transaction];
     [self provideContent:transaction.payment.productIdentifier];
     [self finishTransaction:transaction wasSuccessful:YES];
+    [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction
@@ -138,6 +144,7 @@
     [self recordTransaction:transaction.originalTransaction];
     [self provideContent:transaction.originalTransaction.payment.productIdentifier];
     [self finishTransaction:transaction wasSuccessful:YES];
+    [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction
@@ -146,14 +153,14 @@
     {
         // error!
         NSString* error = transaction.error.localizedDescription;
-        [self.purchasePresentationDelegate presentFailureNotification:error explanation:nil];
-        
+        [_purchaseAlertViewController loadHeadline:error byline:@"" cancelTitle:@"Dismiss" acceptTitle:nil];
         [self finishTransaction:transaction wasSuccessful:NO];
     }
     else
     {
         // this is fine, the user just cancelled, so don’t notify
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
     }
 }
 
@@ -164,12 +171,20 @@
 #pragma mark SKProductsRequestDelegate Methods
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
+    [_purchaseAlertViewController hideActivitySpinner];
     NSArray *products = response.products;
     premiumFiltersUpgrade = [products count] == 1 ? [products firstObject] : nil;
     if (premiumFiltersUpgrade)
     {
         productIsReachableAtApple = YES;
-        [self.purchasePresentationDelegate presentDetailsOfUpgrade:premiumFiltersUpgrade.localizedTitle description:premiumFiltersUpgrade.localizedDescription price:premiumFiltersUpgrade.price];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+        [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [numberFormatter setLocale:premiumFiltersUpgrade.priceLocale];
+        NSString *formattedPrice= [numberFormatter stringFromNumber:premiumFiltersUpgrade.price];
+        NSString* headline = [NSString stringWithFormat:@"Unlock Premium Filters for %@",formattedPrice];
+        NSString* byline = @"Activate additional filters. Available for use immediately";
+        [_purchaseAlertViewController loadHeadline:headline byline:byline cancelTitle:@"Cancel" acceptTitle:@"Buy Now"];
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
@@ -186,6 +201,7 @@
 #pragma mark SKPaymentTransactionObserverDelegate Methods
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
+    [_purchaseAlertViewController hideActivitySpinner];
     for (SKPaymentTransaction *transaction in transactions)
     {
         switch (transaction.transactionState)
@@ -214,5 +230,13 @@
 }
 
 
+
+
+#pragma mark -
+#pragma mark PurchaseAlertViewActionDelegate Protocol
+
+- (void)purchaseAlertViewAccepted:(BOOL)accepted withOptions:(NSDictionary*)options {
+    [self purchaseProUpgrade];
+}
 
 @end

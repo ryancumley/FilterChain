@@ -16,7 +16,7 @@
 #import "InAppPurchaseManager.h"
 #import "PurchaseAlertViewController.h"
 
-@interface MainViewController : UIViewController <ActiveFilterToMVC, InAppPurchasingDisplayManager, UIAlertViewDelegate, FilterBankToMVC, RecordingManagerToMVC, PurchaseAlertViewDelegate>
+@interface MainViewController : UIViewController <ActiveFilterToMVC, UIAlertViewDelegate, FilterBankToMVC, RecordingManagerToMVC, PurchaseAlertViewDelegate>
 {
     CGRect filterBankFrame;
     CGRect collectionShellFrame;
@@ -25,7 +25,9 @@
     int timeSec;
     int timeMin;
     NSTimer *timer;
-    UIView* puchaseAlertView;
+    UIView* purchaseAlertView;
+    UIView* blockingView;
+    BOOL purchaseAlertViewIsShowing;
 }
 
 @property (strong, nonatomic) InAppPurchaseManager* purchaseManager;

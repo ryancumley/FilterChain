@@ -57,6 +57,7 @@
     _recordingTimer.hidden = YES;
     [_globalBlend addTarget:self action:@selector(touchDownInBlend) forControlEvents:UIControlEventTouchDown];
     [_globalBlend addTarget:self action:@selector(touchEndedInBlend) forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside)];
+    purchaseAlertViewIsShowing = NO;
     
     //Camera config
     _recordingManager = [[RecordingManager alloc] init];
@@ -93,6 +94,7 @@
     [_purchaseManager loadStore];
     NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
     [standardDefaults registerDefaults:@{@NO:k_upgradePurchased}];
+    //[standardDefaults setObject:@NO forKey:k_upgradePurchased]; // Manually voiding the purchase with every launch for in-app purchasing testing    Remove later
     [standardDefaults synchronize];
 }
 
@@ -144,7 +146,7 @@
     [super shouldAutorotate];
     
     //Block if a recording is in progress, otherwise allow it.
-    if (_recordingManager.isRecording) {
+    if (_recordingManager.isRecording | purchaseAlertViewIsShowing) {
         return NO;
     }
     return YES;
@@ -192,7 +194,7 @@
     }
     else {
         //Handle portrait orientation
-        collectionShellFrame = CGRectMake(-offsetModifier * appFrame.size.width, 0.0, appFrame.size.width, appFrame.size.height); //flip height and width
+        collectionShellFrame = CGRectMake(-offsetModifier * appFrame.size.width, 0.0, appFrame.size.width, appFrame.size.height);
     }
     return collectionShellFrame;
 }
@@ -399,54 +401,41 @@
 
 
 
-#pragma mark -
-#pragma mark InAppPurchaseDisplay Protocol and alertViewResponse handlers
-
-- (void)presentDetailsOfUpgrade:(NSString*)title description:(NSString*)description price:(NSDecimalNumber*)price {
-    //User selected a locked filter, and we've queried Apple to make sure the product is available, and fetched the details in localized $
-    //Present it to the user for approval
-    NSString* alertViewTitle = [NSString stringWithFormat:@"Unlock Premium Filters for %@",price];
-    
-    UIAlertView* av = [[UIAlertView alloc]
-                       initWithTitle:alertViewTitle
-                       message:@"Activate additional filters. Available for use immediately."
-                       delegate:self
-                       cancelButtonTitle:@"Cancel"
-                       otherButtonTitles:@"Purchase / Restore",
-                       nil];
-    [av show];
-}
-
-- (void)presentFailureNotification:(NSString*)title explanation:(NSString*)explanation {
-    UIAlertView* av = [[UIAlertView alloc] initWithTitle:title message:explanation delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-    [av show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        //purchase was approved by the user, go make some money.
-        [_purchaseManager purchaseProUpgrade];
-    }
-}
-
-- (void)alertViewCancel:(UIAlertView *)alertView {
-    
-}
-
-
-
-
-
 
 
 #pragma mark -
 #pragma mark PurchaseAlertViewDelegate Protocol
 
 - (void)purchaseAlertViewIsTakingOverWithView:(UIView *)view {
+    blockingView = [[UIView alloc] initWithFrame:self.view.frame];
+    [blockingView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+    [blockingView setUserInteractionEnabled:YES];//intercepts touches much like an UIAlertView would.
+    [self.view addSubview:blockingView];
+    
+    purchaseAlertView = view;
+    CGRect appFrame = [[UIScreen mainScreen] bounds];
+    CGPoint center;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        center = CGPointMake(appFrame.size.height/2, appFrame.size.width/2);
+    }
+    else {
+        center = CGPointMake(appFrame.size.width/2, appFrame.size.height/2);
+    }
+    purchaseAlertView.center = center;
+    [self.view addSubview:purchaseAlertView];
+    purchaseAlertViewIsShowing = YES;
+    
     
 }
 
 - (void)purchaseAlertViewIsResigning {
+    //do any requried cleanup
+    
+    
+    [blockingView removeFromSuperview];
+    blockingView = nil;
+    [purchaseAlertView removeFromSuperview];
+    purchaseAlertViewIsShowing = NO;
     
 }
 

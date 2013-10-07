@@ -87,6 +87,7 @@
 		C0C700BC17F6A17B00464BE9 /* lookup_amatorka.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700B917F6A17B00464BE9 /* lookup_amatorka.png */; };
 		C0C700BD17F6A17B00464BE9 /* lookup_soft_elegance_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700BA17F6A17B00464BE9 /* lookup_soft_elegance_1.png */; };
 		C0C700BE17F6A17B00464BE9 /* lookup_soft_elegance_2.png in Resources */ = {isa = PBXBuildFile; fileRef = C0C700BB17F6A17B00464BE9 /* lookup_soft_elegance_2.png */; };
+		C0D87A9018024011004572CC /* PremiumTileSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = C0D87A8F18024011004572CC /* PremiumTileSmall.png */; };
 		C0DB6F7C17E602150020B394 /* Edges.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7617E602150020B394 /* Edges.jpg */; };
 		C0DB6F7D17E602150020B394 /* Grayscale.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7717E602150020B394 /* Grayscale.jpg */; };
 		C0DB6F7E17E602150020B394 /* HighlightShadows.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0DB6F7817E602150020B394 /* HighlightShadows.jpg */; };
@@ -224,6 +225,7 @@
 		C0C700B917F6A17B00464BE9 /* lookup_amatorka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_amatorka.png; sourceTree = "<group>"; };
 		C0C700BA17F6A17B00464BE9 /* lookup_soft_elegance_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_soft_elegance_1.png; sourceTree = "<group>"; };
 		C0C700BB17F6A17B00464BE9 /* lookup_soft_elegance_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_soft_elegance_2.png; sourceTree = "<group>"; };
+		C0D87A8F18024011004572CC /* PremiumTileSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PremiumTileSmall.png; sourceTree = "<group>"; };
 		C0DB6F7617E602150020B394 /* Edges.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Edges.jpg; sourceTree = "<group>"; };
 		C0DB6F7717E602150020B394 /* Grayscale.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grayscale.jpg; sourceTree = "<group>"; };
 		C0DB6F7817E602150020B394 /* HighlightShadows.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = HighlightShadows.jpg; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				C0B4644417DA826F00126545 /* AppDelegate.m */,
 				C0B4648A17DA8A4900126545 /* MainViewController.h */,
 				C0B4648B17DA8A4900126545 /* MainViewController.m */,
+				C0D87A8F18024011004572CC /* PremiumTileSmall.png */,
 				C0B4648617DA89FF00126545 /* Retina.xib */,
 				C0EFCAD717FD3E39009537F2 /* InAppPurchaseManager.h */,
 				C0EFCAD817FD3E39009537F2 /* InAppPurchaseManager.m */,
@@ -621,6 +624,7 @@
 				C008F54117FCA4BA0061232A /* Soft.jpg in Resources */,
 				C0A35E0B17EE62510015CA6E /* icon57.png in Resources */,
 				C0A35DEC17EE584F0015CA6E /* Default~ipad.png in Resources */,
+				C0D87A9018024011004572CC /* PremiumTileSmall.png in Resources */,
 				C0DB6F8117E602150020B394 /* Sepia.jpg in Resources */,
 				C0A35E1017EE62510015CA6E /* icon100.png in Resources */,
 				C008F53717FCA04A0061232A /* NeonEdge.jpg in Resources */,

@@ -12,7 +12,7 @@
 
 #define k_InAppPurchaseManagerProductsFetchedNotification @"k_InAppPurchaseManagerProductsFetchedNotification"
 
-@interface InAppPurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface InAppPurchaseManager : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, PurchaseAlertViewActionDelegate>
 
 {
     SKProduct* premiumFiltersUpgrade;
@@ -27,12 +27,5 @@
 - (void)launchInAppPurchaseDialog;
 - (void)purchaseProUpgrade;
 
-
-@end
-
-@protocol InAppPurchasingDisplayManager <NSObject>
-
-- (void)presentDetailsOfUpgrade:(NSString*)title description:(NSString*)description price:(NSDecimalNumber*)price;
-- (void)presentFailureNotification:(NSString*)title explanation:(NSString*)explanation;
 
 @end
