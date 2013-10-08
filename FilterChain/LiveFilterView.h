@@ -16,7 +16,7 @@
     BOOL displayingKillButton;
 }
 
-@property (nonatomic, assign) id sliderDelegate;
+@property (nonatomic, assign) id actionDelegate;
 
 @property (strong, nonatomic) UISlider* slider;
 @property (strong, nonatomic) UIButton* killButton;

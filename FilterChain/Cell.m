@@ -38,7 +38,6 @@
         _image.contentMode = UIViewContentModeScaleAspectFill;
         _auxControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"export", @"play", @"delete", nil]];
         _auxControl.frame = CGRectMake(0.0, 150.0, 160.0, 30.0);
-        _auxControl.segmentedControlStyle = UISegmentedControlStyleBar;
         
         //add it all in
         [self.contentView addSubview:_backingView];

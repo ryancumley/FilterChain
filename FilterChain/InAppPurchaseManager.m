@@ -88,16 +88,6 @@
 #pragma -
 #pragma Purchase helpers
 
-- (void)recordTransaction:(SKPaymentTransaction *)transaction
-{
-    if ([transaction.payment.productIdentifier isEqualToString:k_InAppPurchaseProUpgradeProductId])
-    {
-        // save the transaction receipt to disk
-        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"proUpgradeReciept":transaction.transactionReceipt}];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-}
-
 - (void)provideContent:(NSString *)productId
 {
     if ([productId isEqualToString:k_InAppPurchaseProUpgradeProductId])
@@ -133,7 +123,6 @@
 
 - (void)completeTransaction:(SKPaymentTransaction*)transaction
 {
-    [self recordTransaction:transaction];
     [self provideContent:transaction.payment.productIdentifier];
     [self finishTransaction:transaction wasSuccessful:YES];
     [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
@@ -141,7 +130,6 @@
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction
 {
-    [self recordTransaction:transaction.originalTransaction];
     [self provideContent:transaction.originalTransaction.payment.productIdentifier];
     [self finishTransaction:transaction wasSuccessful:YES];
     [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
@@ -183,7 +171,7 @@
         [numberFormatter setLocale:premiumFiltersUpgrade.priceLocale];
         NSString *formattedPrice= [numberFormatter stringFromNumber:premiumFiltersUpgrade.price];
         NSString* headline = [NSString stringWithFormat:@"Unlock Premium Filters for %@",formattedPrice];
-        NSString* byline = @"Activate additional filters. Available for use immediately";
+        NSString* byline = @"Activate all additional filters. Available for use immediately";
         [_purchaseAlertViewController loadHeadline:headline byline:byline cancelTitle:@"Cancel" acceptTitle:@"Buy Now"];
     }
     

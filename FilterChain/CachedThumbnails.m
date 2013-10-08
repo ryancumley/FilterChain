@@ -8,6 +8,7 @@
 
 #import "CachedThumbnails.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface CachedThumbnails ()
 
@@ -64,13 +65,13 @@
 }
 
 - (UIImage*)generateNewThumbnailForURL:(NSURL*)targetUrl withPath:(NSString*)path{
-    MPMoviePlayerController *mpc = [[MPMoviePlayerController alloc] initWithContentURL:targetUrl];
-    mpc.shouldAutoplay = NO;
-    UIImage *thumb = [mpc thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-    NSData* jpgRepresentation = UIImageJPEGRepresentation(thumb, 1.0f);
-    
-    fileManager = [NSFileManager defaultManager];
-    [fileManager createFileAtPath:path contents:jpgRepresentation attributes:nil];
+    AVURLAsset* asset = [[AVURLAsset alloc] initWithURL:targetUrl options:nil];
+    AVAssetImageGenerator* generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    NSError* err = NULL;
+    CMTime time = CMTimeMake(1, 2);
+    CGImageRef oneRef = [generator copyCGImageAtTime:time actualTime:NULL error:&err];
+    UIImage* thumb = [[UIImage alloc] initWithCGImage:oneRef];
     return thumb;
 }
 

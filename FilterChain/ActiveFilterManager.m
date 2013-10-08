@@ -46,7 +46,7 @@
         for (int i = 1; i <= k_maxActive; i++) {
             LiveFilterView* newLiveFilter = [[LiveFilterView alloc] init];
             newLiveFilter.tag = i; //reasonably sure this is the only place in the whole app I'm using view tags.
-            [newLiveFilter setSliderDelegate:self];
+            [newLiveFilter setActionDelegate:self];
             [newLiveFilter setFrame:[self frameForPosition:i]];
             [mvc.view addSubview:newLiveFilter];
             [newLiveFilter setHidden:YES];
@@ -108,6 +108,13 @@
     return activeFilterNames;
 }
 
+- (NSMutableArray*)activeFilters {
+    if (!_activeFilters) {
+        _activeFilters = [[NSMutableArray alloc] init];
+    }
+    return _activeFilters;
+}
+
 - (NSString*)designatorForName:(NSString *)name {
     namesAndDesignations = [self namesAndDesignations];
     NSString* designator = [namesAndDesignations valueForKey:name];
@@ -134,8 +141,7 @@
 #pragma mark Management of Active Filters
 - (BOOL)addFilterNamed:(NSString *)name withOriginatingView:(UIView *)view {
     
-    
-    //append this filter to the end of the activeFilters array
+    //Fail early if we're already at capacity
     int currentCount = [[self activeFilters] count] + 1;
     if (currentCount > k_maxActive) { //fail if we already have enough active
         [view removeFromSuperview];
@@ -143,7 +149,11 @@
         return FALSE; //tells the caller to clean up and restore state like it was before the call
     }
     
+    //update the Arrays with the new name/filter respectively
     [[self activeFilterNames] addObject:name];
+    NSString* designator = [self designatorForName:name];
+    GPUImageFilter *newConversion = [[NSClassFromString(designator) alloc] init];
+    [[self activeFilters] addObject:newConversion];
 
     //animate the view into position
     CGRect target = [self frameForPosition:currentCount];
@@ -188,20 +198,12 @@
         NSLog(@"%@",error.localizedDescription);
     }
     Filter* filter = (Filter*)[fetch objectAtIndex:0]; //Assuming Filter contains no duplicates, fetch.count will always = 1
-    [self.filterBankDelegate retireFilter:filter];
+    [self.filterBankDelegate retireFilter:filter]; //Sends a generic instance of the NSManagedObject Filter* to be placed back in service
 }
 
 - (void)updatePipeline {
     if (activeFilterNames.count == 0) {
         _activeFilters = nil;
-    }
-    else {
-        _activeFilters = [[NSMutableArray alloc] init];
-        for (NSString* name in activeFilterNames) {
-            NSString* designator = [self designatorForName:name];
-            GPUImageFilter *newConversion = [[NSClassFromString(designator) alloc] init];
-            [_activeFilters addObject:newConversion];
-        }
     }
     
      //now send these filters to the pipeline, via our delegate protocol

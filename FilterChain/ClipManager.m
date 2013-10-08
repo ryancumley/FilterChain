@@ -10,7 +10,7 @@
 #import "Cell.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-#define kCellID @"cellID"
+#define k_CellID @"cellID"
 #define k_layoutItemSize CGSizeMake(160.0, 180.0)
 
 @interface ClipManager ()
@@ -50,7 +50,7 @@
         UICollectionView *view = [[UICollectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320, 493) collectionViewLayout:flowLayout];
         self.collectionView = view;
         self.collectionView.allowsMultipleSelection = NO;
-        [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
+        [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:k_CellID];
     }
     return self;
 }
@@ -59,7 +59,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
+    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:k_CellID];
     [self.collectionView setAllowsMultipleSelection:NO];
     [self refreshStoredClips];
 }
@@ -118,7 +118,7 @@
                                        cancelButtonTitle:nil
                                        otherButtonTitles:nil];
     [av show];
-    [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:1.8];
+    [self performSelector:@selector(dismissAlert:) withObject:av afterDelay:2.5];
 }
 
 - (void)generateThumbnails {
@@ -225,9 +225,9 @@
 #pragma mark UICollectionView DataSource and Delegate Protocol Methods
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:@"cellID"];
+    [self.collectionView registerClass:[Cell class] forCellWithReuseIdentifier:k_CellID];
 
-    Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
+    Cell *cell = [cv dequeueReusableCellWithReuseIdentifier:k_CellID forIndexPath:indexPath];
     [cell.auxControl addTarget:self action:@selector(clipActionInvoked) forControlEvents:UIControlEventValueChanged];
     [cell.auxControl setHidden:YES];
     

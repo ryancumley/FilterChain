@@ -180,7 +180,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    int elements;
+    int elements = 1;
     if (section == 0) {
         elements = 1;
     }

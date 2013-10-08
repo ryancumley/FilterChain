@@ -88,19 +88,4 @@
 }
 
 
-
-
-
-#pragma mark -
-#pragma mark InAppPurchasingDisplayManager Protocol
-
-- (void)presentDetailsOfUpgrade:(NSString*)title description:(NSString*)description price:(NSDecimalNumber*)price {
-    
-}
-
-- (void)presentFailureNotification:(NSString*)title explanation:(NSString*)explanation {
-    
-}
-
-
 @end

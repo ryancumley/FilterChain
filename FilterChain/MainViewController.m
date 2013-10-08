@@ -13,6 +13,7 @@
 #define k_filterBankOffsetFromTop 51.0f
 #define k_maxActiveFilters 6
 #define k_upgradePurchased @"upgradePurchased"
+#define k_micPermission @"micPermission"
 #define k_filterBankBackgroundColor [UIColor colorWithRed:49.0f/255.0f green:57.0f/255.0f blue:73.0f/255.0f alpha:1.0]
 #define k_filterBankBackgroundRecordingColor [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:0.5]
 
@@ -116,18 +117,18 @@
 }
 
 - (void)checkForMicrophonePermission {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@NO:@"micPermission"}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@NO:k_micPermission}];
     
     if ([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)]) {
         [[AVAudioSession sharedInstance] performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
             if (granted) {
                 // Microphone enabled code
-                [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"micPermission"];
+                [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:k_micPermission];
                 _micWarning.hidden = YES;
             }
             else {
                 // Microphone disabled code
-                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"micPermission"];//for when access was rescinded at a later point. next full app launch will catch it
+                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:k_micPermission];//for when access was rescinded at a later point. next full app launch will catch it
                 _micWarning.hidden = NO;
             }
         }];
@@ -433,20 +434,24 @@
 #pragma mark PurchaseAlertViewDelegate Protocol
 
 - (void)purchaseAlertViewIsTakingOverWithView:(UIView *)view {
-    blockingView = [[UIView alloc] initWithFrame:self.view.frame];
+    CGRect appFrame = [[UIScreen mainScreen] bounds];
+    CGRect blockingViewFrame;
+    CGPoint center;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        center = CGPointMake(appFrame.size.height/2, appFrame.size.width/2);
+        blockingViewFrame = CGRectMake(0.0, 0.0, appFrame.size.height, appFrame.size.width);
+    }
+    else {
+        center = CGPointMake(appFrame.size.width/2, appFrame.size.height/2);
+        blockingViewFrame = CGRectMake(0.0, 0.0, appFrame.size.width, appFrame.size.height);
+    }
+
+    blockingView = [[UIView alloc] initWithFrame:blockingViewFrame];
     [blockingView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
     [blockingView setUserInteractionEnabled:YES];//intercepts touches much like an UIAlertView would.
     [self.view addSubview:blockingView];
     
     purchaseAlertView = view;
-    CGRect appFrame = [[UIScreen mainScreen] bounds];
-    CGPoint center;
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-        center = CGPointMake(appFrame.size.height/2, appFrame.size.width/2);
-    }
-    else {
-        center = CGPointMake(appFrame.size.width/2, appFrame.size.height/2);
-    }
     purchaseAlertView.center = center;
     [self.view addSubview:purchaseAlertView];
     purchaseAlertViewIsShowing = YES;

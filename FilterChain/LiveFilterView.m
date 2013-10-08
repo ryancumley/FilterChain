@@ -25,8 +25,8 @@
         _slider = [[UISlider alloc] initWithFrame:k_sliderFramePreRotation];
         CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * -0.5);
         _slider.transform = trans;
-        _slider.minimumTrackTintColor = [UIColor blackColor];
-        _slider.maximumTrackTintColor = [UIColor whiteColor];
+        _slider.minimumTrackTintColor = [UIColor colorWithRed:196.0f/255.0f green:204.0f/255.0f blue:208.0f/255.0f alpha:1.0];
+        _slider.maximumTrackTintColor = [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0];
         [_slider addTarget:self action:@selector(pushUpdatedSliderValueToFilter:) forControlEvents:UIControlEventValueChanged];
         [_slider addTarget:self action:@selector(thisSliderIsHot) forControlEvents:UIControlEventTouchDown];
         [_slider addTarget:self action:@selector(thisSliderIsCold) forControlEvents:(UIControlEventTouchUpOutside | UIControlEventTouchUpInside)];
@@ -59,7 +59,7 @@
 }
 
 - (void)killThisFilter {
-    [self.sliderDelegate killLiveFilterWithTag:self.tag];
+    [self.actionDelegate killLiveFilterWithTag:self.tag];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self hideKillButton];
 }
@@ -113,7 +113,7 @@
         [_slider setValue:0.7];
         return;
     }
-    [self.sliderDelegate liveFilterWithTag:self.tag isSendingValue:_slider.value];
+    [self.actionDelegate liveFilterWithTag:self.tag isSendingValue:_slider.value];
 }
 
 @end
