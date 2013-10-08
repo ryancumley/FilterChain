@@ -7,13 +7,13 @@
 //
 
 #import "MainViewController.h"
+#import <AVFoundation/AVAudioSession.h>
 
 #define k_filterBankHeight 99.0f
 #define k_filterBankOffsetFromTop 51.0f
 #define k_maxActiveFilters 6
 #define k_upgradePurchased @"upgradePurchased"
 #define k_filterBankBackgroundColor [UIColor colorWithRed:49.0f/255.0f green:57.0f/255.0f blue:73.0f/255.0f alpha:1.0]
-//#define k_filterBankBackgroundColor [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:1.0]
 #define k_filterBankBackgroundRecordingColor [UIColor colorWithRed:37.0f/255.0f green:44.0f/255.0f blue:58.0f/255.0f alpha:0.5]
 
 @interface MainViewController ()
@@ -94,8 +94,10 @@
     [_purchaseManager loadStore];
     NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
     [standardDefaults registerDefaults:@{@NO:k_upgradePurchased}];
-    //[standardDefaults setObject:@NO forKey:k_upgradePurchased]; // Manually voiding the purchase with every launch for in-app purchasing testing    Remove later
     [standardDefaults synchronize];
+    
+    
+    [self performSelector:@selector(checkForMicrophonePermission) withObject:nil afterDelay:1.0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,6 +113,26 @@
         [self navigateToClips:nil];
         orientationChangedDuringPlayback = NO; //reset the flag
     }
+}
+
+- (void)checkForMicrophonePermission {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@NO:@"micPermission"}];
+    
+    if ([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)]) {
+        [[AVAudioSession sharedInstance] performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
+            if (granted) {
+                // Microphone enabled code
+                [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"micPermission"];
+                _micWarning.hidden = YES;
+            }
+            else {
+                // Microphone disabled code
+                [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"micPermission"];//for when access was rescinded at a later point. next full app launch will catch it
+                _micWarning.hidden = NO;
+            }
+        }];
+    }
+    
 }
 
 - (IBAction)globalMixChanged:(UISlider *)sender {
@@ -251,6 +273,10 @@
         [_recordingManager startNewRecording];
         [self startTimer];
     }
+}
+
+- (IBAction)pressedMicWarning:(id)sender {
+    [[[UIAlertView alloc] initWithTitle:@"Microphone Permission Denied" message:@"You must enable permission to access the microphone. Right now all your videos will be silent. Settings > Privacy > Microphone" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil] show];
 }
 
 - (void)awakeVideoCamera {

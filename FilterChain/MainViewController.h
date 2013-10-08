@@ -45,10 +45,12 @@
 @property (strong, nonatomic) IBOutlet UILabel* notifierLabel;
 @property (strong, nonatomic) IBOutlet UISlider* globalBlend;
 @property (strong, nonatomic) IBOutlet UILabel* recordingTimer;
+@property (strong, nonatomic) IBOutlet UIButton* micWarning;
 
 - (IBAction)navigateToClips:(id)sender;
 - (IBAction)navigateToCamera:(id)sender;
 - (IBAction)userPressedRecord:(UIButton *)sender;
+- (IBAction)pressedMicWarning:(id)sender;
 
 - (void)previewClipForUrl:(NSURL *)targetUrl;
 - (void)awakeVideoCamera;

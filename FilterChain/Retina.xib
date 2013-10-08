@@ -12,6 +12,7 @@
                 <outlet property="collectionShell" destination="314" id="426"/>
                 <outlet property="controlBoxView" destination="12" id="fkq-86-OLO"/>
                 <outlet property="globalBlend" destination="Pgf-kD-faK" id="HJX-8z-D8t"/>
+                <outlet property="micWarning" destination="LaZ-8I-lLy" id="xck-PI-dAz"/>
                 <outlet property="notifierLabel" destination="J89-9a-zX6" id="Rxd-MX-e4O"/>
                 <outlet property="previewLayer" destination="3" id="10"/>
                 <outlet property="recordingNotifier" destination="c1J-JT-Uc3" id="4o5-Gs-5RX"/>
@@ -148,6 +149,17 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaZ-8I-lLy">
+                                            <rect key="frame" x="86" y="11" width="42" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="! Mic !">
+                                                <color key="titleColor" red="0.998622589" green="1" blue="0.042955112150000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="pressedMicWarning:" destination="-1" eventType="touchUpInside" id="Uib-w9-FEh"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <gestureRecognizers/>
@@ -158,10 +170,13 @@
                                         <constraint firstItem="59" firstAttribute="trailing" secondItem="453" secondAttribute="trailing" id="492"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="453" secondAttribute="top" id="493"/>
                                         <constraint firstItem="59" firstAttribute="leading" secondItem="453" secondAttribute="leading" id="494"/>
+                                        <constraint firstItem="453" firstAttribute="leading" secondItem="LaZ-8I-lLy" secondAttribute="trailing" constant="10" id="CDS-HM-jim"/>
+                                        <constraint firstItem="LaZ-8I-lLy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4dk-Bg-Xqf" secondAttribute="trailing" constant="5" id="Oy6-AQ-gXL"/>
                                         <constraint firstItem="4dk-Bg-Xqf" firstAttribute="leading" secondItem="12" secondAttribute="leading" constant="15" id="TmJ-pE-iX5"/>
                                         <constraint firstItem="4dk-Bg-Xqf" firstAttribute="top" secondItem="12" secondAttribute="top" constant="15" id="boS-iF-bD9"/>
                                         <constraint firstItem="Pgf-kD-faK" firstAttribute="leading" secondItem="59" secondAttribute="trailing" constant="15" id="dLf-dg-tVy"/>
                                         <constraint firstItem="Pgf-kD-faK" firstAttribute="centerY" secondItem="59" secondAttribute="centerY" id="h5Z-sh-4Nw"/>
+                                        <constraint firstItem="LaZ-8I-lLy" firstAttribute="centerY" secondItem="59" secondAttribute="centerY" id="lK2-YK-bFO"/>
                                         <constraint firstItem="59" firstAttribute="top" secondItem="12" secondAttribute="top" constant="4" id="lnu-MY-hj6"/>
                                         <constraint firstAttribute="trailing" secondItem="Pgf-kD-faK" secondAttribute="trailing" constant="15" id="r6W-eE-wAM"/>
                                     </constraints>
