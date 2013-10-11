@@ -39,6 +39,10 @@
 		C0960B6017EE4FE6006FF0A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C0960B5F17EE4FE6006FF0A5 /* Default.png */; };
 		C0960B6417EE507B006FF0A5 /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = C0960B6317EE507B006FF0A5 /* Default~iphone.png */; };
 		C0960B6617EE50E6006FF0A5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0960B6517EE50E6006FF0A5 /* Default-568h@2x.png */; };
+		C0A2E8181808A7B000576F1B /* Cobblestones.JPG in Resources */ = {isa = PBXBuildFile; fileRef = C0A2E8131808A7B000576F1B /* Cobblestones.JPG */; };
+		C0A2E8191808A7B000576F1B /* DenverSunset.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C0A2E8141808A7B000576F1B /* DenverSunset.jpg */; };
+		C0A2E81B1808A7B000576F1B /* KidsMountain.JPG in Resources */ = {isa = PBXBuildFile; fileRef = C0A2E8161808A7B000576F1B /* KidsMountain.JPG */; };
+		C0A2E81C1808A7B000576F1B /* MtHood.JPG in Resources */ = {isa = PBXBuildFile; fileRef = C0A2E8171808A7B000576F1B /* MtHood.JPG */; };
 		C0A35DEC17EE584F0015CA6E /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A35DEB17EE584F0015CA6E /* Default~ipad.png */; };
 		C0A35DF017EE58850015CA6E /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A35DEF17EE58850015CA6E /* Default-Landscape~ipad.png */; };
 		C0A35DF217EE592D0015CA6E /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C0A35DF117EE592D0015CA6E /* Default-Portrait@2x~ipad.png */; };
@@ -168,6 +172,10 @@
 		C0960B5F17EE4FE6006FF0A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C0960B6317EE507B006FF0A5 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
 		C0960B6517EE50E6006FF0A5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C0A2E8131808A7B000576F1B /* Cobblestones.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Cobblestones.JPG; path = ../../../../Desktop/StillImages/Cobblestones.JPG; sourceTree = "<group>"; };
+		C0A2E8141808A7B000576F1B /* DenverSunset.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = DenverSunset.jpg; path = ../../../../Desktop/StillImages/DenverSunset.jpg; sourceTree = "<group>"; };
+		C0A2E8161808A7B000576F1B /* KidsMountain.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = KidsMountain.JPG; path = ../../../../Desktop/StillImages/KidsMountain.JPG; sourceTree = "<group>"; };
+		C0A2E8171808A7B000576F1B /* MtHood.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MtHood.JPG; path = ../../../../Desktop/StillImages/MtHood.JPG; sourceTree = "<group>"; };
 		C0A35DEB17EE584F0015CA6E /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad.png"; sourceTree = "<group>"; };
 		C0A35DEF17EE58850015CA6E /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		C0A35DF117EE592D0015CA6E /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
@@ -339,6 +347,17 @@
 			name = "Launch and Icon Images";
 			sourceTree = "<group>";
 		};
+		C0A2E8101808A79700576F1B /* StillImages */ = {
+			isa = PBXGroup;
+			children = (
+				C0A2E8131808A7B000576F1B /* Cobblestones.JPG */,
+				C0A2E8141808A7B000576F1B /* DenverSunset.jpg */,
+				C0A2E8161808A7B000576F1B /* KidsMountain.JPG */,
+				C0A2E8171808A7B000576F1B /* MtHood.JPG */,
+			);
+			name = StillImages;
+			sourceTree = "<group>";
+		};
 		C0B4642617DA826F00126545 = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +422,7 @@
 		C0B4643B17DA826F00126545 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C0A2E8101808A79700576F1B /* StillImages */,
 				C053504917EE4DAA0078A3D7 /* Launch and Icon Images */,
 				C0DB6F8417E602570020B394 /* Supplimentary Image Files */,
 				C0B4643C17DA826F00126545 /* FilterChain-Info.plist */,
@@ -596,6 +616,7 @@
 				C008F53F17FCA4BA0061232A /* Sharpen.jpg in Resources */,
 				C008F52E17FC9B5B0061232A /* Amatorka.jpg in Resources */,
 				C0C700BE17F6A17B00464BE9 /* lookup_soft_elegance_2.png in Resources */,
+				C0A2E8181808A7B000576F1B /* Cobblestones.JPG in Resources */,
 				C008F54017FCA4BA0061232A /* Sketch.jpg in Resources */,
 				C073570417E51DE40024D02B /* OrangeSquareMin.jpg in Resources */,
 				C0A35DF417EE595F0015CA6E /* Default-Landscape@2x~ipad.png in Resources */,
@@ -621,13 +642,16 @@
 				C0A35E0F17EE62510015CA6E /* icon80.png in Resources */,
 				C008F54117FCA4BA0061232A /* Soft.jpg in Resources */,
 				C0A35E0B17EE62510015CA6E /* icon57.png in Resources */,
+				C0A2E8191808A7B000576F1B /* DenverSunset.jpg in Resources */,
 				C0A35DEC17EE584F0015CA6E /* Default~ipad.png in Resources */,
 				C0D87A9018024011004572CC /* PremiumTileSmall.png in Resources */,
+				C0A2E81B1808A7B000576F1B /* KidsMountain.JPG in Resources */,
 				C0DB6F8117E602150020B394 /* Sepia.jpg in Resources */,
 				C0A35E1017EE62510015CA6E /* icon100.png in Resources */,
 				C008F53717FCA04A0061232A /* NeonEdge.jpg in Resources */,
 				C0960B6417EE507B006FF0A5 /* Default~iphone.png in Resources */,
 				C01734A917E82EC900113DFE /* recordRedLight.png in Resources */,
+				C0A2E81C1808A7B000576F1B /* MtHood.JPG in Resources */,
 				C05C1E441801D52F004B29BA /* PurchaseAlertView.xib in Resources */,
 				C0960B6617EE50E6006FF0A5 /* Default-568h@2x.png in Resources */,
 				C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */,

@@ -8,6 +8,8 @@
 
 #import "ActiveFilterManager.h"
 #import "AppDelegate.h"
+#import "MainViewController.h"
+#import "RecordingManager.h"
 
 #define k_w 40.0
 #define k_h 150.0
@@ -149,11 +151,16 @@
         return FALSE; //tells the caller to clean up and restore state like it was before the call
     }
     
+    MainViewController* mvc = (MainViewController*)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    //GPUImageView* previewLayer = [mvc previewLayer];
+    
+    
     //update the Arrays with the new name/filter respectively
     [[self activeFilterNames] addObject:name];
     NSString* designator = [self designatorForName:name];
     GPUImageFilter *newConversion = [[NSClassFromString(designator) alloc] init];
     [[self activeFilters] addObject:newConversion];
+    //[newConversion forceProcessingAtSize:previewLayer.sizeInPixels];
 
     //animate the view into position
     CGRect target = [self frameForPosition:currentCount];
@@ -164,7 +171,6 @@
      ];
     
     //scale down and push the thumbnail image to the correct LiveFilterView instance
-    UIViewController* mvc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     LiveFilterView* destination = (LiveFilterView*)[mvc.view viewWithTag:currentCount];
     UIImage* bigThumb = [(UIImageView*)view image];
     UIImage* smallThumb = [self scaledDownVersionOf:bigThumb];

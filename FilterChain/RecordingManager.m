@@ -21,13 +21,8 @@
 
 - (void)updatePipelineWithFilters:(NSArray*)filters {
     //save mix value and prepare to swap out the pipeline
-    CGFloat mix = _blendFilter.mix;
-    if (recording) {
-        [_blendFilter removeTarget:_movieWriter];
-    }
-    [videoCamera removeTarget:_blendFilter];
-    [_pipelineDestination removeTarget:_blendFilter];
-    _blendFilter = nil;
+    [_staticPicture removeAllTargets];
+    [_pipelineDestination removeTarget:_mvcPreviewLayer];
     
     //handle an empty Pipeline
     if (filters.count == 0) {
@@ -40,14 +35,10 @@
     }
     
     //Re-configure the blendFilter
-    _blendFilter = [[GPUImageDissolveBlendFilter alloc] init];
-    [videoCamera addTarget:_blendFilter];
-    [_pipelineDestination addTarget:_blendFilter];
-    [_blendFilter addTarget:_mvcPreviewLayer];
-    [_blendFilter setMix:mix];
-    if (recording) {
-        [_blendFilter addTarget:_movieWriter];
-    }
+    [_staticPicture addTarget:_prePassThrough];
+    //[_pipelineDestination forceProcessingAtSize:_mvcPreviewLayer.sizeInPixels];
+    [_pipelineDestination addTarget:_mvcPreviewLayer];
+    [_staticPicture processImage];
 }
 
 - (void)configureCamera {
@@ -58,15 +49,24 @@
     videoCamera.horizontallyMirrorRearFacingCamera = NO;
     
     _mvcPreviewLayer = [(MainViewController*)[[[[UIApplication sharedApplication] delegate] window] rootViewController] previewLayer];
-    _blendFilter = [[GPUImageDissolveBlendFilter alloc] init];
-    _passThrough = [[GPUImageFilter alloc] init];//used as a placeholder for empty pipelines.
-    NSArray* filters = [NSArray arrayWithObjects:_passThrough, nil];
+    _prePassThrough = [[GPUImageFilter alloc] init];
+    _passThrough = [[GPUImageSepiaFilter alloc] init];//used as a placeholder for empty pipelines.
     _pipelineDestination = [[GPUImageFilter alloc] init];
-    _pipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filters input:videoCamera output:_pipelineDestination];
-    [videoCamera addTarget:_blendFilter];
-    [_pipelineDestination addTarget:_blendFilter];
-    [_blendFilter addTarget:_mvcPreviewLayer];
-    [videoCamera startCameraCapture];
+    
+    //2048x1536
+    UIImage* portraitImage = [UIImage imageNamed:@"Cobblestones.JPG"];
+    UIImage* image = [UIImage imageWithCGImage:portraitImage.CGImage scale:1.0 orientation:UIImageOrientationRight];
+    _staticPicture = [[GPUImagePicture alloc] initWithImage:image smoothlyScaleOutput:YES];
+    
+    //[_prePassThrough forceProcessingAtSize:_mvcPreviewLayer.sizeInPixels];
+    
+    NSArray* filters = [NSArray arrayWithObjects:_passThrough, nil];
+    
+    [_staticPicture addTarget:_prePassThrough];
+    
+    _pipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filters input:_prePassThrough output:_pipelineDestination];
+    [_pipelineDestination addTarget:_mvcPreviewLayer];
+    [_staticPicture processImage];
 }
 
 - (void)startCameraCapture {
@@ -165,7 +165,13 @@
             break;
     }
     
-    [videoCamera setOutputImageOrientation:outputOrientation];
+    //[videoCamera setOutputImageOrientation:outputOrientation];
+    /*
+    MainViewController* mvc = (MainViewController*)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    GPUImageView* previewLayer = [mvc previewLayer];
+    CGRect plBounds = previewLayer.bounds;
+    NSLog(@"plBounds: %f,%f,%f,%f",plBounds.origin.x,plBounds.origin.y,plBounds.size.height,plBounds.size.width);
+     */
 }
 
 
@@ -177,6 +183,9 @@
 
 - (void)updateBlendMix:(CGFloat)mix {
     [_blendFilter setMix:mix];
+    ActiveFilterManager* activeFilterManager = [(MainViewController*)[[[[UIApplication sharedApplication] delegate] window] rootViewController] activeFilterManager];
+    NSArray* activeFilters = [activeFilterManager activeFilters];
+    [self updatePipelineWithFilters:activeFilters];
 }
 
 @end

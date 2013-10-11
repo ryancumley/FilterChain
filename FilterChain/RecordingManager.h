@@ -22,6 +22,8 @@
 @property (strong, nonatomic) GPUImageDissolveBlendFilter* blendFilter;
 @property (strong, nonatomic) GPUImageMovieWriter *movieWriter;
 @property (strong, nonatomic) GPUImageFilterPipeline* pipeline;
+@property (strong, nonatomic) GPUImagePicture* staticPicture;
+@property (strong, nonatomic) GPUImageFilter* prePassThrough;
 @property (strong, nonatomic) IBOutlet UIImageView* blinkyRedLight;
 @property (nonatomic, assign) id mvcDelegate;
 
