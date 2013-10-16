@@ -30,12 +30,14 @@
 		C046913317F0BF6500F14AE6 /* NavCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C046913217F0BF6500F14AE6 /* NavCell.m */; };
 		C046913817F0CDFF00F14AE6 /* VideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C046913717F0CDFF00F14AE6 /* VideoIcon.png */; };
 		C048DD3517ECAFE700F47A1D /* CachedThumbnails.m in Sources */ = {isa = PBXBuildFile; fileRef = C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */; };
+		C04D70AC180E4020009ECC1C /* record_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C04D70AB180E4020009ECC1C /* record_button@2x.png */; };
 		C05C1E431801D52F004B29BA /* PurchaseAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C05C1E411801D52F004B29BA /* PurchaseAlertViewController.m */; };
 		C05C1E441801D52F004B29BA /* PurchaseAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C05C1E421801D52F004B29BA /* PurchaseAlertView.xib */; };
 		C06A359517FA224800DC3DBA /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C06A359417FA224800DC3DBA /* Filter.m */; };
 		C073570417E51DE40024D02B /* OrangeSquareMin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C073570317E51DE40024D02B /* OrangeSquareMin.jpg */; };
-		C073571217E5384E0024D02B /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = C073571117E5384E0024D02B /* record.png */; };
+		C073571217E5384E0024D02B /* record_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C073571117E5384E0024D02B /* record_button.png */; };
 		C073571817E540B40024D02B /* CameraLensSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = C073571717E540B40024D02B /* CameraLensSmall.png */; };
+		C08E29891808C9B5003295A2 /* Contrast.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C008F52C17FC9B5B0061232A /* Contrast.jpg */; };
 		C0960B6017EE4FE6006FF0A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C0960B5F17EE4FE6006FF0A5 /* Default.png */; };
 		C0960B6417EE507B006FF0A5 /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = C0960B6317EE507B006FF0A5 /* Default~iphone.png */; };
 		C0960B6617EE50E6006FF0A5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0960B6517EE50E6006FF0A5 /* Default-568h@2x.png */; };
@@ -157,13 +159,14 @@
 		C046913717F0CDFF00F14AE6 /* VideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VideoIcon.png; sourceTree = "<group>"; };
 		C048DD3317ECAFE700F47A1D /* CachedThumbnails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedThumbnails.h; sourceTree = "<group>"; };
 		C048DD3417ECAFE700F47A1D /* CachedThumbnails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedThumbnails.m; sourceTree = "<group>"; };
+		C04D70AB180E4020009ECC1C /* record_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "record_button@2x.png"; sourceTree = "<group>"; };
 		C05C1E401801D52F004B29BA /* PurchaseAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseAlertViewController.h; sourceTree = "<group>"; };
 		C05C1E411801D52F004B29BA /* PurchaseAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseAlertViewController.m; sourceTree = "<group>"; };
 		C05C1E421801D52F004B29BA /* PurchaseAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseAlertView.xib; sourceTree = "<group>"; };
 		C06A359317FA224800DC3DBA /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		C06A359417FA224800DC3DBA /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		C073570317E51DE40024D02B /* OrangeSquareMin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = OrangeSquareMin.jpg; sourceTree = "<group>"; };
-		C073571117E5384E0024D02B /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
+		C073571117E5384E0024D02B /* record_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_button.png; sourceTree = "<group>"; };
 		C073571717E540B40024D02B /* CameraLensSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraLensSmall.png; sourceTree = "<group>"; };
 		C0960B5F17EE4FE6006FF0A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C0960B6317EE507B006FF0A5 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
@@ -385,7 +388,6 @@
 				C0B4644417DA826F00126545 /* AppDelegate.m */,
 				C0B4648A17DA8A4900126545 /* MainViewController.h */,
 				C0B4648B17DA8A4900126545 /* MainViewController.m */,
-				C0D87A8F18024011004572CC /* PremiumTileSmall.png */,
 				C0B4648617DA89FF00126545 /* Retina.xib */,
 				C0EFCAD717FD3E39009537F2 /* InAppPurchaseManager.h */,
 				C0EFCAD817FD3E39009537F2 /* InAppPurchaseManager.m */,
@@ -444,6 +446,7 @@
 		C0DB6F8417E602570020B394 /* Supplimentary Image Files */ = {
 			isa = PBXGroup;
 			children = (
+				C0D87A8F18024011004572CC /* PremiumTileSmall.png */,
 				C016A93317FF6E1C005EA66E /* locked.png */,
 				C008F53917FCA4BA0061232A /* Sharpen.jpg */,
 				C008F53A17FCA4BA0061232A /* Sketch.jpg */,
@@ -470,7 +473,8 @@
 				C0DB6F7917E602150020B394 /* Inversion.jpg */,
 				C0DB6F7A17E602150020B394 /* Pixellate.jpg */,
 				C0DB6F7B17E602150020B394 /* Sepia.jpg */,
-				C073571117E5384E0024D02B /* record.png */,
+				C073571117E5384E0024D02B /* record_button.png */,
+				C04D70AB180E4020009ECC1C /* record_button@2x.png */,
 				C01734A817E82EC900113DFE /* recordRedLight.png */,
 				C073570317E51DE40024D02B /* OrangeSquareMin.jpg */,
 			);
@@ -582,6 +586,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08E29891808C9B5003295A2 /* Contrast.jpg in Resources */,
 				C0FF5D6A18042725003D6772 /* icon152.png in Resources */,
 				C008F54217FCA4BA0061232A /* TiltShift.jpg in Resources */,
 				C0B4643F17DA826F00126545 /* InfoPlist.strings in Resources */,
@@ -599,9 +604,10 @@
 				C008F54017FCA4BA0061232A /* Sketch.jpg in Resources */,
 				C073570417E51DE40024D02B /* OrangeSquareMin.jpg in Resources */,
 				C0A35DF417EE595F0015CA6E /* Default-Landscape@2x~ipad.png in Resources */,
-				C073571217E5384E0024D02B /* record.png in Resources */,
+				C073571217E5384E0024D02B /* record_button.png in Resources */,
 				C073571817E540B40024D02B /* CameraLensSmall.png in Resources */,
 				C0A35E0E17EE62510015CA6E /* icon76.png in Resources */,
+				C04D70AC180E4020009ECC1C /* record_button@2x.png in Resources */,
 				C0C700BC17F6A17B00464BE9 /* lookup_amatorka.png in Resources */,
 				C0C700BD17F6A17B00464BE9 /* lookup_soft_elegance_1.png in Resources */,
 				C008F53517FCA04A0061232A /* Exposure.jpg in Resources */,

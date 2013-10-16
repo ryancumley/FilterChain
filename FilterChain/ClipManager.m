@@ -125,7 +125,7 @@
     if (!cachedThumbnails) {
         cachedThumbnails = [[CachedThumbnails alloc] init];
     }
-    //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs. Our cached Thumbnails class stores the thumbnails in ~/documents/Thumbnails to avoid expensive use of MPMoviePlayerController in creating the thumbs every time.
+    //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs. Our cached Thumbnails class stores the thumbnails in ~/documents/Thumbnails to avoid expensive use of MPMoviePlayerController in creating the thumbs every time. ***update*** deprecated in iOS 7, so using AVAssetImageGenerator instead.
     _storedThumbnails = nil;
     _storedThumbnails = [NSMutableArray arrayWithCapacity:_storedClips.count];
     for (NSURL *clip in _storedClips) {
@@ -167,8 +167,7 @@
     double delayToBegin= 0.2;
     dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, delayToBegin* NSEC_PER_SEC);
     dispatch_after(startTime, dispatch_get_main_queue(), ^(void){
-        if (selected == 0) {
-            //Export the file!
+        if (selected == 0) { //Export the file!
             NSString *path = [targetUrl path];
             BOOL compatible = UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path);
             if (compatible) {
@@ -180,9 +179,6 @@
         }
         
         else if (selected == 1) { //preview the file
-            //AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-            //MainViewController *mvc = (MainViewController*)appDelegate.mVC;
-            //[mvc previewClipForUrl:targetUrl];
             [_moviePlayerDelegate previewClipForUrl:targetUrl];
             [aux setSelectedSegmentIndex:-1];
             [self selectCellAtIndexPath:selectedPath];

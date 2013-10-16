@@ -27,7 +27,8 @@
 
 
 
-#pragma Initialization, Configuration and View Lifecycle
+#pragma mark -
+#pragma mark Initialization, Configuration and View Lifecycle
 
 - (void)createDirectoryForThumbnails {
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

@@ -69,6 +69,7 @@
     [videoCamera startCameraCapture];
 }
 
+
 - (void)startCameraCapture {
     [videoCamera startCameraCapture];
 }

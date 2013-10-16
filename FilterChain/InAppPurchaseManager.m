@@ -171,8 +171,8 @@
         [numberFormatter setLocale:premiumFiltersUpgrade.priceLocale];
         NSString *formattedPrice= [numberFormatter stringFromNumber:premiumFiltersUpgrade.price];
         NSString* headline = [NSString stringWithFormat:@"Unlock Premium Filters for %@",formattedPrice];
-        NSString* byline = @"Activate all additional filters. Available for use immediately";
-        [_purchaseAlertViewController loadHeadline:headline byline:byline cancelTitle:@"Cancel" acceptTitle:@"Buy Now"];
+        NSString* byline = @"Activate all filters immediately. \n\n Already purchased this? Restore them for free on any device you have associated with your Apple ID.";
+        [_purchaseAlertViewController loadHeadline:headline byline:byline cancelTitle:@"Cancel" acceptTitle:@"Buy / Restore"];
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
