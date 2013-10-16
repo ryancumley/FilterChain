@@ -270,8 +270,10 @@
     }
     
     if ([target class] == [GPUImageToonFilter class]) {
-            [(GPUImageToonFilter*)target setThreshold:(value / 2)];
-            [(GPUImageToonFilter*)target setQuantizationLevels:(20 * value)];
+            [(GPUImageToonFilter*)target setThreshold:0.2];
+            if (value > 0.0) {//prevents total darkness at 0.0
+                [(GPUImageToonFilter*)target setQuantizationLevels:(20 * value)];
+            }
         return;
     }
     
@@ -281,10 +283,11 @@
     }
     
     if ([target class] == [GPUImageTiltShiftFilter class]) {
-        if (value > 0.2 && value < 0.8) {
-            [(GPUImageTiltShiftFilter*)target setTopFocusLevel:(value - 0.1)];
-            [(GPUImageTiltShiftFilter*)target setBottomFocusLevel:(value + 0.1)];
-            [(GPUImageTiltShiftFilter*)target setFocusFallOffRate:0.2];
+        float flip = 1 - value;
+        if (value > 0.1 && value < 0.9) {
+            [(GPUImageTiltShiftFilter*)target setTopFocusLevel:(flip - 0.1)];
+            [(GPUImageTiltShiftFilter*)target setBottomFocusLevel:(flip + 0.1)];
+            [(GPUImageTiltShiftFilter*)target setFocusFallOffRate:0.15];
         }
         return;
     }

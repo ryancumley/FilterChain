@@ -17,18 +17,20 @@
 @property (strong, nonatomic) IBOutlet UILabel* byline;
 @property (strong, nonatomic) IBOutlet UIButton* cancelButton;
 @property (strong, nonatomic) IBOutlet UIButton* acceptButton;
+@property (strong, nonatomic) IBOutlet UIButton* restoreButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicator;
 
 @property (nonatomic, assign) id viewDelegate;
 @property (nonatomic, assign) id actionDelegate;
 
 - (void)loadMessagesOnlyWithHeadline:(NSString*)headline byline:(NSString*)byline;
-- (void)loadHeadline:(NSString*)headline byline:(NSString*)byline cancelTitle:(NSString*)cancelTitle acceptTitle:(NSString*)acceptTitle;
+- (void)loadHeadline:(NSString*)headline byline:(NSString*)byline cancelTitle:(NSString*)cancelTitle acceptTitle:(NSString*)acceptTitle restoreTitle:(NSString*)restoreTitle;
 - (void)displayActivitySpinner;
 - (void)hideActivitySpinner;
 - (void)userCancelled;
 - (void)userAccepted;
 - (IBAction)pressedCancel:(id)sender;
+- (IBAction)pressedRestore:(id)sender;
 - (IBAction)pressedAccept:(id)sender;
 
 @end
@@ -43,5 +45,6 @@
 @protocol PurchaseAlertViewActionDelegate <NSObject>
 
 - (void)purchaseAlertViewAccepted:(BOOL)accepted withOptions:(NSDictionary*)options;
+- (void)purchaseAlertViewRestored;
 
 @end

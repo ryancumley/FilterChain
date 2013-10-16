@@ -31,7 +31,7 @@
     [_purchaseAlertViewController setViewDelegate:[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
     [_purchaseAlertViewController setActionDelegate:self];
     [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsTakingOverWithView:_purchaseAlertViewController.view];
-    [_purchaseAlertViewController loadHeadline:@"Enable Premium Filters" byline:@"Conacting Apple's AppStore" cancelTitle:@"Cancel" acceptTitle:nil];
+    [_purchaseAlertViewController loadHeadline:@"Enable Premium Filters" byline:@"Contacting Apple's AppStore" cancelTitle:@"Cancel" acceptTitle:nil restoreTitle:nil];
     [_purchaseAlertViewController displayActivitySpinner];
     
     // get the product description and set the productIsReachableAtApple flag
@@ -60,7 +60,7 @@
         //Alert view with message
         NSString* notAllowedMessage = @"Error: You do not have Permission to make Purchases";
         NSString* explanation = @"Enable \"In-App Purchases\" from the Restrictions to proceed";
-        [_purchaseAlertViewController loadHeadline:notAllowedMessage byline:explanation cancelTitle:@"Dismiss" acceptTitle:nil];
+        [_purchaseAlertViewController loadHeadline:notAllowedMessage byline:explanation cancelTitle:@"Dismiss" acceptTitle:nil restoreTitle:nil];
         return;
     }
     
@@ -70,7 +70,7 @@
         //Alert view with message
         NSString *notAvaialbleMessage = @"Error: The AppStore is not reachable right now";
         NSString *explanation = @"Make sure you're connected to the internet! Otherwise, try again in a few minutes";
-        [_purchaseAlertViewController loadHeadline:notAvaialbleMessage byline:explanation cancelTitle:@"Dismiss" acceptTitle:nil];
+        [_purchaseAlertViewController loadHeadline:notAvaialbleMessage byline:explanation cancelTitle:@"Dismiss" acceptTitle:nil restoreTitle:nil];
         return;
     }
     
@@ -132,7 +132,6 @@
 {
     [self provideContent:transaction.originalTransaction.payment.productIdentifier];
     [self finishTransaction:transaction wasSuccessful:YES];
-    [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction
@@ -141,14 +140,14 @@
     {
         // error!
         NSString* error = transaction.error.localizedDescription;
-        [_purchaseAlertViewController loadHeadline:error byline:@"" cancelTitle:@"Dismiss" acceptTitle:nil];
+        [_purchaseAlertViewController loadHeadline:error byline:@"" cancelTitle:@"Dismiss" acceptTitle:nil restoreTitle:nil];
         [self finishTransaction:transaction wasSuccessful:NO];
     }
     else
     {
         // this is fine, the user just cancelled, so don’t notify
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-        [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
+        //[_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
     }
 }
 
@@ -171,8 +170,8 @@
         [numberFormatter setLocale:premiumFiltersUpgrade.priceLocale];
         NSString *formattedPrice= [numberFormatter stringFromNumber:premiumFiltersUpgrade.price];
         NSString* headline = [NSString stringWithFormat:@"Unlock Premium Filters for %@",formattedPrice];
-        NSString* byline = @"Activate all filters immediately. \n\n Already purchased this? Restore them for free on any device you have associated with your Apple ID.";
-        [_purchaseAlertViewController loadHeadline:headline byline:byline cancelTitle:@"Cancel" acceptTitle:@"Buy / Restore"];
+        NSString* byline = @"Activate all filters immediately. \n\n Already purchased this? Restore them for free on any device associated with your Apple ID.";
+        [_purchaseAlertViewController loadHeadline:headline byline:byline cancelTitle:@"Cancel" acceptTitle:@"Buy" restoreTitle:@"Restore"];
     }
     
     for (NSString *invalidProductId in response.invalidProductIdentifiers)
@@ -189,6 +188,7 @@
 #pragma mark SKPaymentTransactionObserverDelegate Methods
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
+    
     [_purchaseAlertViewController hideActivitySpinner];
     for (SKPaymentTransaction *transaction in transactions)
     {
@@ -217,7 +217,19 @@
     return;
 }
 
+- (void) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
+    [_purchaseAlertViewController loadHeadline:@"Success!" byline:@"Restoring Filters..." cancelTitle:@"" acceptTitle:nil restoreTitle:nil];
+    [_purchaseAlertViewController displayActivitySpinner];
+    [self performSelector:@selector(tellViewDelegateToResign) withObject:nil afterDelay:2.0];
+}
 
+- (void)tellViewDelegateToResign {
+    [_purchaseAlertViewController.viewDelegate purchaseAlertViewIsResigning];
+}
+
+- (void) paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
+    [_purchaseAlertViewController loadHeadline:error.localizedDescription byline:@"Are you sure you're signed in to this device with the correct Apple ID?" cancelTitle:@"Dismiss" acceptTitle:nil restoreTitle:nil];
+}
 
 
 #pragma mark -
@@ -225,6 +237,11 @@
 
 - (void)purchaseAlertViewAccepted:(BOOL)accepted withOptions:(NSDictionary*)options {
     [self purchaseProUpgrade];
+}
+
+- (void)purchaseAlertViewRestored {
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+    [_purchaseAlertViewController displayActivitySpinner];
 }
 
 @end

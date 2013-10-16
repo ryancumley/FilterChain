@@ -64,18 +64,6 @@
     _recordingManager = [[RecordingManager alloc] init];
     [_recordingManager setMvcDelegate:self];
     
-    //ClipManager Config
-    clipCollectionIsVisible = NO;
-    CGRect offScreen = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    _clipManagerView.frame = offScreen;
-    [self.view addSubview:_clipManagerView];
-    _clipManager = [[ClipManager alloc] init];
-    _clipManager.collectionView.frame = _collectionShell.frame;
-    _clipManager.collectionView.backgroundColor = [UIColor clearColor];
-    [_collectionShell addSubview:_clipManager.collectionView];
-    [_clipManager refreshStoredClips];
-    [_clipManager setMoviePlayerDelegate:self];
-    
     //FilterBank Config
     _filterBank = [[FilterBank alloc] init];
     _filterBank.collectionView.frame = [self filterBankFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
@@ -88,14 +76,6 @@
     [_activeFilterManager setFilterBankDelegate:_filterBank];
     [_activeFilterManager setRecordingManagerDelegate:_recordingManager];
     [_activeFilterManager setMvcDelegate:self];
-    
-    //PurchaseManager Config
-    _purchaseManager = [[InAppPurchaseManager alloc] init];
-    [_purchaseManager setPurchasePresentationDelegate:self];
-    [_purchaseManager loadStore];
-    NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
-    [standardDefaults registerDefaults:@{@NO:k_upgradePurchased}];
-    [standardDefaults synchronize];
     
     
     [self performSelector:@selector(checkForMicrophonePermission) withObject:nil afterDelay:1.0];
@@ -231,6 +211,19 @@
 #pragma mark App Specific tasks and actions
 
 - (IBAction)navigateToClips:(id)sender {
+    //ClipManager Config
+    clipCollectionIsVisible = NO;
+    CGRect offScreen = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+    _clipManagerView.frame = offScreen;
+    [self.view addSubview:_clipManagerView];
+    _clipManager = [[ClipManager alloc] init];
+    _clipManager.collectionView.frame = _collectionShell.frame;
+    _clipManager.collectionView.backgroundColor = [UIColor clearColor];
+    [_collectionShell addSubview:_clipManager.collectionView];
+    [_clipManager refreshStoredClips];
+    [_clipManager setMoviePlayerDelegate:self];
+    
+    //free up resources from recording gracefully
     if (_recordingManager.isRecording) {
         [self stopTimer];
         [_recordingManager stopRecording];
@@ -238,6 +231,7 @@
     }
     [_recordingManager pauseCameraCapture];
     
+    //present the clips
     clipCollectionIsVisible = YES;
     [self.view bringSubviewToFront:_clipManagerView];
     CGRect displayClips = [self clipManagerFrameForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
@@ -259,6 +253,9 @@
                          _clipManagerView.frame = displayClips;
                      }
      ];
+    
+    [_clipManager.view removeFromSuperview];
+    _clipManager = nil;
 }
 
 - (IBAction)userPressedRecord:(UIButton *)sender {
@@ -268,7 +265,7 @@
         [self stopTimer];
         _blinkyRedLight.userInteractionEnabled = YES; //enabling interaction of the glowing red view covering the button effectively prevents the user from pressing record again until we're ready to deal with a new recording.
         [_recordingManager stopRecording];
-        [_clipManager refreshStoredClips];
+        //[_clipManager refreshStoredClips]; happens when navigating to clipManager.view now instead of here.
     }
     else {
         [_recordingManager startNewRecording];
@@ -461,13 +458,10 @@
 
 - (void)purchaseAlertViewIsResigning {
     //do any requried cleanup
-    
-    
     [blockingView removeFromSuperview];
     blockingView = nil;
     [purchaseAlertView removeFromSuperview];
     purchaseAlertViewIsShowing = NO;
-    
 }
 
 
@@ -478,6 +472,16 @@
 #pragma mark FilterBankToMVC Protocol
 
 - (void)userSelectedAPremiumFilter {
+    if  (_purchaseManager == nil) {
+        //PurchaseManager Config
+        _purchaseManager = [[InAppPurchaseManager alloc] init];
+        [_purchaseManager setPurchasePresentationDelegate:self];
+        NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
+        [standardDefaults registerDefaults:@{@NO:k_upgradePurchased}];
+        [standardDefaults synchronize];
+    }
+    
+    [_purchaseManager loadStore];
     [_purchaseManager launchInAppPurchaseDialog];
 }
 

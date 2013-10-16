@@ -13,6 +13,7 @@
                 <outlet property="byline" destination="h1Z-rU-2Jx" id="PRy-qC-7gL"/>
                 <outlet property="cancelButton" destination="Zng-xg-YgM" id="gmg-nt-aie"/>
                 <outlet property="headline" destination="3eq-U4-j6I" id="zMc-0Z-WXG"/>
+                <outlet property="restoreButton" destination="3ZK-Cw-f7o" id="aec-st-dPf"/>
                 <outlet property="seeThroughBackingView" destination="ZOr-UQ-3Mi" id="3Lh-HF-u0V"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -39,9 +40,9 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zng-xg-YgM" userLabel="cancelButton">
-                            <rect key="frame" x="0.0" y="230" width="135" height="40"/>
+                            <rect key="frame" x="0.0" y="230" width="90" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="CancelButton">
+                            <state key="normal" title="Cancel">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -49,13 +50,23 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBS-nO-cOC" userLabel="acceptButton">
-                            <rect key="frame" x="135" y="230" width="135" height="40"/>
+                            <rect key="frame" x="180" y="230" width="90" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="AcceptButton">
+                            <state key="normal" title="Buy">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="pressedAccept:" destination="-1" eventType="touchUpInside" id="TjO-85-IRS"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ZK-Cw-f7o" userLabel="restoreButton">
+                            <rect key="frame" x="90" y="230" width="90" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Restore">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="pressedRestore:" destination="-1" eventType="touchUpInside" id="iol-ZW-yn1"/>
                             </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="250" translatesAutoresizingMaskIntoConstraints="NO" id="3eq-U4-j6I" userLabel="headline Label">
@@ -73,17 +84,20 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2rr-SG-bGS">
-                            <rect key="frame" x="117" y="117" width="37" height="37"/>
+                            <rect key="frame" x="117" y="116" width="37" height="37"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="v7z-7x-Xbx" secondAttribute="bottom" constant="40" id="85b-o2-I5z"/>
+                        <constraint firstItem="3ZK-Cw-f7o" firstAttribute="leading" secondItem="Zng-xg-YgM" secondAttribute="trailing" id="9u5-MR-dnP"/>
+                        <constraint firstItem="QBS-nO-cOC" firstAttribute="leading" secondItem="3ZK-Cw-f7o" secondAttribute="trailing" id="DOc-RE-llP"/>
                         <constraint firstItem="v7z-7x-Xbx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h1Z-rU-2Jx" secondAttribute="bottom" constant="5" id="Ez6-Bk-jmt"/>
                         <constraint firstItem="3eq-U4-j6I" firstAttribute="top" secondItem="ZOr-UQ-3Mi" secondAttribute="top" constant="15" id="G3V-LJ-HYe"/>
                         <constraint firstAttribute="trailing" secondItem="3eq-U4-j6I" secondAttribute="trailing" constant="10" id="H9s-h8-3nD"/>
                         <constraint firstItem="3eq-U4-j6I" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" constant="10" id="Ib3-bf-ffj"/>
+                        <constraint firstItem="3ZK-Cw-f7o" firstAttribute="width" secondItem="Zng-xg-YgM" secondAttribute="width" id="K7E-f8-FWm"/>
                         <constraint firstItem="Zng-xg-YgM" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" id="O1Q-ak-g0r"/>
                         <constraint firstAttribute="centerY" secondItem="2rr-SG-bGS" secondAttribute="centerY" id="TbI-Vw-0CL"/>
                         <constraint firstItem="Zng-xg-YgM" firstAttribute="top" secondItem="v7z-7x-Xbx" secondAttribute="bottom" id="VhN-9m-EDZ"/>
@@ -92,12 +106,13 @@
                         <constraint firstAttribute="centerX" secondItem="2rr-SG-bGS" secondAttribute="centerX" id="d9i-nY-YjW"/>
                         <constraint firstAttribute="trailing" secondItem="h1Z-rU-2Jx" secondAttribute="trailing" constant="10" id="e0K-WH-H8M"/>
                         <constraint firstItem="h1Z-rU-2Jx" firstAttribute="top" secondItem="3eq-U4-j6I" secondAttribute="bottom" constant="10" id="gzy-1O-tqZ"/>
+                        <constraint firstAttribute="bottom" secondItem="3ZK-Cw-f7o" secondAttribute="bottom" id="hub-32-akN"/>
                         <constraint firstAttribute="trailing" secondItem="v7z-7x-Xbx" secondAttribute="trailing" id="i4z-kn-waA"/>
+                        <constraint firstItem="3ZK-Cw-f7o" firstAttribute="top" secondItem="v7z-7x-Xbx" secondAttribute="bottom" id="ixK-xF-BD0"/>
                         <constraint firstAttribute="bottom" secondItem="Zng-xg-YgM" secondAttribute="bottom" id="ldJ-Ie-4hP"/>
-                        <constraint firstItem="Zng-xg-YgM" firstAttribute="width" secondItem="QBS-nO-cOC" secondAttribute="width" id="qyV-uG-qUQ"/>
+                        <constraint firstItem="3ZK-Cw-f7o" firstAttribute="width" secondItem="QBS-nO-cOC" secondAttribute="width" id="quu-oY-Szp"/>
                         <constraint firstAttribute="centerX" secondItem="v7z-7x-Xbx" secondAttribute="centerX" id="r64-dh-ajx"/>
                         <constraint firstItem="v7z-7x-Xbx" firstAttribute="leading" secondItem="ZOr-UQ-3Mi" secondAttribute="leading" id="vC4-Ob-xSI"/>
-                        <constraint firstItem="QBS-nO-cOC" firstAttribute="leading" secondItem="Zng-xg-YgM" secondAttribute="trailing" id="vRH-my-vmK"/>
                         <constraint firstAttribute="bottom" secondItem="QBS-nO-cOC" secondAttribute="bottom" id="vk1-7D-NOo"/>
                         <constraint firstItem="QBS-nO-cOC" firstAttribute="top" secondItem="v7z-7x-Xbx" secondAttribute="bottom" id="xQ9-3c-wTl"/>
                     </constraints>
