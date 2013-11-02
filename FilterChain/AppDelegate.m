@@ -127,6 +127,22 @@
 
 }
 
+#pragma mark TODO
+/*
+Implement this design pattern:
+ NSString *predicateString = [NSString stringWithFormat @"employeeID == $EMPLOYEE_ID"];
+ NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
+ 
+ for (NSString *anID in employeeIDs) {
+ NSDictionary *variables = @{ @"EMPLOYEE_ID" : anID };
+ NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:variables];
+
+ prior to the fastEnumeration in loadFiltersFromJSON. push @"name" as the variable by including another argument in:
+ 
+ - (BOOL)alreadyExists:(NSString*)filterNamed inManagedObjectContext:(NSManagedObjectContext*)moc withPredicate:(NSPredicate*)predicate {}
+ 
+ */
+
 - (BOOL)alreadyExists:(NSString*)filterNamed inManagedObjectContext:(NSManagedObjectContext*)moc {
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name == %@", filterNamed];
     NSEntityDescription* description = [NSEntityDescription entityForName:@"Filter" inManagedObjectContext:moc];

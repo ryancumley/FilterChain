@@ -260,7 +260,7 @@
     }
     
     if ([target class] == [GPUImageAdaptiveThresholdFilter class]) {
-            [(GPUImageAdaptiveThresholdFilter*)target setBlurSize:(5 * value)];
+            [(GPUImageAdaptiveThresholdFilter*)target setBlurRadiusInPixels:(5 * value)];
         return;
     }
     
@@ -278,7 +278,7 @@
     }
     
     if ([target class] == [GPUImageGaussianBlurFilter class]) {
-               [(GPUImageGaussianBlurFilter*)target setBlurSize:(3 * value)];
+               [(GPUImageGaussianBlurFilter*)target setBlurRadiusInPixels:(3 * value)];
         return;
     }
     

@@ -125,7 +125,7 @@
     if (!cachedThumbnails) {
         cachedThumbnails = [[CachedThumbnails alloc] init];
     }
-    //We're going to loop through the NSUrl's conatined in _storedClips and use the MPMoviePlayerController thumbnailImageAtTime method to create and store thumbs. Our cached Thumbnails class stores the thumbnails in ~/documents/Thumbnails to avoid expensive use of MPMoviePlayerController in creating the thumbs every time. ***update*** deprecated in iOS 7, so using AVAssetImageGenerator instead.
+    //pulls thumbnails from the cache if available, otherwise creates and caches a fresh thumb
     _storedThumbnails = nil;
     _storedThumbnails = [NSMutableArray arrayWithCapacity:_storedClips.count];
     for (NSURL *clip in _storedClips) {
@@ -164,7 +164,7 @@
     UISegmentedControl *aux = cell.auxControl;
     targetUrl = [_storedClips objectAtIndex:selectedRow];
     
-    double delayToBegin= 0.2;
+    double delayToBegin= 0.2; //Delayed so that user can witness the button push. UI felt unresponsive otherwise.
     dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, delayToBegin* NSEC_PER_SEC);
     dispatch_after(startTime, dispatch_get_main_queue(), ^(void){
         if (selected == 0) { //Export the file!
